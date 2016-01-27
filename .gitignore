@@ -1,3 +1,4 @@
 *~
 *.o
 scop
+.DS_Store

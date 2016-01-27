@@ -2,6 +2,7 @@ NAME=scop
 
 SRC= main.c \
 		init.c \
+		main_loop.c \
 		clean.c
 
 OBJ= $(SRC:.c=.o)
@@ -17,6 +18,19 @@ CC=clang
 FLAGS= -Werror -Wextra -Wall
 
 INC= -I ./includes
+
+UNAME_S := $(shell uname -s)
+
+INC= -I ./includes
+LIB= -lSDL2 -lGLEW
+ifeq ($(UNAME_S),Linux)
+LIB+= -lGL
+endif
+ifeq ($(UNAME_S),Darwin)
+LIB+= -framework OpenGL
+endif
+
+
 
 all: $(NAME)
 
