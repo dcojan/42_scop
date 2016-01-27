@@ -13,13 +13,17 @@ void	scop()
 	GLuint vertexArrayId;
 	init_vao(&vertexArrayId);
 
+	GLuint	vertexBuffer = init_vertex_buffer();
+
 	shaderProgram = loadShaders();
+	// init_camera();
 
 
-	main_loop(&sdl_var);
+	main_loop(&sdl_var, shaderProgram);
 
 
 	glDeleteProgram(shaderProgram); // del shader program
+	glDeleteBuffers(1, &vertexBuffer); //del vertex buffer
 	glDeleteVertexArrays(1, &vertexArrayId); //del vao
 	clean_sdl(&sdl_var);
 }

@@ -1,11 +1,12 @@
 #include <scop.h>
 
-void 		main_loop(t_sdl	*sdl_var)
+void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram)
 {
 	SDL_Event		windowEvent;
   	t_bool        quit = FALSE;
 
-	// glUseProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+	glBindVertexArray(shaderProgram);
 
 	while (quit == FALSE)
 	{
@@ -16,8 +17,9 @@ void 		main_loop(t_sdl	*sdl_var)
 				windowEvent.key.keysym.sym == SDLK_ESCAPE))
 				quit = TRUE;
         }
-
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+
+		glDrawArrays(GL_TRIANGLES,0,36);
 		SDL_GL_SwapWindow(sdl_var->window);
 	}
 }
