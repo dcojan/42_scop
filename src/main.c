@@ -1,11 +1,11 @@
 #include <scop.h>
 
 
-int		main(int ac, char **av)
+void	scop()
 {
-	t_sdl				sdl_var;
-	(void) ac;
-	(void) av;
+	t_sdl	sdl_var;
+	GLuint	shaderProgram;
+
 	init_sdl(&sdl_var);
 	init_glew();
 	init_gl();
@@ -13,8 +13,22 @@ int		main(int ac, char **av)
 	GLuint vertexArrayId;
 	init_vao(&vertexArrayId);
 
+	shaderProgram = loadShaders();
+
+
 	main_loop(&sdl_var);
 
+
+	glDeleteProgram(shaderProgram); // del shader program
+	glDeleteVertexArrays(1, &vertexArrayId); //del vao
 	clean_sdl(&sdl_var);
+}
+
+
+int		main(int ac, char **av)
+{
+	(void) ac;
+	(void) av;
+	scop();
 	return (0);
 }

@@ -25,6 +25,8 @@ void		init_sdl(t_sdl *sdl_var);
 void		init_glew();
 void    	init_vao(GLuint *vertexArrayId);
 void		init_gl();
+GLuint		loadShaders();
+
 
 void 		main_loop(t_sdl	*sdl_var);
 
