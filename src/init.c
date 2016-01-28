@@ -12,8 +12,8 @@ void		init_sdl(t_sdl *sdl_var)
 void        init_gl(){
     glFrontFace( GL_CCW );
     glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST); //doesn't change a thing
-	glDepthFunc(GL_LESS); // doesnt't change a thing
+    glEnable(GL_DEPTH_TEST); //doesn't change a thing
+    glDepthFunc(GL_LESS); // doesnt't change a thing
 	glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
 }
 
@@ -30,82 +30,63 @@ void		init_glew()
 	GLuint vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 }
-// 
-// glm::mat4 ViewMatrix;
-// glm::mat4 ProjectionMatrix;
 //
-// glm::mat4 getViewMatrix(){
-// 	return ViewMatrix;
-// }
-// glm::mat4 getProjectionMatrix(){
-// 	return ProjectionMatrix;
-// }
-
-// void init_camera() {
-// 	//++++++++++++++++++++++++++++++++++++++++++++++++++ CAMERA
-// 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-// 	 ProjectionMatrix = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-// 	 // Camera matrix
-// 	 ViewMatrix = glm::lookAt(
-// 	                glm::vec3(4,3,5), // Camera is at (4,3,3), in World Space
-// 	                glm::vec3(0,0,0), // and looks at the origin
-// 	                glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-// 	                );
-// 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// const GLfloat g_vertex_buffer_data[] = {
 //
-// }
+//     -1.0f,-1.0f,-1.0f, // triangle 1 : begin
+//     -1.0f,-1.0f, 1.0f,
+//     -1.0f, 1.0f, 1.0f, // triangle 1 : end
+//
+//     1.0f, 1.0f,-1.0f, // triangle 2 : begin
+//     -1.0f,-1.0f,-1.0f,
+//     -1.0f, 1.0f,-1.0f, // triangle 2 : end
+//
+//     1.0f,-1.0f, 1.0f,
+//     -1.0f,-1.0f,-1.0f,
+//     1.0f,-1.0f,-1.0f,
+//
+//     1.0f, 1.0f,-1.0f,
+//     1.0f,-1.0f,-1.0f,
+//     -1.0f,-1.0f,-1.0f,
+//
+//     -1.0f,-1.0f,-1.0f,
+//     -1.0f, 1.0f, 1.0f,
+//     -1.0f, 1.0f,-1.0f,
+//
+//     1.0f,-1.0f, 1.0f,
+//     -1.0f,-1.0f, 1.0f,
+//     -1.0f,-1.0f,-1.0f,
+//
+//     -1.0f, 1.0f, 1.0f,
+//     -1.0f,-1.0f, 1.0f,
+//     1.0f,-1.0f, 1.0f,
+//
+//     1.0f, 1.0f, 1.0f,
+//     1.0f,-1.0f,-1.0f,
+//     1.0f, 1.0f,-1.0f,
+//
+//     1.0f,-1.0f,-1.0f,
+//     1.0f, 1.0f, 1.0f,
+//     1.0f,-1.0f, 1.0f,
+//
+//     1.0f, 1.0f, 1.0f,
+//     1.0f, 1.0f,-1.0f,
+//     -1.0f, 1.0f,-1.0f,
+//
+//     1.0f, 1.0f, 1.0f,
+//     -1.0f, 1.0f,-1.0f,
+//     -1.0f, 1.0f, 1.0f,
+//
+//     1.0f, 1.0f, 1.0f,
+//     -1.0f, 1.0f, 1.0f,
+//     1.0f,-1.0f, 1.0f
+// };
 
-const GLfloat g_vertex_buffer_data[] = {
-
-    -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-    -1.0f,-1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f, // triangle 1 : end
-
-    1.0f, 1.0f,-1.0f, // triangle 2 : begin
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f,-1.0f, // triangle 2 : end
-
-    1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f,-1.0f,
-    1.0f,-1.0f,-1.0f,
-
-    1.0f, 1.0f,-1.0f,
-    1.0f,-1.0f,-1.0f,
-    -1.0f,-1.0f,-1.0f,
-
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-
-    1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f,-1.0f,
-
-    -1.0f, 1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f,
-
-    1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f,-1.0f,
-    1.0f, 1.0f,-1.0f,
-
-    1.0f,-1.0f,-1.0f,
-    1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f,
-
-    1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f,-1.0f,
-    -1.0f, 1.0f,-1.0f,
-
-    1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-    -1.0f, 1.0f, 1.0f,
-
-    1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f,
-    1.0f,-1.0f, 1.0f
+static const GLfloat g_vertex_buffer_data[] = {
+   -1.0f, -1.0f, 0.0f,
+   1.0f, -1.0f, 0.0f,
+   0.0f,  1.0f, 0.0f,
 };
-
 GLuint  init_vertex_buffer()
 {
   	GLuint vertexBuffer;

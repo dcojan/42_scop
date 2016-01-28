@@ -4,6 +4,8 @@
 # include <GL/glew.h>
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_opengl.h>
+# include <glmath.h>
+# include <stdio.h>
 
 # define WIDTH  		800
 # define HEIGHT 		600
@@ -12,7 +14,6 @@ typedef enum 		e_bool
 {
 	FALSE,
 	TRUE
-
 }					t_bool;
 
 typedef struct		s_sdl

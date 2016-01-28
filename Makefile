@@ -6,11 +6,12 @@ SRC= main.c \
 		load_shader.c \
 		clean.c
 
+SRCGLMATH= lookat.c
+
 OBJ= $(SRC:.c=.o)
+OBJ+= $(SRCGLMATH:.c=.o)
 
-LIB= -lGL -lSDL2 -lGLEW
-
-DIRSRC= src/
+VPATH:= src:glmaths
 DIROBJ= obj/
 DIROBJS= $(addprefix $(DIROBJ), $(OBJ))
 
@@ -18,12 +19,11 @@ CC=clang
 
 FLAGS= -Werror -Wextra -Wall
 
-INC= -I ./includes
+INC= -I ./includes -I ./glmaths
 
 UNAME_S := $(shell uname -s)
 
-INC= -I ./includes
-LIB= -lSDL2 -lGLEW
+LIB= -lSDL2 -lGLEW -lm
 ifeq ($(UNAME_S),Linux)
 LIB+= -lGL
 endif
@@ -38,7 +38,7 @@ all: $(NAME)
 $(NAME): $(DIROBJS)
 	$(CC) $^ -o $@ $(LIB)
 
-$(DIROBJ)%.o: $(DIRSRC)%.c
+$(DIROBJ)%.o: %.c
 	mkdir -p $(DIROBJ)
 	$(CC) $(FLAGS) -c $^ -o $@  $(INC)
 
