@@ -3,6 +3,7 @@ NAME=scop
 SRC= main.c \
 		init.c \
 		main_loop.c \
+		load_obj.c \
 		load_shader.c \
 		clean.c
 

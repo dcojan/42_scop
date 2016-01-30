@@ -28,6 +28,7 @@ void    	init_vao(GLuint *vertexArrayId);
 void		init_gl();
 GLuint		init_vertex_buffer();
 GLuint		loadShaders();
+int    		load_obj(char *path);
 
 
 void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram);

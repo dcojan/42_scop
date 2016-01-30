@@ -31,8 +31,8 @@ void	scop()
 
 int		main(int ac, char **av)
 {
-	(void) ac;
-	(void) av;
-	scop();
+	if (ac == 2)
+		load_obj(av[1]);
+	//scop();
 	return (0);
 }

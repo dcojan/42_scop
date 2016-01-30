@@ -1,9 +1,5 @@
 #include <glmath.h>
 
-#define X(x)    (*x)[0]
-#define Y(x)    (*x)[1]
-#define Z(x)    (*x)[2]
-
 void        print_mat(t_mat4x4 const *m)
 {
     int     i;
