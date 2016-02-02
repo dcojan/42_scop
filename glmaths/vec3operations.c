@@ -5,6 +5,10 @@ void     normalize(t_vec3 *src)
     GLfloat     d;
 
     d = sqrt(X(src) * X(src) + Y(src) * Y(src) + Z(src) * Z(src));
+    if (d == 0)
+    {
+        return ;
+    }
     X(src) = X(src) / d;
     Y(src) = Y(src) / d;
     Z(src) = Z(src) / d;

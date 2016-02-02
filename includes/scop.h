@@ -38,7 +38,7 @@ typedef struct		s_vertex_data
 {
 	t_vertex		v;
 	void			*vt;
-	void			*vn;
+	t_vertex		vn;
 	void			*vp;
 	void			*cstype;
 	void			*deg;
@@ -67,7 +67,9 @@ void		init_sdl(t_sdl *sdl_var);
 void		init_glew();
 void    	init_vao(GLuint *vertexArrayId);
 void		init_gl();
-GLuint		init_vertex_buffer();
+GLuint		init_vertex_buffer(t_obj *obj);
+GLuint		init_normal_buffer(t_obj *obj);
+
 GLuint 		init_element_array_buffer(t_obj *obj);
 
 GLuint		loadShaders();

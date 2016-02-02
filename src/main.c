@@ -5,14 +5,24 @@ void	scop(t_obj *obj)
 	t_sdl	sdl_var;
 	GLuint	shaderProgram;
 
+	printf("init sdl\n");
 	init_sdl(&sdl_var);
+	printf("init glew\n");
 	init_glew();
+	printf("init gl\n");
 	init_gl();
 
+	printf("init vertexArrayId\n");
 	GLuint vertexArrayId;
 	init_vao(&vertexArrayId);
 
+	printf("computing vertex buffer\n");
 	GLuint	vertexBuffer = init_vertex_buffer(obj);
+	printf("Done.\n");
+	printf("computing normal buffer\n");
+	GLuint	normalBuffer = init_normal_buffer(obj);
+	printf("Done.\n");
+	(void)normalBuffer;
 	// init_element_array_buffer(obj);
 
 	shaderProgram = loadShaders();
