@@ -5,10 +5,13 @@ SRC= main.c \
 		main_loop.c \
 		load_obj.c \
 		load_shader.c \
+		load_buffer.c \
 		clean.c
 
-SRCGLMATH= lookat.c
-
+SRCGLMATH= lookat.c \
+						vec3operations.c \
+						mat4x4operations.c \
+						perspective.c
 OBJ= $(SRC:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)
 

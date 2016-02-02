@@ -1,7 +1,6 @@
 #include <scop.h>
 
-
-void	scop()
+void	scop(t_obj *obj)
 {
 	t_sdl	sdl_var;
 	GLuint	shaderProgram;
@@ -13,14 +12,14 @@ void	scop()
 	GLuint vertexArrayId;
 	init_vao(&vertexArrayId);
 
-	GLuint	vertexBuffer = init_vertex_buffer();
+	GLuint	vertexBuffer = init_vertex_buffer(obj);
+	// init_element_array_buffer(obj);
 
 	shaderProgram = loadShaders();
 	// init_camera();
 
 
-	main_loop(&sdl_var, shaderProgram);
-
+	main_loop(&sdl_var, shaderProgram, obj);
 
 	glDeleteProgram(shaderProgram); // del shader program
 	glDeleteBuffers(1, &vertexBuffer); //del vertex buffer
@@ -31,8 +30,15 @@ void	scop()
 
 int		main(int ac, char **av)
 {
+	t_obj *obj = NULL;
+
 	if (ac == 2)
-		load_obj(av[1]);
-	//scop();
+	{
+		obj = load_obj(av[1]);
+		if (obj != NULL)
+			scop(obj);
+		else
+			printf("Error : unable to load object\n");
+	}
 	return (0);
 }

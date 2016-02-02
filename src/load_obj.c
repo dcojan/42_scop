@@ -1,60 +1,181 @@
 #include <scop.h>
 #include <fcntl.h>
-//#include <errno.h>
 
-int    load_obj(char *path)
+FILE    *open_file(char *path)
 {
-    FILE     *stream;
-    int     ret;
-    char    state;
+    FILE *stream;
 
     printf("path = %s\n", path);
-
     stream = fopen(path, "r");
     if (stream == NULL)
     {
         perror("");
-        return (0);
+        return (NULL);
     }
-    // printf("READING\n");
+    return stream;
+}
 
+void    add_vec3(t_vec3 *vec, t_vertex *v)
+{
+    GLfloat     *new = (GLfloat *)malloc(sizeof(GLfloat) * (v->size + 3));
+
+    if (v->size > 0)
+        memcpy(new, v->vertices, sizeof(GLfloat) * v->size);
+    new[v->size] = X(vec);
+    new[v->size + 1] = Y(vec);
+    new[v->size + 2] = Z(vec);
+    if (v->vertices != NULL)
+        free(v->vertices);
+    v->vertices = new;
+    v->size += 3;
+}
+void    add_element(GLushort *el, t_element *v, int nb)
+{
+    GLushort     *new = (GLushort *)malloc(sizeof(GLushort) * (v->size + nb));
+
+    if (v->size > 0)
+        memcpy(new, v->element, sizeof(GLushort) * v->size);
+    for (int i = 0; i < nb; i++)
+        new[v->size + i] = el[i] - 1;
+    if (v->element != NULL)
+        free(v->element);
+    v->element = new;
+    v->size += nb;
+}
+void    print_vertice_array(GLfloat *array, size_t size)
+{
+    for (size_t i = 0; i < size; i += 3)
+        printf("%f %f %f\n", array[i], array[i + 1], array[i + 2]);
+}
+void    print_element_array(GLushort *array, size_t size)
+{
+    for (size_t i = 0; i < size; i++)
+    {
+        printf("%hd ", array[i]);
+        if ((i + 1) % 4 == 0)
+            printf("\n");
+    }
+    printf("\n");
+}
+
+t_obj   *new_obj()
+{
+    t_obj   *obj = (t_obj*)malloc(sizeof(t_obj));
+    obj->vertex_data.v.vertices = NULL;
+    obj->vertex_data.v.size = 0;
+    obj->elements.f.element = NULL;
+    obj->elements.f.size = 0;
+    return obj;
+}
+t_obj    *load_obj(char *path)
+{
+    FILE     *stream;
+    int     ret;
+    int     vertice_count = 0;
+    int     face_count = 0;
+
+    if ((stream = open_file(path)) == NULL)
+        return NULL;
+    t_obj   *obj = new_obj();
     t_vec3      vec;
     while (1)
     {
-        ret = fread(&state, 1, 1,stream);
+        char label[15];
+        ret = fscanf(stream, "%s", label);
         if (ret == 0 || ret == -1)
             break;
-        else if (state == '#')
-            printf("\ncomment\n");
-        else if (state == 'v')
+        else if (strcmp(label,"#") == 0)
+            printf("comment\t");
+        else if (strcmp(label,"v") == 0)
         {
-            printf("\nvertex\n");
+            // printf("vertex\t");
             ret = fscanf(stream, " %f %f %f", &(vec[0]), &(vec[1]), &(vec[2]));
-            printf("%d =>  %f %f %f\n", ret, vec[0], vec[1], vec[2]);
+            // printf("%d =>  %f %f %f\n", ret, vec[0], vec[1], vec[2]);
+            vertice_count += ret;
+            add_vec3(&vec, &(obj->vertex_data.v));
         }
-        else if (state == 'f')
+        else if (strcmp(label,"f") == 0)
         {
-            int a,b,c,d;
-            printf("\nface\n");
-            ret = fscanf(stream, " %d %d %d %d", &a, &b, &c, &d);
+            GLushort    el[4];
+            // printf("face\t");
+            ret = fscanf(stream, " %hd %hd %hd %hd", &(el[0]), &(el[1]), &(el[2]), &(el[3]));
+            face_count += ret;
             if (ret == 4)
-                printf("%d =>  %d %d %d %d\n", ret, a, b, c, d);
+            {
+                // printf("%d =>  %d %d %d %d\n", ret, el[0], el[1], el[2], el[3]);
+                add_element(el, &(obj->elements.f), ret);
+            }
             if (ret == 3)
             {
-                printf("%d =>  %d %d %d\n", ret, a, b, c);
+                // printf("%d =>  %d %d %d\n", ret, el[0], el[1], el[2]);
+                add_element(el, &(obj->elements.f), ret);
                 continue;
             }
         }
-        else if (state == 'o')
-            printf("\nname\n");
+        else if (strcmp(label,"o") == 0)
+        {
+            char name[256];
+            printf("name\t");
+            ret = fscanf(stream, "%s", name);
+            printf("%d =>  %s\n", ret, name);
+
+        }
+        else if (strcmp(label,"s") == 0)
+        {
+            char name[256];
+            printf("smoothing group\t");
+            ret = fscanf(stream, "%s", name);
+            printf("%d =>  %s\n", ret, name);
+
+        }
+        else if (strcmp(label,"mtllib") == 0)
+        {
+            char name[256];
+            printf("mtllib\t");
+            ret = fscanf(stream, "%s", name);
+            printf("%d =>  %s\n", ret, name);
+        }
+        else if (strcmp(label,"usemtl") == 0)
+        {
+            char name[256];
+            printf("semtl\t");
+            ret = fscanf(stream, "%s", name);
+            printf("%d =>  %s\n", ret, name);
+        }
+        else
+        {
+            printf("parse error state `%s` not recognized\n", label);
+            return NULL;
+        }
+        char    state;
         while ((ret = fread(&state, 1, 1,stream)) != 0 && state != '\n')
         {
             // printf("%c", state);
         }
         if (ret == 0 || ret == -1)
             break;
-        // ret = fscanf(stream, "#[^\n]");
-        // printf("%d\n", ret);
+        // if (state == '\n')
+            // printf("------------- \\n ------------\n");
     }
-    return (1);
+    // print_vertice_array(obj->vertex_data.v.vertices, obj->vertex_data.v.size);
+    // print_element_array(obj->elements.f.element, obj->elements.f.size);
+
+    if (obj->elements.f.size > 0)
+    {
+        GLfloat     *new = (GLfloat *)malloc(sizeof(GLfloat) * (obj->elements.f.size * 3));
+        size_t      size = obj->elements.f.size * 3;
+        int         vindex = 0;
+        for (size_t i = 0; i < obj->elements.f.size; i++)
+        {
+            new[vindex] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3];
+            new[vindex + 1] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3 + 1];
+            new[vindex + 2] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3 + 2 ];
+            vindex += 3;
+        }
+        free(obj->vertex_data.v.vertices);
+        obj->vertex_data.v.vertices = new;
+        obj->vertex_data.v.size = size;
+        print_vertice_array(obj->vertex_data.v.vertices, obj->vertex_data.v.size);
+    }
+    return obj;
 }

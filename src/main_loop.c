@@ -1,32 +1,6 @@
 #include <scop.h>
-// 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-// 	 ProjectionMatrix = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 
-t_mat4x4	*perspective(GLfloat fovy, GLfloat ratio, GLfloat near, GLfloat far)
-{
-    t_mat4x4	*mat;
-    GLfloat		tan_half_angle;
-
-    if (ratio == 0 || near == far)
-    {
-        printf("ratio == 0 or near == far\n");
-        exit(-1);
-    }
-    mat = new_mat4x4();
-    // mat_zero(to_return);
-    tan_half_angle = tan(fovy / 2.0f);
-    (*mat)[0][0] = 1.0f / (ratio * tan_half_angle);
-    (*mat)[1][1] = 1.0f / tan_half_angle;
-    (*mat)[2][2] = -(far + near) / (far - near);
-    (*mat)[2][3] = -1.0f;
-    (*mat)[3][2] = -(2.0f * far * near) / (far - near);
-    (*mat)[3][3] = 0.0f;
-    return (mat);
-}
-
-
-
-void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram)
+void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram, t_obj *obj)
 {
 	SDL_Event		windowEvent;
   	t_bool        quit = FALSE;
@@ -34,9 +8,6 @@ void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram)
 	glUseProgram(shaderProgram);
 	glBindVertexArray(shaderProgram);
 
-
-    // t_mat4x4 *ProjectionMatrix = perspective(0.785398f, (float) WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-    // t_mat4x4 *ProjectionMatrix = perspective(0.785398f, 4.0f / 3.0f, 0.1f, 100.0f);
 	t_mat4x4 *ProjectionMatrix = perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
 
 	t_vec3 eye = {4,3,3};
@@ -44,15 +15,15 @@ void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram)
 	t_vec3 up = {0,1,0};
 	t_mat4x4 * ViewMatrix = lookAt(&eye, &center, &up);
 	t_mat4x4 mvp;
-	mul_mat4x4(ViewMatrix, ProjectionMatrix, &mvp);
-	print_mat(ProjectionMatrix);
-	print_mat(ViewMatrix);
-	print_mat(&mvp);
+    mul_mat4x4(ViewMatrix, ProjectionMatrix, &mvp);
+	// print_mat(ProjectionMatrix);
+	// print_mat(ViewMatrix);
+	// print_mat(&mvp);
 
     GLuint MatrixID = glGetUniformLocation(shaderProgram, "MVP");
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(mvp)[0][0]);
-	// glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(*ViewMatrix)[0][0]);
-	// glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(*ProjectionMatrix)[0][0]);
+    printf("vertice count : %zu  -  face count %zu\n",  obj->vertex_data.v.size,  obj->elements.f.size);
+
 	while (quit == FALSE)
 	{
 		if (SDL_PollEvent(&windowEvent))
@@ -64,7 +35,14 @@ void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram)
         }
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES,0,36);
+        glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
+		// glDrawArrays(GL_TRIANGLES,0, obj->vertex_data.v.size / 3);
+        // glDrawElements(
+        //     GL_TRIANGLES,      // mode
+        //     obj->elements.f.size,    // count
+        //     GL_UNSIGNED_SHORT,   // type
+        //     (void*)0           // element array buffer offset
+        // );
 		SDL_GL_SwapWindow(sdl_var->window);
 	}
 }
