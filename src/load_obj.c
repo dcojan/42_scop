@@ -36,12 +36,6 @@ void    add_element(GLushort *el, t_element *v, int nb)
 
     if (v->size > 0)
         memcpy(new, v->element, sizeof(GLushort) * v->size);
-    // for (int i = 0; i + 3 <= nb; i++)
-    // {
-    //     new[v->size + i] = el[i] - 1;
-    //     new[v->size + i + 1] = el[i + 1] - 1;
-    //     new[v->size + i + 2] = el[i + 2] - 1;
-    // }
     new[v->size] = el[0] - 1;
     new[v->size + 1] = el[1] - 1;
     new[v->size + 2] = el[2] - 1;
@@ -84,6 +78,7 @@ t_obj   *new_obj()
     obj->elements.f.size = 0;
     return obj;
 }
+
 t_obj    *load_obj(char *path)
 {
     FILE     *stream;

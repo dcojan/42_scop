@@ -1,40 +1,59 @@
 #include <scop.h>
 
+void	clean_object(t_obj *obj)
+{
+	glDeleteProgram(obj->shaderProgram);
+	glDeleteBuffers(1, &(obj->vertexBuffer));
+	glDeleteBuffers(1, &(obj->normalBuffer));
+	if (obj->vertex_data.v.vertices != NULL)
+		free(obj->vertex_data.v.vertices);
+	if (obj->vertex_data.vn.vertices != NULL)
+		free(obj->vertex_data.vn.vertices);
+	if (obj->elements.f.element != NULL)
+		free(obj->elements.f.element);
+	free(obj);
+}
+
+void	create_object(t_obj *obj)
+{
+	printf("computing vertex buffer\n");
+	obj->vertexBuffer = init_vertex_buffer(obj);
+	printf("Done.\n");
+	printf("computing normal buffer\n");
+	obj->normalBuffer = init_normal_buffer(obj);
+	printf("Done.\n");
+	obj->shaderProgram = loadShaders();
+}
+
+GLuint	new_vao()
+{
+	GLuint vertexArrayId;
+
+	glGenVertexArrays(1, &vertexArrayId);
+	glBindVertexArray(vertexArrayId);
+	return (vertexArrayId);
+}
+
 void	scop(t_obj *obj)
 {
 	t_sdl	sdl_var;
-	GLuint	shaderProgram;
 
-	printf("init sdl\n");
 	init_sdl(&sdl_var);
-	printf("init glew\n");
 	init_glew();
-	printf("init gl\n");
 	init_gl();
 
 	printf("init vertexArrayId\n");
-	GLuint vertexArrayId;
-	init_vao(&vertexArrayId);
+	GLuint vertexArrayId = new_vao();
 
-	printf("computing vertex buffer\n");
-	GLuint	vertexBuffer = init_vertex_buffer(obj);
-	printf("Done.\n");
-	printf("computing normal buffer\n");
-	GLuint	normalBuffer = init_normal_buffer(obj);
-	printf("Done.\n");
-	(void)normalBuffer;
-	// init_element_array_buffer(obj);
+	create_object(obj);
 
-	shaderProgram = loadShaders();
-	// init_camera();
+	main_loop(&sdl_var, obj->shaderProgram, obj);
 
-
-	main_loop(&sdl_var, shaderProgram, obj);
-
-	glDeleteProgram(shaderProgram); // del shader program
-	glDeleteBuffers(1, &vertexBuffer); //del vertex buffer
-	glDeleteVertexArrays(1, &vertexArrayId); //del vao
+	printf("Cleaning\n");
+	glDeleteVertexArrays(1, &(vertexArrayId));
+	clean_object(obj);
 	clean_sdl(&sdl_var);
+	printf("Done\n");
 }
 
 
@@ -50,5 +69,7 @@ int		main(int ac, char **av)
 		else
 			printf("Error : unable to load object\n");
 	}
+	else
+		printf("Usage :\n$> ./scop file.obj\n");
 	return (0);
 }

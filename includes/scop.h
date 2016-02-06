@@ -60,12 +60,14 @@ typedef struct		s_obj
 {
 	t_vertex_data	vertex_data;
 	t_element_data	elements;
+	GLuint			vertexBuffer;
+	GLuint			normalBuffer;
+	GLuint			shaderProgram;
 }					t_obj;
 
 
 void		init_sdl(t_sdl *sdl_var);
 void		init_glew();
-void    	init_vao(GLuint *vertexArrayId);
 void		init_gl();
 GLuint		init_vertex_buffer(t_obj *obj);
 GLuint		init_normal_buffer(t_obj *obj);
