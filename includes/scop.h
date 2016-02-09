@@ -69,18 +69,23 @@ typedef struct		s_obj
 void		init_sdl(t_sdl *sdl_var);
 void		init_glew();
 void		init_gl();
-GLuint		init_vertex_buffer(t_obj *obj);
-GLuint		init_normal_buffer(t_obj *obj);
+// GLuint		init_vertex_buffer(t_obj *obj);
+// GLuint		init_normal_buffer(t_obj *obj);
+GLuint  	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
+
+void		scop(t_obj *obj, t_sdl *sdl_var);
 
 GLuint 		init_element_array_buffer(t_obj *obj);
+int			glsl_loader(char **text, char *path);
 
 GLuint		loadShaders();
+FILE		*open_file(char *path);
 t_obj    	*load_obj(char *path);
 
+void		set_camera(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLuint shaderProgram);
+void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderProgram);
 
 void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram, t_obj *obj);
-void		init_camera();
-
 
 void		clean_sdl(t_sdl *sdl_var);
 

@@ -1,17 +1,22 @@
 NAME=scop
 
 SRC= main.c \
+		scop.c \
 		init.c \
 		main_loop.c \
-		load_obj.c \
-		load_shader.c \
-		load_buffer.c \
+		object_loader.c \
+		glsl_loader.c \
+		shaders.c \
+		camera.c \
+		light.c \
+		buffers.c \
 		clean.c
 
 SRCGLMATH= lookat.c \
-						vec3operations.c \
-						mat4x4operations.c \
-						perspective.c
+			vec3operations.c \
+			mat4x4operations.c \
+			perspective.c
+
 OBJ= $(SRC:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)
 

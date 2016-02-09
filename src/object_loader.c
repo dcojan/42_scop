@@ -1,34 +1,36 @@
 #include <scop.h>
 #include <fcntl.h>
 
-FILE    *open_file(char *path)
+FILE	*open_file(char *path)
 {
-    FILE *stream;
+	FILE	*stream;
 
-    printf("path = %s\n", path);
-    stream = fopen(path, "r");
-    if (stream == NULL)
-    {
-        perror("");
-        return (NULL);
-    }
-    return stream;
+	printf("path = %s\n", path);
+	stream = fopen(path, "r");
+	if (stream == NULL)
+	{
+		perror("");
+		return (NULL);
+	}
+	return stream;
 }
 
 void    add_vec3(t_vec3 *vec, t_vertex *v)
 {
-    GLfloat     *new = (GLfloat *)malloc(sizeof(GLfloat) * (v->size + 3));
+	GLfloat		*new
 
-    if (v->size > 0)
-        memcpy(new, v->vertices, sizeof(GLfloat) * v->size);
-    new[v->size] = X(vec);
-    new[v->size + 1] = Y(vec);
-    new[v->size + 2] = Z(vec);
-    if (v->vertices != NULL)
-        free(v->vertices);
-    v->vertices = new;
-    v->size += 3;
+	new = (GLfloat *)malloc(sizeof(GLfloat) * (v->size + 3));
+	if (v->size > 0)
+		memcpy(new, v->vertices, sizeof(GLfloat) * v->size);
+	new[v->size] = X(vec);
+	new[v->size + 1] = Y(vec);
+	new[v->size + 2] = Z(vec);
+	if (v->vertices != NULL)
+		free(v->vertices);
+	v->vertices = new;
+	v->size += 3;
 }
+
 void    add_element(GLushort *el, t_element *v, int nb)
 {
     size_t size = (v->size + (3 * (nb - 2)));
