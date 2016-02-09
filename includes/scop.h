@@ -6,6 +6,7 @@
 # include <SDL2/SDL_opengl.h>
 # include <glmath.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 # define WIDTH  		800
 # define HEIGHT 		600
@@ -15,6 +16,7 @@ typedef enum 		e_bool
 	FALSE,
 	TRUE
 }					t_bool;
+
 
 typedef struct		s_sdl
 {
@@ -81,6 +83,7 @@ int			glsl_loader(char **text, char *path);
 GLuint		loadShaders();
 FILE		*open_file(char *path);
 t_obj    	*load_obj(char *path);
+int			consume_end_of_line(FILE *stream);
 
 void		set_camera(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLuint shaderProgram);
 void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderProgram);
@@ -88,5 +91,22 @@ void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderPro
 void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram, t_obj *obj);
 
 void		clean_sdl(t_sdl *sdl_var);
+void    	print_element_array(GLushort *array, size_t size);
+void    	print_vertice_array(GLfloat *array, size_t size);
+
+void		add_vec3(t_vec3 *vec, t_vertex *v);
+void		add_element(GLushort *el, t_element *v, int nb);
+t_obj		*new_obj();
+void		compute_normals(t_obj *obj);
+void		unpack_elements(t_obj *obj);
+
+int			parse_label(t_obj *obj, FILE *stream);
+int			label_usemtl(t_obj *obj, FILE *stream);
+int			label_mtllib(t_obj *obj, FILE *stream);
+int			label_comment(t_obj *obj, FILE *stream);
+int			label_f(t_obj *obj, FILE *stream);
+int			label_s(t_obj *obj, FILE *stream);
+int			label_o(t_obj *obj, FILE *stream);
+int			label_v(t_obj *obj, FILE *stream);
 
 #endif
