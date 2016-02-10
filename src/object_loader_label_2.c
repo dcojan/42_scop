@@ -25,24 +25,20 @@ int			label_mtllib(t_obj *obj, FILE *stream)
 
 int			label_usemtl(t_obj *obj, FILE *stream)
 {
-	char name[256];
-	int     ret;
-	char    state;
+	char	name[256];
+	int		ret;
 
 	(void)obj;
 	printf("usemtl\t");
 	ret = fscanf(stream, "%s", name);
 	printf("%d =>  %s\n", ret, name);
-	while ((ret = fread(&state, 1, 1,stream)) != 0 && state != '\n')
-	{
-		// printf("%c", state);
-	}
+	consume_end_of_line(stream);
 	return (ret);
 }
 
-int		label_o(t_obj *obj, FILE *stream)
+int			label_o(t_obj *obj, FILE *stream)
 {
-	char 	name[256];
+	char	name[256];
 	int		ret;
 
 	(void)obj;

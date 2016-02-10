@@ -16,7 +16,7 @@ void	clean_object(t_obj *obj)
 
 int		main(int ac, char **av)
 {
-	t_obj		*obj = NULL;
+	t_obj		*obj;
 	t_sdl		sdl_var;
 
 	if (ac == 2)

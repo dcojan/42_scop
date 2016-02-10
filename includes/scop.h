@@ -78,10 +78,10 @@ GLuint  	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
 void		scop(t_obj *obj, t_sdl *sdl_var);
 
 GLuint 		init_element_array_buffer(t_obj *obj);
-int			glsl_loader(char **text, char *path);
+int			glsl_loader(char **text, const char *path);
 
-GLuint		loadShaders();
-FILE		*open_file(char *path);
+GLuint		load_shaders();
+FILE		*open_file(const char *path);
 t_obj    	*load_obj(char *path);
 int			consume_end_of_line(FILE *stream);
 

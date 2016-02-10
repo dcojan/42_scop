@@ -1,28 +1,28 @@
 #include <scop.h>
 
-void		set_camera(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLuint shaderProgram)
+t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez)
 {
-	GLuint			MatrixID;
-	GLuint			ViewMatrixID;
-	GLuint			ModelMatrixID;
-	t_mat4x4		*ProjectionMatrix;
+	t_mat4x4		*view_m;
+	t_vec3 const	eye = {eyex, eyey, eyez};
+	t_vec3 const	center = {0, 0, 0};
+	t_vec3 const	up = {0, 1, 0};
 
-	ProjectionMatrix = perspective(45.0f, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-	t_vec3 eye = {eyeX,eyeY,eyeZ};
-	t_vec3 center = {0,0,0};
-	t_vec3 up = {0,1,0};
-	t_mat4x4 * ViewMatrix = lookAt(&eye, &center, &up);
-	t_mat4x4 mvp;
-	mul_mat4x4(ViewMatrix, ProjectionMatrix, &mvp);
-	MatrixID = glGetUniformLocation(shaderProgram, "MVP");
-	ViewMatrixID = glGetUniformLocation(shaderProgram, "V");
-	ModelMatrixID = glGetUniformLocation(shaderProgram, "M");
+	view_m = lookAt(&eye, &center, &up);
+	return (view_m);
+}
 
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(mvp)[0][0]);
-	t_mat4x4 ModelMatrix;
-	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-	glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &((*ViewMatrix)[0][0]));
-    // print_mat(ProjectionMatrix);
-	// print_mat(ViewMatrix);
-	// print_mat(&mvp);
+void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
+{
+	GLuint			proj_unif_id;
+	GLuint			view_unif_id;
+	t_mat4x4		*projection;
+	t_mat4x4		*view;
+
+	projection = perspective(45.0f,
+		(GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	view = view_matrix(eyex, eyey, eyez);
+	proj_unif_id = glGetUniformLocation(progid, "Projection");
+	view_unif_id = glGetUniformLocation(progid, "View");
+	glUniformMatrix4fv(proj_unif_id, 1, GL_FALSE, &((*projection)[0][0]));
+	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((*view)[0][0]));
 }

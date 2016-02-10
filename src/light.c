@@ -1,7 +1,9 @@
 #include <scop.h>
 
-void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderProgram)
+void		set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program)
 {
-	GLuint LightID = glGetUniformLocation(shaderProgram, "light_position_worldspace");
-	glUniform3f(LightID, lightX, lightY, lightZ);
+	GLuint light_id;
+
+	light_id = glGetUniformLocation(program, "light_position_worldspace");
+	glUniform3f(light_id, x, y, z);
 }

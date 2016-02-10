@@ -1,28 +1,26 @@
 #include <scop.h>
 
-void 		main_loop(t_sdl	*sdl_var, GLuint shaderProgram, t_obj *obj)
+void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
 {
-	SDL_Event		windowEvent;
-  	t_bool        quit = FALSE;
+	SDL_Event		window_event;
+	t_bool			quit;
 
-	glUseProgram(shaderProgram);
-	glBindVertexArray(shaderProgram);
-
-	set_camera(4, 3, 3, shaderProgram);
-	set_light(4, 4, 4, shaderProgram);
-
+	quit = FALSE;
+	glUseProgram(program);
+	glBindVertexArray(program);
+	set_camera(4, 3, 3, program);
+	set_light(4, 4, 4, program);
 	while (quit == FALSE)
 	{
-		if (SDL_PollEvent(&windowEvent))
+		if (SDL_PollEvent(&window_event))
 		{
-			if (windowEvent.type == SDL_QUIT ||
-				(windowEvent.type == SDL_KEYUP &&
-				windowEvent.key.keysym.sym == SDLK_ESCAPE))
+			if (window_event.type == SDL_QUIT ||
+				(window_event.type == SDL_KEYUP &&
+				window_event.key.keysym.sym == SDLK_ESCAPE))
 				quit = TRUE;
-        }
-		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-
-        glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
+		}
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
 		SDL_GL_SwapWindow(sdl_var->window);
 	}
 }
