@@ -9,10 +9,12 @@
 typedef GLfloat   t_vec3[3];
 typedef GLfloat   t_vec4[4];
 typedef GLfloat   t_mat4x4[4][4];
+typedef GLfloat   t_quat[4];
 
 #define X(x)    (*x)[0]
 #define Y(x)    (*x)[1]
 #define Z(x)    (*x)[2]
+#define W(x)    (*x)[3]
 
 // vec3
 void        normalize(t_vec3 *src);
@@ -33,5 +35,11 @@ t_mat4x4    *lookAt(t_vec3 const *eye, t_vec3  const *center, t_vec3  const *up)
 
 // perspective
 t_mat4x4	*perspective(GLfloat fovy, GLfloat ratio, GLfloat near, GLfloat far);
+
+void		angleAxis(float angle, t_vec3 *axis, t_quat *dest);
+float		radians(float degree);
+void		quat_mult(t_quat *q1, t_quat *q2, t_quat *q);
+
+void		vec3_to_vec4(t_vec3 *src, float w, t_vec4 *dest);
 
 #endif

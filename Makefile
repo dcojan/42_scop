@@ -18,8 +18,10 @@ SRC= main.c \
 
 SRCGLMATH= lookat.c \
 			vec3operations.c \
+			vec4operations.c \
 			mat4x4operations.c \
-			perspective.c
+			perspective.c \
+			quaternions.c
 
 OBJ= $(SRC:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)
