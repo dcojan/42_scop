@@ -1,5 +1,16 @@
 #include <glmath.h>
 
+void	compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal)
+{
+	t_vec3		tmp1;
+	t_vec3		tmp2;
+
+	sub(v2, v1, &tmp1);
+	sub(v3, v1, &tmp2);
+	cross(&tmp1, &tmp2, normal);
+	normalize(normal);
+}
+
 void     normalize(t_vec3 *src)
 {
     GLfloat     d;

@@ -8,15 +8,15 @@
 
 GLuint  new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 {
-	GLuint buffer;
+	GLuint	buffer;
 
-    glGenBuffers(1, &buffer);
-    glBindBuffer(type, buffer);
-    glBufferData(type,
-        size * sizeof(data[0]),
-        &(data[0]),
-        draw);
-    return buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(type, buffer);
+	glBufferData(type,
+		size * sizeof(data[0]),
+		&(data[0]),
+		draw);
+	return (buffer);
 }
 
 

@@ -1,46 +1,58 @@
-#include <scop.h>
+#include "scop.h"
 
-void	compute_normals(t_obj *obj)
+void		compute_normals(t_obj *obj)
 {
+	t_vec3		*tmp[3];
+	size_t		i;
+	t_vec3		*normal;
+	GLfloat		*dest;
+
 	printf("Computing normals.\n");
-	obj->vertex_data.vn.vertices = (GLfloat*)malloc(sizeof(GLfloat) * obj->vertex_data.v.size);
+	dest = (GLfloat*)malloc(sizeof(GLfloat) * obj->vertex_data.v.size);
 	obj->vertex_data.vn.size = obj->vertex_data.v.size;
-	for (size_t i = 0; i < obj->vertex_data.v.size; i+=9)
+	i = 0;
+	while (i < obj->vertex_data.v.size)
 	{
-		t_vec3  v, v2;
-		t_vec3  *ia = (t_vec3*)&(obj->vertex_data.v.vertices[i]);
-		t_vec3  *ib = (t_vec3*)&(obj->vertex_data.v.vertices[i + 3]);
-		t_vec3  *ic = (t_vec3*)&(obj->vertex_data.v.vertices[i + 6]);
-		sub(ib, ia, &v);
-		sub(ic, ia, &v2);
-		cross(&v, &v2, (t_vec3*)&(obj->vertex_data.vn.vertices[i]));
-		normalize((t_vec3*)&(obj->vertex_data.vn.vertices[i]));
-		memcpy(&(obj->vertex_data.vn.vertices[i + 3]), &(obj->vertex_data.vn.vertices[i]), sizeof(GLfloat) * 3);
-		memcpy(&(obj->vertex_data.vn.vertices[i + 6]), &(obj->vertex_data.vn.vertices[i]), sizeof(GLfloat) * 3);
+		tmp[0] = (t_vec3*)&(obj->vertex_data.v.vertices[i]);
+		tmp[1] = (t_vec3*)&(obj->vertex_data.v.vertices[i + 3]);
+		tmp[2] = (t_vec3*)&(obj->vertex_data.v.vertices[i + 6]);
+		normal = (t_vec3 *)&(dest[i]);
+		compute_normal(tmp[0], tmp[1], tmp[2], normal);
+		memcpy(&(normal[3]), normal, sizeof(GLfloat) * 3);
+		memcpy(&(normal[6]), normal, sizeof(GLfloat) * 3);
+		i += 9;
 	}
+	obj->vertex_data.vn.vertices = dest;
 }
 
-void	unpack_elements(t_obj *obj)
+void		unpack_elements(t_obj *obj)
 {
-	GLfloat     *new = (GLfloat *)malloc(sizeof(GLfloat) * (obj->elements.f.size * 3));
-	size_t      size = obj->elements.f.size * 3;
-	int         vindex = 0;
+	GLfloat		*new;
+	size_t		size;
+	int			vindex;
+	size_t		i;
+	GLushort	tmp;
 
 	printf("Unpacking elements\n");
-	for (size_t i = 0; i < obj->elements.f.size; i++)
+	new = (GLfloat *)malloc(sizeof(GLfloat) * (obj->elements.f.size * 3));
+	size = obj->elements.f.size * 3;
+	vindex = 0;
+	i = 0;
+	while (i < obj->elements.f.size)
 	{
-		new[vindex] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3];
-		new[vindex + 1] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3 + 1];
-		new[vindex + 2] = obj->vertex_data.v.vertices[ obj->elements.f.element[i] * 3 + 2 ];
+		tmp = obj->elements.f.element[i] * 3;
+		new[vindex] = obj->vertex_data.v.vertices[tmp];
+		new[vindex + 1] = obj->vertex_data.v.vertices[tmp + 1];
+		new[vindex + 2] = obj->vertex_data.v.vertices[tmp + 2];
 		vindex += 3;
+		i++;
 	}
 	free(obj->vertex_data.v.vertices);
 	obj->vertex_data.v.vertices = new;
 	obj->vertex_data.v.size = size;
-	// print_vertice_array(obj->vertex_data.v.vertices, obj->vertex_data.v.size);
 }
 
-void    add_vec3(t_vec3 *vec, t_vertex *v)
+void		add_vec3(t_vec3 *vec, t_vertex *v)
 {
 	GLfloat		*new;
 
@@ -56,37 +68,41 @@ void    add_vec3(t_vec3 *vec, t_vertex *v)
 	v->size += 3;
 }
 
-void    add_element(GLushort *el, t_element *v, int nb)
+void		add_element(GLushort *el, t_element *v, int nb)
 {
-    size_t size = (v->size + (3 * (nb - 2)));
-    GLushort     *new = (GLushort *)malloc(sizeof(GLushort) * size);
+	size_t		size;
+	GLushort	*new;
 
-    if (v->size > 0)
-        memcpy(new, v->element, sizeof(GLushort) * v->size);
-    new[v->size] = el[0] - 1;
-    new[v->size + 1] = el[1] - 1;
-    new[v->size + 2] = el[2] - 1;
-    if (nb == 4)
-    {
-        printf("nb 4 !!\n");
-        new[v->size + 3] = el[2] - 1;
-        new[v->size + 4] = el[3] - 1;
-        new[v->size + 5] = el[0] - 1;
-    }
-    if (v->element != NULL)
-        free(v->element);
-    v->element = new;
-    v->size = size;
+	size = (v->size + (3 * (nb - 2)));
+	new = (GLushort *)malloc(sizeof(GLushort) * size);
+	if (v->size > 0)
+		memcpy(new, v->element, sizeof(GLushort) * v->size);
+	new[v->size] = el[0] - 1;
+	new[v->size + 1] = el[1] - 1;
+	new[v->size + 2] = el[2] - 1;
+	if (nb == 4)
+	{
+		printf("nb 4 !!\n");
+		new[v->size + 3] = el[2] - 1;
+		new[v->size + 4] = el[3] - 1;
+		new[v->size + 5] = el[0] - 1;
+	}
+	if (v->element != NULL)
+		free(v->element);
+	v->element = new;
+	v->size = size;
 }
 
-t_obj   *new_obj()
+t_obj		*new_obj(void)
 {
-	t_obj   *obj = (t_obj*)malloc(sizeof(t_obj));
+	t_obj	*obj;
+
+	obj = (t_obj*)malloc(sizeof(t_obj));
 	obj->vertex_data.v.vertices = NULL;
 	obj->vertex_data.v.size = 0;
 	obj->vertex_data.vn.vertices = NULL;
 	obj->vertex_data.vn.size = 0;
 	obj->elements.f.element = NULL;
 	obj->elements.f.size = 0;
-	return obj;
+	return (obj);
 }

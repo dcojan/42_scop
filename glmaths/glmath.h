@@ -21,6 +21,8 @@ void        cross(t_vec3 const *a, t_vec3 const *b, t_vec3 *dest);
 GLfloat     dot(t_vec3 const *a, t_vec3 const *b);
 void        print_vec3(t_vec3 const *m);
 
+void		compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal);
+
 // mat4x4
 t_mat4x4    *new_mat4x4();
 void        mul_mat4x4(t_mat4x4 const *a, t_mat4x4 const *b, t_mat4x4 *dest);

@@ -20,8 +20,8 @@ typedef enum 		e_bool
 
 typedef struct		s_sdl
 {
-	SDL_Window* window;
-	SDL_GLContext context;
+	SDL_Window*		window;
+	SDL_GLContext	context;
 }					t_sdl;
 
 typedef struct		s_vertex

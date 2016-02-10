@@ -36,12 +36,12 @@ INC= -I ./includes -I ./glmaths
 
 UNAME_S := $(shell uname -s)
 
-LIB= -lSDL2 -lGLEW -lm
+LIB= -lGLEW -lm
 ifeq ($(UNAME_S),Linux)
-LIB+= -lGL
+LIB+= -lGL -lSDL2
 endif
 ifeq ($(UNAME_S),Darwin)
-LIB+= -framework OpenGL
+LIB+= -framework OpenGL -L $(HOME)/.brew/lib -lSDL2
 endif
 
 
