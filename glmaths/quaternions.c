@@ -4,7 +4,7 @@ void		angleAxis(float angle, t_vec3 *axis, t_quat *dest)
 {
 	float	half_angle;
 
-	half_angle = angle / 2.0;
+	half_angle = angle / 2.0f;
 	X(dest) = X(axis) * (float)sin(half_angle);
 	Y(dest) = Y(axis) * (float)sin(half_angle);
 	Z(dest) = Z(axis) * (float)sin(half_angle);

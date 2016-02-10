@@ -20,7 +20,7 @@ t_obj		*load_obj(char *path)
 	if ((stream = open_file(path)) == NULL)
 		return (NULL);
 	obj = new_obj();
-	printf("Parsing file\n");
+	printf("Loading object from file\n");
 	while (1)
 	{
 		ret = parse_label(obj, stream);
@@ -29,12 +29,15 @@ t_obj		*load_obj(char *path)
 		if (ret == -1)
 			return (NULL);
 	}
+	// printf("%zu vertices :\n", obj->vertex_data.v.size);
 	// print_vertice_array(obj->vertex_data.v.vertices, obj->vertex_data.v.size);
 	// print_element_array(obj->elements.f.element, obj->elements.f.size);
 	if (obj->elements.f.size > 0)
 		unpack_elements(obj);
 	compute_normals(obj);
+	// printf("%zu normals :\n", obj->vertex_data.vn.size);
 	// print_vertice_array(obj->vertex_data.vn.vertices, obj->vertex_data.vn.size);
+
 	printf("Done.\n");
 	return (obj);
 }

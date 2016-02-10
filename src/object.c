@@ -18,8 +18,8 @@ void		compute_normals(t_obj *obj)
 		tmp[2] = (t_vec3*)&(obj->vertex_data.v.vertices[i + 6]);
 		normal = (t_vec3 *)&(dest[i]);
 		compute_normal(tmp[0], tmp[1], tmp[2], normal);
-		memcpy(&(normal[3]), normal, sizeof(GLfloat) * 3);
-		memcpy(&(normal[6]), normal, sizeof(GLfloat) * 3);
+		memcpy(&(normal[1]), &(normal[0]), sizeof(GLfloat) * 3);
+		memcpy(&(normal[2]), &(normal[0]), sizeof(GLfloat) * 3);
 		i += 9;
 	}
 	obj->vertex_data.vn.vertices = dest;
@@ -82,7 +82,6 @@ void		add_element(GLushort *el, t_element *v, int nb)
 	new[v->size + 2] = el[2] - 1;
 	if (nb == 4)
 	{
-		printf("nb 4 !!\n");
 		new[v->size + 3] = el[2] - 1;
 		new[v->size + 4] = el[3] - 1;
 		new[v->size + 5] = el[0] - 1;
