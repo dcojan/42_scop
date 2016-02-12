@@ -38,12 +38,12 @@ void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
      #include <unistd.h>
 void		move_camera(int x, int y, GLuint prog)
 {
-	// x = 0;
-	// y = 1;
-	// sleep(1);
+	x = 1;
+	y = 0;
+	sleep(1);
 
 	float speed = 3.0f;
-	t_vec3 position = {4.0f, 3.0f, 5.0f};
+	static t_vec3 position = {0.0f, 0.0f, 5.0f};
 	float yawAngle = 1.0f * speed;
  	float pitchAngle = 1.0f * speed;
 
@@ -74,7 +74,6 @@ void		move_camera(int x, int y, GLuint prog)
 	printf("quat mul\n");
 	printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
 
-
 	// position = glm::vec3(pitch * tmp);
 	position[0] = tmp2[0];
 	position[1] = tmp2[1];
@@ -83,18 +82,40 @@ void		move_camera(int x, int y, GLuint prog)
 	printf("%f %f %f\n", position[0], position[1], position[2]);
 
 	yawAngle *= -x / 20.0f;
+	printf("before radians\n");
+	printf("%f %f %f\n", 0.0f, yawAngle, 0.0f);
 	t_quat yaw;
 	yaw[0] = radians(0.0f);
 	yaw[1] = radians(yawAngle);
 	yaw[2] = radians(0.0f);
 	yaw[3] = 1.0f;
-	// t_quat yaw = glm::quat(glm::radians(glm::vec3(0.0f, yawAngle, 0.0f)));
+	printf("after radians\n");
+	printf("%f %f %f %f\n", yaw[0], yaw[1], yaw[2], yaw[3]);
+
+//////////// glm::quat(vec3)
+	t_vec3 c;
+	c[0] = cos(yaw[0] * 0.5f);
+	c[1] = cos(yaw[1] * 0.5f);
+	c[2] = cos(yaw[2] * 0.5f);
+	t_vec3 s;
+	s[0] = sin(yaw[0] * 0.5f);
+	s[1] = sin(yaw[1] * 0.5f);
+	s[2] = sin(yaw[2] * 0.5f);
+
+	yaw[3] = c[0] * c[1] * c[2] + s[0] * s[1] * s[2];
+	yaw[0] = s[0] * c[1] * c[2] - c[0] * s[1] * s[2];
+	yaw[1] = c[0] * s[1] * c[2] + s[0] * c[1] * s[2];
+	yaw[2] = c[0] * c[1] * s[2] - s[0] * s[1] * c[2];
+	printf("yaw\n");
+	printf("%f %f %f %f\n", yaw[0], yaw[1], yaw[2], yaw[3]);
+/////////////
+
 	vec3_to_vec4(&position, 1.0f, &tmp);
+	// quat_mult((t_quat*)&yaw, &tmp, &tmp2);
+	quat_mult(&tmp, &yaw, &tmp2);
 	printf("quat mul\n");
 	printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
 
-	quat_mult((t_quat*)&yaw, &tmp, &tmp2);
-	// position = glm::vec3(yaw * glm::vec4(position, 1.0f));
 	position[0] = tmp2[0];
 	position[1] = tmp2[1];
 	position[2] = tmp2[2];

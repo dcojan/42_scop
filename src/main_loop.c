@@ -17,7 +17,7 @@ void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
 	quit = FALSE;
 	glUseProgram(program);
 	glBindVertexArray(program);
-	set_camera(4, 3, 5, program);
+	set_camera(0, 0, 5, program);
 	set_light(4, 4, 4, program);
 	printf("MAIN LOOP\n");
 	while (quit == FALSE)
