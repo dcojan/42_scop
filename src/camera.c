@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/12 17:12:33 by dcojan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <scop.h>
 
 t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez)
@@ -36,11 +48,10 @@ void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
 	printf("done.\n");
 }
 
-
 void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)
 {
-	t_vec3 target = {0.0f, 0.0f, 0.0f};
-	t_vec3 camera_up_vector = {0.f, 1.f, 0.f};
+	static const t_vec3 target = {0.0f, 0.0f, 0.0f};
+	static const t_vec3 camera_up_vector = {0.f, 1.f, 0.f};
 	t_vec3 target_to_camera_vector;
 	t_vec3 camera_right_vector;
 

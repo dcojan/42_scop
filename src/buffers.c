@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buffers.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/12 17:10:07 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/12 17:14:46 by dcojan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <scop.h>
 
 // static const GLfloat g_vertex_buffer_data[] = {
@@ -6,7 +18,7 @@
 //    0.0f,  1.0f, 0.0f,
 // };
 
-GLuint  new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
+GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 {
 	GLuint	buffer;
 
@@ -18,7 +30,6 @@ GLuint  new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 		draw);
 	return (buffer);
 }
-
 
 //
 // GLuint  init_texture_buffer()
