@@ -87,7 +87,7 @@ int			consume_end_of_line(FILE *stream);
 
 void		set_camera(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLuint shaderProgram);
 void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderProgram);
-void		move_camera(int x, int y, GLuint progid);
+void		move_camera(int x, int y, GLuint progid, float speed);
 
 void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram, t_obj *obj);
 

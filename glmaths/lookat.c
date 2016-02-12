@@ -7,7 +7,7 @@ t_mat4x4 *lookAt(t_vec3 const *eye, t_vec3  const *center, t_vec3  const *up)
     t_vec3  f; //Z
 
     // Z
-    sub(center, eye, &f);
+    sub(*center, *eye, f);
     normalize(&f);
 
     //X

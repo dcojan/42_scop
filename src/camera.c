@@ -35,98 +35,89 @@ void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
 	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((*view)[0][0]));
 	printf("done.\n");
 }
-     #include <unistd.h>
-void		move_camera(int x, int y, GLuint prog)
+
+
+void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)
 {
-	x = 1;
-	y = 0;
-	sleep(1);
-
-	float speed = 3.0f;
-	static t_vec3 position = {0.0f, 0.0f, 5.0f};
-	float yawAngle = 1.0f * speed;
- 	float pitchAngle = 1.0f * speed;
-
 	t_vec3 target = {0.0f, 0.0f, 0.0f};
 	t_vec3 camera_up_vector = {0.f, 1.f, 0.f};
 	t_vec3 target_to_camera_vector;
 	t_vec3 camera_right_vector;
 
-	sub(&position, &target, &target_to_camera_vector);
+	sub(*position, target, target_to_camera_vector);
 	cross(&target_to_camera_vector, &camera_up_vector, &camera_right_vector);
 	normalize(&camera_right_vector);
-	printf("'\nCamera right vector\n");
-	printf("%f %f %f\n", camera_right_vector[0], camera_right_vector[1], camera_right_vector[2]);
+	// printf("'\nCamera right vector\n");
+	// printf("%f %f %f\n", camera_right_vector[0], camera_right_vector[1], camera_right_vector[2]);
 
-	pitchAngle *= y / 20.0f;
+	pitch_angle *= y / 20.0f;
 	t_quat	pitch;
-	angleAxis(radians(pitchAngle), &camera_right_vector, &pitch);
-	printf("pitch\n");
-	printf("%f %f %f %f\n", pitch[0], pitch[1], pitch[2], pitch[3]);
+	angleAxis(radians(pitch_angle), &camera_right_vector, &pitch);
+	// printf("pitch\n");
+	// printf("%f %f %f %f\n", pitch[0], pitch[1], pitch[2], pitch[3]);
 
 	t_vec4	tmp;
-	vec3_to_vec4(&position, 1.0f, &tmp);
-	printf("to vec\n");
-	printf("%f %f %f %f\n", tmp[0], tmp[1], tmp[2], tmp[3]);
+	vec3_to_vec4(position, 1.0f, &tmp);
+	// printf("to vec\n");
+	// printf("%f %f %f %f\n", tmp[0], tmp[1], tmp[2], tmp[3]);
 
 	t_vec4	tmp2;
 	quat_mult(&pitch, &tmp, &tmp2);
-	printf("quat mul\n");
-	printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
+	// printf("quat mul\n");
+	// printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
 
-	// position = glm::vec3(pitch * tmp);
-	position[0] = tmp2[0];
-	position[1] = tmp2[1];
-	position[2] = tmp2[2];
-	printf("position1\n");
-	printf("%f %f %f\n", position[0], position[1], position[2]);
+	X(position) = tmp2[0];
+	Y(position) = tmp2[1];
+	Z(position) = tmp2[2];
+}
 
-	yawAngle *= -x / 20.0f;
-	printf("before radians\n");
-	printf("%f %f %f\n", 0.0f, yawAngle, 0.0f);
-	t_quat yaw;
-	yaw[0] = radians(0.0f);
-	yaw[1] = radians(yawAngle);
-	yaw[2] = radians(0.0f);
-	yaw[3] = 1.0f;
-	printf("after radians\n");
-	printf("%f %f %f %f\n", yaw[0], yaw[1], yaw[2], yaw[3]);
+void		move_position_yaw(float yaw_angle, t_vec3 *position, int x)
+{
+	t_quat		yaw;
+	t_vec4		tmp;
+	t_vec4		tmp2;
 
-//////////// glm::quat(vec3)
-	t_vec3 c;
-	c[0] = cos(yaw[0] * 0.5f);
-	c[1] = cos(yaw[1] * 0.5f);
-	c[2] = cos(yaw[2] * 0.5f);
-	t_vec3 s;
-	s[0] = sin(yaw[0] * 0.5f);
-	s[1] = sin(yaw[1] * 0.5f);
-	s[2] = sin(yaw[2] * 0.5f);
+	yaw_angle *= -x / 20.0f;
+	eul_to_quat(radians(0.0f), radians(yaw_angle), radians(0.0f), yaw);
+	// printf("yaw\n");
+	// printf("%f %f %f %f\n", yaw[0], yaw[1], yaw[2], yaw[3]);
+	vec3_to_vec4(position, 1.0f, &tmp);
+	// printf("tmp\n");
+	// printf("%f %f %f %f\n", tmp[0], tmp[1], tmp[2], tmp[3]);
+	quat_mult((t_quat*)&yaw, &tmp, &tmp2);
+	// quat_mult(&tmp, &yaw, &tmp2);
+	// printf("quat mul\n");
+	// printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
 
-	yaw[3] = c[0] * c[1] * c[2] + s[0] * s[1] * s[2];
-	yaw[0] = s[0] * c[1] * c[2] - c[0] * s[1] * s[2];
-	yaw[1] = c[0] * s[1] * c[2] + s[0] * c[1] * s[2];
-	yaw[2] = c[0] * c[1] * s[2] - s[0] * s[1] * c[2];
-	printf("yaw\n");
-	printf("%f %f %f %f\n", yaw[0], yaw[1], yaw[2], yaw[3]);
-/////////////
+	X(position) = tmp2[0];
+	Y(position) = tmp2[1];
+	Z(position) = tmp2[2];
+}
 
-	vec3_to_vec4(&position, 1.0f, &tmp);
-	// quat_mult((t_quat*)&yaw, &tmp, &tmp2);
-	quat_mult(&tmp, &yaw, &tmp2);
-	printf("quat mul\n");
-	printf("%f %f %f %f\n", tmp2[0], tmp2[1], tmp2[2], tmp2[3]);
+// #include <unistd.h> // sleep
+void		move_camera(int x, int y, GLuint prog, float speed)
+{
+	static t_vec3		position = {0.0f, 0.0f, 5.0f};
+	float				yaw_angle;
+ 	float				pitch_angle;
+	t_mat4x4			*view;
+	GLuint				view_unif_id;
 
-	position[0] = tmp2[0];
-	position[1] = tmp2[1];
-	position[2] = tmp2[2];
-	printf("position2\n");
-	printf("%f %f %f\n", position[0], position[1], position[2]);
-	// ViewMatrix = lookAt(&position, &target, &camera_up_vector);
+	yaw_angle = 1.0f * speed;
+	pitch_angle = 1.0f * speed;
+	// x = 1;
+	// y = 0;
+	// sleep(1);
 
-	t_mat4x4		*view;
-	GLuint			view_unif_id;
+	move_position_pitch(pitch_angle, &position, y);
+	// printf("position1\n");
+	// printf("%f %f %f\n", position[0], position[1], position[2]);
+	move_position_yaw(yaw_angle, &position, x);
+
+	// printf("position2\n");
+	// printf("%f %f %f\n", position[0], position[1], position[2]);
+
 	view = view_matrix(position[0], position[1], position[2]);
 	view_unif_id = glGetUniformLocation(prog, "View");
 	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((*view)[0][0]));
-
 }

@@ -5,8 +5,8 @@ void	compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal)
 	t_vec3		tmp1;
 	t_vec3		tmp2;
 
-	sub(v2, v1, &tmp1);
-	sub(v3, v1, &tmp2);
+	sub(*v2, *v1, tmp1);
+	sub(*v3, *v1, tmp2);
 	cross(&tmp1, &tmp2, normal);
 	normalize(normal);
 }
@@ -25,11 +25,11 @@ void     normalize(t_vec3 *src)
     Z(src) = Z(src) / d;
 }
 
-void     sub(t_vec3 const *a, t_vec3 const *b, t_vec3 *dest)
+void     sub(t_vec3 const a, t_vec3 const b, t_vec3 dest)
 {
-    X(dest) = X(a) - X(b);
-    Y(dest) = Y(a) - Y(b);
-    Z(dest) = Z(a) - Z(b);
+	dest[0] = a[0] - b[0];
+	dest[1] = a[1] - b[1];
+	dest[2] = a[2] - b[2];
 }
 
 void     cross(t_vec3 const *a, t_vec3 const *b, t_vec3 *dest)

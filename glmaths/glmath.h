@@ -18,7 +18,7 @@ typedef GLfloat   t_quat[4];
 
 // vec3
 void        normalize(t_vec3 *src);
-void        sub(t_vec3 const *a, t_vec3 const *b, t_vec3 *dest);
+void        sub(t_vec3 const a, t_vec3 const b, t_vec3 dest);
 void        cross(t_vec3 const *a, t_vec3 const *b, t_vec3 *dest);
 GLfloat     dot(t_vec3 const *a, t_vec3 const *b);
 void        print_vec3(t_vec3 const *m);
@@ -38,7 +38,9 @@ t_mat4x4	*perspective(GLfloat fovy, GLfloat ratio, GLfloat near, GLfloat far);
 
 void		angleAxis(float angle, t_vec3 *axis, t_quat *dest);
 float		radians(float degree);
+
 void		quat_mult(t_quat *q1, t_quat *q2, t_quat *q);
+void		eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat dest);
 
 void		vec3_to_vec4(t_vec3 *src, float w, t_vec4 *dest);
 

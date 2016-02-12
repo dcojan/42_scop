@@ -61,7 +61,7 @@ void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
 		{
 			// printf("mouse relative position : %d %d\n", mousex - mousebasex, mousey - mousebasey);
 
-			move_camera(mousex - mousebasex, mousey - mousebasey, program);
+			move_camera(mousex - mousebasex, mousey - mousebasey, program, 3.0f);
 			mousebasex = mousex;
 			mousebasey = mousey;
 		}
