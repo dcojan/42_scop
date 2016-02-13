@@ -14,6 +14,7 @@ out vec3 light_direction_camera_space;
 out vec3 eye_direction_camera_space;
 
 // uniform mat4 MVP;
+uniform mat4 Rotation;
 uniform mat4 Projection;
 uniform mat4 View;
 // uniform mat4 V;
@@ -23,7 +24,7 @@ uniform vec3 light_position_worldspace;
 smooth out vec3 vNormal;
 
 void main() {
-	gl_Position = Projection * View * vec4(in_vertex, 1.0);
+	gl_Position = Projection * View * Rotation * vec4(in_vertex, 1.0);
 // " position_world_space = (M * vec4(in_vertex, 1.0)).xyz;"
 	position_world_space = ( vec4(in_vertex, 1.0)).xyz;
 

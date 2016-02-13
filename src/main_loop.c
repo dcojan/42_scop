@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:10 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 16:52:14 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/13 17:25:06 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_event		get_event()
 	{
 		if (test_event(&we, SDL_QUIT, 0) || test_event(&we, SDL_KEYUP, SDLK_ESCAPE))
 			return (QUIT);
+		else if (test_event(&we, SDL_KEYUP, SDLK_a))
+			return (OBJ_ROT_X_REV);
 		else if (test_event(&we, SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT))
 		{
 			click_down = TRUE;
@@ -43,6 +45,17 @@ t_event		get_event()
 			return (CAMERA_MOVE);
 	}
 	return (NO_EVENT);
+}
+
+void		rotate_obj(GLuint program, t_event event)
+{
+	(void)event;
+
+	printf("rotate object\n");
+	t_mat4x4		*rotation =  new_mat4x4();
+
+	GLuint rot_unif_id = glGetUniformLocation(program, "Rotation");
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((*rotation)[0][0]));
 }
 
 void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
@@ -57,7 +70,11 @@ void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
 	glUseProgram(program);
 	glBindVertexArray(program);
 	set_camera(0, 0, 5, program);
-	set_light(4, 4, 4, program);
+	t_mat4x4		*rotation =  new_mat4x4();
+
+	GLuint rot_unif_id = glGetUniformLocation(program, "Rotation");
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((*rotation)[0][0]));
+
 	printf("MAIN LOOP\n");
 	while (event != QUIT)
 	{
@@ -75,7 +92,9 @@ void		main_loop(t_sdl *sdl_var, GLuint program, t_obj *obj)
 			mousebasex = mousex;
 			mousebasey = mousey;
 		}
-
+		else if (event == OBJ_ROT_X_REV)
+			rotate_obj(program, event);
+		set_light(4, 4, 4, program);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
 		SDL_GL_SwapWindow(sdl_var->window);

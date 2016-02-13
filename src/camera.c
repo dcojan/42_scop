@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:12:33 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/13 17:01:21 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
 	t_mat4x4		*projection;
 	t_mat4x4		*view;
 
-	printf("SET CAMERA\n");
+	// printf("SET CAMERA\n");
 	projection = perspective(radians(45.0f),
 		(GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-	printf("PROJECTION\n");
-	for (int i = 0; i < 4; i++)
-	 	printf("%f %f %f %f\n", (*projection)[i][0], (*projection)[i][1], (*projection)[i][2], (*projection)[i][3]);
+	// printf("PROJECTION\n");
+	// for (int i = 0; i < 4; i++)
+	//  	printf("%f %f %f %f\n", (*projection)[i][0], (*projection)[i][1], (*projection)[i][2], (*projection)[i][3]);
 	view = view_matrix(eyex, eyey, eyez);
-	printf("VIEW\n");
-	for (int i = 0; i < 4; i++)
-	 	printf("%f %f %f %f\n", (*view)[i][0], (*view)[i][1], (*view)[i][2], (*view)[i][3]);
+	// printf("VIEW\n");
+	// for (int i = 0; i < 4; i++)
+	//  	printf("%f %f %f %f\n", (*view)[i][0], (*view)[i][1], (*view)[i][2], (*view)[i][3]);
 
 	proj_unif_id = glGetUniformLocation(progid, "Projection");
 	view_unif_id = glGetUniformLocation(progid, "View");
 	glUniformMatrix4fv(proj_unif_id, 1, GL_FALSE, &((*projection)[0][0]));
 	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((*view)[0][0]));
-	printf("done.\n");
+	// printf("done.\n");
 }
 
 void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)

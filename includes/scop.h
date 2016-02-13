@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 16:24:01 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/13 17:13:53 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ typedef enum		s_event
 	START_CAMERA_MOVE,
 	CAMERA_MOVE,
 	STOP_CAMERA_MOVE,
+	OBJ_ROT_X,
+	OBJ_ROT_X_REV,
+	OBJ_ROT_Y,
+	OBJ_ROT_Y_REV,
+	OBJ_ROT_Z,
+	OBJ_ROT_Z_REV,
 	TOTAL_EVENT,
 }					t_event;
 
