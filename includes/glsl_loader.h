@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   glsl_loader.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/12 17:13:52 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 15:44:58 by dcojan           ###   ########.fr       */
+/*   Created: 2016/02/13 15:21:57 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/13 15:33:02 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#ifndef GLSL_LOADER_H
+# define GLSL_LOADER_H
 
-void	print_vertice_array(GLfloat *array, size_t size)
-{
-	size_t		i;
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
-	i = 0;
-	while (i < size)
-	{
-		printf("%f %f %f\n", array[i], array[i + 1], array[i + 2]);
-		i += 3;
-	}
-}
+int		glsl_loader(char **text, const char *path);
 
-void	print_element_array(GLushort *array, size_t size)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < size)
-	{
-		printf("%hd ", array[i]);
-		if ((i + 1) % 3 == 0)
-			printf("\n");
-		i++;
-	}
-	printf("\n");
-}
+#endif

@@ -6,11 +6,25 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:13:41 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/13 15:38:17 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+# include "object_loader.h"
+
+FILE	*open_file(const char *path)
+{
+	FILE	*stream;
+
+	printf("path = %s\n", path);
+	stream = fopen(path, "r");
+	if (stream == NULL)
+	{
+		perror("");
+		return (NULL);
+	}
+	return (stream);
+}
 
 int			consume_end_of_line(FILE *stream)
 {

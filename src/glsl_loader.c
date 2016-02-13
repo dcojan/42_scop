@@ -6,11 +6,25 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:54 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:12:54 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/13 15:26:02 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+#include "glsl_loader.h"
+
+static FILE	*open_file(const char *path)
+{
+	FILE	*stream;
+
+	printf("path = %s\n", path);
+	stream = fopen(path, "r");
+	if (stream == NULL)
+	{
+		perror("");
+		return (NULL);
+	}
+	return (stream);
+}
 
 void	maj_buffer(char **text, char buf[4094], int ret, int *current_size)
 {
