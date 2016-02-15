@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 17:13:53 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 14:50:04 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,35 @@
 # include "object_loader.h"
 # include "glmath.h"
 
+typedef struct		s_mouse_coord
+{
+	int				x;
+	int				y;
+}					t_mouse_coord;
+
 typedef enum		s_event
 {
-	NO_EVENT,
 	QUIT,
-	START_CAMERA_MOVE,
-	CAMERA_MOVE,
-	STOP_CAMERA_MOVE,
-	OBJ_ROT_X,
-	OBJ_ROT_X_REV,
 	OBJ_ROT_Y,
 	OBJ_ROT_Y_REV,
+	OBJ_ROT_X,
+	OBJ_ROT_X_REV,
 	OBJ_ROT_Z,
 	OBJ_ROT_Z_REV,
 	OBJ_ROT_RESET,
+	START_CAMERA_MOVE,
+	STOP_CAMERA_MOVE,
+	CAMERA_MOVE,
+	NO_EVENT,
 	TOTAL_EVENT,
 }					t_event;
+
+typedef struct		s_keyevent
+{
+	uint32_t		type;
+	SDL_Keycode		code;
+	t_event			event;
+}					t_keyevent;
 
 /*
 ** scop.c
@@ -46,6 +59,12 @@ void		scop(t_obj *obj, t_sdl *sdl_var);
 */
 
 void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram, t_obj *obj);
+
+t_event		get_scop_event();
+
+void		rotate_model(GLuint program, int axis, t_bool reverse, t_bool reset);
+
+void		handle_event(t_event event, GLuint program);
 
 /*
 ** buffers.c
