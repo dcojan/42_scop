@@ -16,7 +16,7 @@ uint8_t		test_event(SDL_Event *we, uint32_t type, SDL_Keycode key)
 {
 	if (we->type == type && key == 0)
 		return (1);
-	if (we->type == type && type == SDL_KEYUP)
+	if (we->type == type && (type == SDL_KEYDOWN || type == SDL_KEYUP))
 		return (we->key.keysym.sym == key);
 	else if (type == SDL_MOUSEBUTTONDOWN || type == SDL_MOUSEBUTTONUP)
 		return (we->type == type && we->button.button == key);
@@ -32,7 +32,7 @@ t_event		get_event()
 	{
 		if (test_event(&we, SDL_QUIT, 0) || test_event(&we, SDL_KEYUP, SDLK_ESCAPE))
 			return (QUIT);
-		else if (test_event(&we, SDL_KEYUP, SDLK_a))
+		else if (test_event(&we, SDL_KEYDOWN, SDLK_a))
 			return (OBJ_ROT_X_REV);
 		else if (test_event(&we, SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT))
 		{
@@ -50,9 +50,17 @@ t_event		get_event()
 void		rotate_obj(GLuint program, t_event event)
 {
 	(void)event;
+	t_mat4x4			*rotation =  new_mat4x4();
+	t_quat				quat;
+	static const float	amount = 1.0f;
+	static float		angle = 0.0f;
+	t_vec3				axis = {0, 1, 0};
 
-	printf("rotate object\n");
-	t_mat4x4		*rotation =  new_mat4x4();
+	angle += amount;
+	if (angle >= 360)
+		angle -= 360;
+	angleAxis(radians(angle), &axis, &quat);
+	quat_to_mat4x4(quat, *rotation);
 
 	GLuint rot_unif_id = glGetUniformLocation(program, "Rotation");
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((*rotation)[0][0]));

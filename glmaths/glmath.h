@@ -53,6 +53,7 @@ float		radians(float degree);
 
 void		quat_mult(t_quat *q1, t_quat *q2, t_quat *q);
 void		eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat dest);
+void		quat_to_mat4x4(const t_quat quat, t_mat4x4 dest);
 
 void		vec3_to_vec4(t_vec3 *src, float w, t_vec4 *dest);
 

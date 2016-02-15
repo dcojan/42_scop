@@ -12,6 +12,21 @@
 
 #include "glmath.h"
 
+void		quat_to_mat4x4(const t_quat quat, t_mat4x4 dest)
+{
+	(dest)[0][0] = 1 - 2 * ((quat[1] * quat[1]) +  (quat[2] * quat[2]));
+	(dest)[0][1] = 2 * ((quat[0] * quat[1]) + (quat[3] * quat[2]));
+	(dest)[0][2] = 2 * ((quat[0] * quat[2]) - (quat[3] * quat[1]));
+
+	(dest)[1][0] = 2 * ((quat[0] * quat[1]) - (quat[3] * quat[2]));
+	(dest)[1][1] = 1 - 2 * ((quat[0] * quat[0]) +  (quat[2] * quat[2]));
+	(dest)[1][2] = 2 * ((quat[1] * quat[2]) + (quat[0] * quat[3]));
+
+	(dest)[2][0] = 2 * ((quat[0] * quat[2]) + (quat[1] * quat[3]));
+	(dest)[2][1] = 2 * ((quat[1] * quat[2]) - (quat[0] * quat[3]));
+	(dest)[2][2] = 1 - 2 * ((quat[0] * quat[0]) +  (quat[1] * quat[1]));
+}
+
 void		angleAxis(float angle, t_vec3 *axis, t_quat *dest)
 {
 	float	half_angle;
