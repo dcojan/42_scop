@@ -6,16 +6,17 @@ SRC= main.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
-		object_loader.c \
-		object_loader_label_1.c \
-		object_loader_label_2.c \
-		glsl_loader.c \
+		dot_obj_file_loader.c \
+		dot_obj_file_loader_label_1.c \
+		dot_obj_file_loader_label_2.c \
+		glsl_file_loader.c \
 		shaders.c \
 		camera.c \
 		rotation.c \
 		light.c \
 		buffers.c \
-		object.c \
+		mesh_building.c \
+		mesh_setup.c \
 		clean.c \
 		utils.c
 

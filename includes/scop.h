@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 14:50:04 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 16:48:35 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "base.h"
 # include "glsl_loader.h"
-# include "object_loader.h"
+# include "mesh_loader.h"
 # include "glmath.h"
 
 typedef struct		s_mouse_coord
@@ -52,13 +52,13 @@ typedef struct		s_keyevent
 ** scop.c
 */
 
-void		scop(t_obj *obj, t_sdl *sdl_var);
+void		scop(t_mesh *mesh, t_sdl *sdl_var);
 
 /*
 ** main_loop.c
 */
 
-void 		main_loop(t_sdl	*sdl_var,GLuint shaderProgram, t_obj *obj);
+void 		main_loop(t_sdl	*sdl_var, t_mesh *mesh);
 
 t_event		get_scop_event();
 
@@ -77,6 +77,8 @@ GLuint  	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
 */
 
 GLuint		load_shaders();
+
+void		setup_mesh(t_mesh *mesh);
 
 /*
 ** camera.c

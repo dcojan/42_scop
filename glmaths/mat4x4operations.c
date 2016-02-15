@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:16:56 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:16:56 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 17:19:50 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ t_mat4x4    *new_mat4x4()
         j = 0;
         while (j < 4)
         {
-            (*mat)[i][j] = 0.0f;
+            (mat->data)[i][j] = 0.0f;
             j++;
         }
         i++;
     }
-    (*mat)[0][0] = 1.0f;
-    (*mat)[1][1] = 1.0f;
-    (*mat)[2][2] = 1.0f;
-    (*mat)[3][3] = 1.0f;
+    (mat->data)[0][0] = 1.0f;
+    (mat->data)[1][1] = 1.0f;
+    (mat->data)[2][2] = 1.0f;
+    (mat->data)[3][3] = 1.0f;
     return (mat);
 }
 
@@ -57,10 +57,10 @@ void     mul_mat4x4(t_mat4x4 const *a, t_mat4x4 const *b, t_mat4x4 *dest)
             k = 0;
             while (k < 4)
             {
-                tmp += (*a)[i][k] * (*b)[k][j];
+                tmp += (a->data)[i][k] * (b->data)[k][j];
                 k++;
             }
-            (*dest)[i][j] = tmp;
+            (dest->data)[i][j] = tmp;
             j++;
         }
         i++;
@@ -78,7 +78,7 @@ void        print_mat(t_mat4x4 const *m)
         j = 0;
         while (j < 4)
         {
-            printf("%f ", (*m)[i][j]);
+            printf("%f ", (m->data)[i][j]);
             j++;
         }
         i++;

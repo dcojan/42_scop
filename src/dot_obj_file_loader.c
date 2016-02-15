@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_loader.c                                    :+:      :+:    :+:   */
+/*   dot_obj_file_loader.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 15:38:17 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 16:42:41 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "object_loader.h"
+#include "mesh_loader.h"
 
-FILE	*open_file(const char *path)
+FILE		*open_file(const char *path)
 {
 	FILE	*stream;
 
@@ -36,34 +36,33 @@ int			consume_end_of_line(FILE *stream)
 	return (ret);
 }
 
-t_obj		*load_obj(char *path)
+t_mesh		*load_dot_obj_file(char *path)
 {
 	FILE		*stream;
-	t_obj		*obj;
+	t_mesh		*mesh;
 	int			ret;
 
 	printf("Opening file\n");
 	if ((stream = open_file(path)) == NULL)
 		return (NULL);
-	obj = new_obj();
+	mesh = new_mesh();
 	printf("Loading object from file\n");
 	while (1)
 	{
-		ret = parse_label(obj, stream);
+		ret = parse_label(mesh, stream);
 		if (ret == 0)
 			break ;
 		if (ret == -1)
 			return (NULL);
 	}
-	// printf("%zu vertices :\n", obj->vertex_data.v.size);
-	// print_vertice_array(obj->vertex_data.v.vertices, obj->vertex_data.v.size);
-	// print_element_array(obj->elements.f.element, obj->elements.f.size);
-	if (obj->elements.f.size > 0)
-		unpack_elements(obj);
-	compute_normals(obj);
-	// printf("%zu normals :\n", obj->vertex_data.vn.size);
-	// print_vertice_array(obj->vertex_data.vn.vertices, obj->vertex_data.vn.size);
-
+	// printf("%zu vertices :\n", mesh->vertex_data.v.size);
+	// print_vertice_array(mesh->vertex_data.v.vertices, mesh->vertex_data.v.size);
+	// print_element_array(mesh->elements.f.element, mesh->elements.f.size);
+	if (mesh->elements.f.size > 0)
+		unpack_elements(mesh);
+	compute_normals(mesh);
+	// printf("%zu normals :\n", mesh->vertex_data.vn.size);
+	// print_vertice_array(mesh->vertex_data.vn.vertices, mesh->vertex_data.vn.size);
 	printf("Done.\n");
-	return (obj);
+	return (mesh);
 }

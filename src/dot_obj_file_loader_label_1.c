@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_loader_label_1.c                            :+:      :+:    :+:   */
+/*   dot_obj_file_loader_label_1.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:13:31 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 17:05:26 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
 
-static int	(*const g_func_tab[7])(t_obj *obj, FILE *stream) =
+static int	(*const g_func_tab[7])(t_mesh *mesh, FILE *stream) =
 {
 	&label_comment,
 	&label_v,
@@ -23,7 +23,7 @@ static int	(*const g_func_tab[7])(t_obj *obj, FILE *stream) =
 	&label_usemtl,
 };
 
-int			parse_label(t_obj *obj, FILE *stream)
+int			parse_label(t_mesh *mesh, FILE *stream)
 {
 	static char		*tab[7] = {"#", "v", "f", "o", "s", "mtllib", "usemtl"};
 	int				i;
@@ -37,14 +37,14 @@ int			parse_label(t_obj *obj, FILE *stream)
 	while (i < 7)
 	{
 		if (strcmp(tab[i], label) == 0)
-			return (*g_func_tab[i])(obj, stream);
+			return (*g_func_tab[i])(mesh, stream);
 		i++;
 	}
 	printf("parse error state `%s` not recognized\n", label);
 	return (-1);
 }
 
-int			label_f(t_obj *obj, FILE *stream)
+int			label_f(t_mesh *mesh, FILE *stream)
 {
 	int			ret;
 	GLushort	el[4];
@@ -52,30 +52,30 @@ int			label_f(t_obj *obj, FILE *stream)
 	ret = fscanf(stream, " %hd %hd %hd %hd",
 		&(el[0]), &(el[1]), &(el[2]), &(el[3]));
 	// printf("%d =>  %d %d %d %d\n", ret, el[0], el[1], el[2], el[3]);
-	add_element(el, &(obj->elements.f), ret);
+	add_element(el, &(mesh->elements.f), ret);
 	return (ret);
 }
 
-int			label_s(t_obj *obj, FILE *stream)
+int			label_s(t_mesh *mesh, FILE *stream)
 {
 	int		ret;
 	char	name[256];
 
-	(void)obj;
+	(void)mesh;
 	printf("smoothing group\t");
 	ret = fscanf(stream, "%s", name);
 	printf("%d =>  %s\n", ret, name);
 	return (ret);
 }
 
-int			label_v(t_obj *obj, FILE *stream)
+int			label_v(t_mesh *mesh, FILE *stream)
 {
-	t_vec3		vec;
+	t_vec3		v;
 	int			ret;
 
 	// printf("vertex\t");
-	ret = fscanf(stream, " %f %f %f", &(vec[0]), &(vec[1]), &(vec[2]));
+	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
 	// printf("%d =>  %f %f %f\n", ret, vec[0], vec[1], vec[2]);
-	add_vec3(&vec, &(obj->vertex_data.v));
+	add_vec3(&v, &(mesh->vertex_data.v));
 	return (ret);
 }

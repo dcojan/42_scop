@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 14:46:24 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 14:48:03 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 16:27:39 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		event_rotation(t_event event, GLuint program)
 		rotate_model(program, 0, FALSE, TRUE);
 }
 
-void		event_camera(t_event event, GLuint program)
+void		event_camera(t_event event, GLuint prog)
 {
 	static t_mouse_coord		mousebase = {0, 0};
 	t_mouse_coord				mouse;
@@ -50,7 +50,7 @@ void		event_camera(t_event event, GLuint program)
 	else if (event == CAMERA_MOVE)
 	{
 		SDL_GetMouseState(&(mouse.x), &(mouse.y));
-		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y, program, 3.0f);
+		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y, prog, 3.0f);
 		mousebase.x = mouse.x;
 		mousebase.y = mouse.y;
 	}

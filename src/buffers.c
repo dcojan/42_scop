@@ -6,17 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:10:07 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:14:46 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 16:27:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
-
-// static const GLfloat g_vertex_buffer_data[] = {
-//    -1.0f, -1.0f, 0.0f,
-//    1.0f, -1.0f, 0.0f,
-//    0.0f,  1.0f, 0.0f,
-// };
 
 GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 {
@@ -41,16 +35,4 @@ GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 //   	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 //   	glEnableVertexAttribArray(1);
 //     return vertexBuffer;
-// }
-
-// GLuint  init_element_array_buffer(t_obj *obj)
-// {
-//     GLuint elementbuffer;
-//     glGenBuffers(1, &elementbuffer);
-//     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-//     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-//         sizeof(GLushort) * obj->elements.f.size,
-//         &(obj->elements.f.element[0]),
-//         GL_STATIC_DRAW);
-//     return elementbuffer;
 // }

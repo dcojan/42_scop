@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   glsl_loader.c                                      :+:      :+:    :+:   */
+/*   glsl_file_loader.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:54 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 15:26:02 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/15 16:49:34 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static FILE	*open_file(const char *path)
 	return (stream);
 }
 
-void	maj_buffer(char **text, char buf[4094], int ret, int *current_size)
+void		maj_buffer(char **text, char buf[4094], int ret, int *current_size)
 {
 	char		*tmp;
 
@@ -44,7 +44,7 @@ void	maj_buffer(char **text, char buf[4094], int ret, int *current_size)
 	(*text)[*current_size] = '\0';
 }
 
-int		glsl_loader(char **text, const char *path)
+int			glsl_loader(char **text, const char *path)
 {
 	char		buf[4096];
 	FILE		*file;

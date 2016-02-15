@@ -1,5 +1,5 @@
-#ifndef OBJECT_LOADER_H
-# define OBJECT_LOADER_H
+#ifndef MESH_LOADER_H
+# define MESH_LOADER_H
 
 # include "glmath.h"
 # include <fcntl.h>
@@ -41,32 +41,34 @@ typedef struct		s_element_data
 	void			*surf;
 }					t_element_data;
 
-typedef struct		s_obj
+typedef struct		s_mesh
 {
 	t_vertex_data	vertex_data;
 	t_element_data	elements;
-	uint32_t		vertexBuffer;
-	uint32_t		normalBuffer;
-	uint32_t		shaderProgram;
-}					t_obj;
+	uint32_t		vertex_buffer;
+	uint32_t		normal_buffer;
+	uint32_t		shader_program;
+}					t_mesh;
 
-t_obj    	*load_obj(char *path);
+t_mesh    	*load_dot_obj_file(char *path);
 int			consume_end_of_line(FILE *stream);
 
 void		add_vec3(t_vec3 *vec, t_vertex *v);
 void		add_element(GLushort *el, t_element *v, int nb);
-t_obj		*new_obj();
-void		compute_normals(t_obj *obj);
-void		unpack_elements(t_obj *obj);
+t_mesh		*new_mesh();
+void		clean_mesh(t_mesh *mesh);
 
-int			parse_label(t_obj *obj, FILE *stream);
-int			label_usemtl(t_obj *obj, FILE *stream);
-int			label_mtllib(t_obj *obj, FILE *stream);
-int			label_comment(t_obj *obj, FILE *stream);
-int			label_f(t_obj *obj, FILE *stream);
-int			label_s(t_obj *obj, FILE *stream);
-int			label_o(t_obj *obj, FILE *stream);
-int			label_v(t_obj *obj, FILE *stream);
+void		compute_normals(t_mesh *mesh);
+void		unpack_elements(t_mesh *mesh);
+
+int			parse_label(t_mesh *mesh, FILE *stream);
+int			label_usemtl(t_mesh *mesh, FILE *stream);
+int			label_mtllib(t_mesh *mesh, FILE *stream);
+int			label_comment(t_mesh *mesh, FILE *stream);
+int			label_f(t_mesh *mesh, FILE *stream);
+int			label_s(t_mesh *mesh, FILE *stream);
+int			label_o(t_mesh *mesh, FILE *stream);
+int			label_v(t_mesh *mesh, FILE *stream);
 
 void    	print_element_array(GLushort *array, size_t size);
 void    	print_vertice_array(GLfloat *array, size_t size);
