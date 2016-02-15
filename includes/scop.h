@@ -31,6 +31,7 @@ typedef enum		s_event
 	OBJ_ROT_Y_REV,
 	OBJ_ROT_Z,
 	OBJ_ROT_Z_REV,
+	OBJ_ROT_RESET,
 	TOTAL_EVENT,
 }					t_event;
 
