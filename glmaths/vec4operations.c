@@ -16,9 +16,19 @@ t_vec4	vec3_to_vec4(t_vec3 *src, GLfloat w)
 {
 	t_vec4		dest;
 
-	dest.data[0] = X(src);
-	dest.data[1] = Y(src);
-	dest.data[2] = Z(src);
+	dest.data[0] = PX(src);
+	dest.data[1] = PY(src);
+	dest.data[2] = PZ(src);
 	dest.data[3] = w;
+	return (dest);
+}
+
+t_vec3	vec4_to_vec3(t_vec4 src)
+{
+	t_vec3		dest;
+
+	dest.data[0] = src.data[0];
+	dest.data[1] = src.data[1];
+	dest.data[2] = src.data[2];
 	return (dest);
 }

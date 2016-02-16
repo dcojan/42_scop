@@ -16,12 +16,11 @@ GLuint	new_vao(void)
 {
 	GLuint	vaoid;
 
+	printf("init vertexArrayId\n");
 	glGenVertexArrays(1, &vaoid);
 	glBindVertexArray(vaoid);
 	return (vaoid);
 }
-
-
 
 void	scop(t_mesh *mesh, t_sdl *sdl_var)
 {
@@ -29,7 +28,6 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var)
 
 	init_glew();
 	init_gl();
-	printf("init vertexArrayId\n");
 	vaoid = new_vao();
 	setup_mesh(mesh);
 	main_loop(sdl_var, mesh);

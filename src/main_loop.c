@@ -17,14 +17,7 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	t_event			event;
 
 	event = NO_EVENT;
-	glUseProgram(mesh->shader_program);
-	glBindVertexArray(mesh->shader_program);
 	set_camera(0, 0, 5, mesh->shader_program);
-	t_mat4x4		*rotation =  new_mat4x4();
-
-	GLuint rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
-	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
-
 	printf("MAIN LOOP\n");
 	while (event != QUIT)
 	{

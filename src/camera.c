@@ -46,34 +46,22 @@ void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)
 	t_vec3					target_to_camera_vector;
 	t_vec3					camera_right_vector;
 	t_quat					pitch;
-	t_vec4					tmp;
-	t_vec4					tmp2;
 
 	target_to_camera_vector = sub(*position, target);
 	camera_right_vector = cross(&target_to_camera_vector, &camera_up_vector);
 	normalize(&camera_right_vector);
 	pitch_angle *= y / 20.0f;
 	angleAxis(radians(pitch_angle), &camera_right_vector, &pitch);
-	tmp = vec3_to_vec4(position, 1.0f);
-	quat_mult(&pitch, (t_quat*)&tmp, (t_quat*)&tmp2);
-	position->data[0] = tmp2.data[0];
-	position->data[1] = tmp2.data[1];
-	position->data[2] = tmp2.data[2];
+	*position = vec4_to_vec3(quat_mult(pitch, vec3_to_vec4(position, 1.0f)));
 }
 
 void		move_position_yaw(float yaw_angle, t_vec3 *position, int x)
 {
 	t_quat		yaw;
-	t_vec4		tmp;
-	t_vec4		tmp2;
 
 	yaw_angle *= -x / 20.0f;
 	eul_to_quat(radians(0.0f), radians(yaw_angle), radians(0.0f), &yaw);
-	tmp = vec3_to_vec4(position, 1.0f);
-	quat_mult((t_quat*)&yaw, (t_quat*)&tmp, (t_quat*)&tmp2);
-	position->data[0] = tmp2.data[0];
-	position->data[1] = tmp2.data[1];
-	position->data[2] = tmp2.data[2];
+	*position = vec4_to_vec3(quat_mult(yaw, vec3_to_vec4(position, 1.0f)));
 }
 
 void		move_camera(int x, int y, GLuint prog, float speed)

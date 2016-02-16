@@ -25,16 +25,16 @@ void	compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal)
 
 void     normalize(t_vec3 *src)
 {
-    GLfloat     d;
+	GLfloat	d;
 
-    d = sqrt(X(src) * X(src) + Y(src) * Y(src) + Z(src) * Z(src));
-    if (d == 0)
-    {
-        return ;
-    }
-    X(src) = X(src) / d;
-    Y(src) = Y(src) / d;
-    Z(src) = Z(src) / d;
+	d = sqrt(PX(src) * PX(src) + PY(src) * PY(src) + PZ(src) * PZ(src));
+	if (d == 0)
+	{
+		return ;
+	}
+	PX(src) = PX(src) / d;
+	PY(src) = PY(src) / d;
+	PZ(src) = PZ(src) / d;
 }
 
 t_vec3     sub(t_vec3 const a, t_vec3 const b)
@@ -51,29 +51,29 @@ t_vec3     cross(t_vec3 const *a, t_vec3 const *b)
 {
 	t_vec3		dest;
 
-	dest.data[0] = Y(a) * Z(b) - Z(a) * Y(b);
-	dest.data[1] = Z(a) * X(b) - X(a) * Z(b);
-	dest.data[2] = X(a) * Y(b) - Y(a) * X(b);
+	dest.data[0] = PY(a) * PZ(b) - PZ(a) * PY(b);
+	dest.data[1] = PZ(a) * PX(b) - PX(a) * PZ(b);
+	dest.data[2] = PX(a) * PY(b) - PY(a) * PX(b);
 	return (dest);
 }
 
 void        print_vec3(t_vec3 const *m)
 {
-    int     i;
+	int		i;
 
-    i = 0;
-    while (i < 3)
-    {
-        printf("%f ", m->data[i]);
-        i++;
-    }
-    printf("\n");
+	i = 0;
+	while (i < 3)
+	{
+		printf("%f ", m->data[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 GLfloat     dot(t_vec3 const *a, t_vec3 const *b)
 {
-    GLfloat     dp;
+	GLfloat		dp;
 
-    dp = X(a) * X (b) + Y(a) * Y(b) + Z(a) * Z(b);
-    return dp;
+	dp = PX(a) * PX(b) + PY(a) * PY(b) + PZ(a) * PZ(b);
+	return dp;
 }
