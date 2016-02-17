@@ -12,7 +12,7 @@
 
 #include <scop.h>
 
-void		rotate_model(GLuint program, int axis, t_bool reverse, t_bool reset)
+void		rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset)
 {
 	t_mat4x4			*rotation;
 	t_quat				quat;
@@ -33,7 +33,7 @@ void		rotate_model(GLuint program, int axis, t_bool reverse, t_bool reset)
 	}
 	eul_to_quat(radians(angle[0]), radians(angle[1]), radians(angle[2]), &quat);
 	quat_to_mat4x4(quat, rotation);
-	rot_unif_id = glGetUniformLocation(program, "Rotation");
+	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
 	free(rotation);
 }

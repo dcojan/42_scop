@@ -62,9 +62,9 @@ void 		main_loop(t_sdl	*sdl_var, t_mesh *mesh);
 
 t_event		get_scop_event();
 
-void		rotate_model(GLuint program, int axis, t_bool reverse, t_bool reset);
+void		rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
 
-void		handle_event(t_event event, GLuint program);
+void		handle_event(t_event event, t_mesh *mesh);
 
 /*
 ** buffers.c

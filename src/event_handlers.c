@@ -12,31 +12,31 @@
 
 #include <scop.h>
 
-void		event_empty(t_event event, GLuint program)
+void		event_empty(t_event event, t_mesh *mesh)
 {
 	(void)event;
-	(void)program;
+	(void)mesh;
 }
 
-void		event_rotation(t_event event, GLuint program)
+void		event_rotation(t_event event, t_mesh *mesh)
 {
 	if (event == OBJ_ROT_X_REV)
-		rotate_model(program, 0, TRUE, FALSE);
+		rotate_model(mesh, 0, TRUE, FALSE);
 	else if (event == OBJ_ROT_X)
-		rotate_model(program, 0, FALSE, FALSE);
+		rotate_model(mesh, 0, FALSE, FALSE);
 	else if (event == OBJ_ROT_Y_REV)
-		rotate_model(program, 1, TRUE, FALSE);
+		rotate_model(mesh, 1, TRUE, FALSE);
 	else if (event == OBJ_ROT_Y)
-		rotate_model(program, 1, FALSE, FALSE);
+		rotate_model(mesh, 1, FALSE, FALSE);
 	else if (event == OBJ_ROT_Z_REV)
-		rotate_model(program, 2, TRUE, FALSE);
+		rotate_model(mesh, 2, TRUE, FALSE);
 	else if (event == OBJ_ROT_Z)
-		rotate_model(program, 2, FALSE, FALSE);
+		rotate_model(mesh, 2, FALSE, FALSE);
 	else if (event == OBJ_ROT_RESET)
-		rotate_model(program, 0, FALSE, TRUE);
+		rotate_model(mesh, 0, FALSE, TRUE);
 }
 
-void		event_camera(t_event event, GLuint prog)
+void		event_camera(t_event event, t_mesh *mesh)
 {
 	static t_mouse_coord		mousebase = {0, 0};
 	t_mouse_coord				mouse;
@@ -50,13 +50,13 @@ void		event_camera(t_event event, GLuint prog)
 	else if (event == CAMERA_MOVE)
 	{
 		SDL_GetMouseState(&(mouse.x), &(mouse.y));
-		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y, prog, 3.0f);
+		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y, mesh->shader_program, 3.0f);
 		mousebase.x = mouse.x;
 		mousebase.y = mouse.y;
 	}
 }
 
-static void		(*const g_f[TOTAL_EVENT])(t_event, GLuint) =
+static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *) =
 {
 	&event_empty,
 	&event_rotation,
@@ -72,7 +72,7 @@ static void		(*const g_f[TOTAL_EVENT])(t_event, GLuint) =
 	&event_empty,
 };
 
-void		handle_event(t_event event, GLuint program)
+void		handle_event(t_event event, t_mesh *mesh)
 {
-	(*g_f[event])(event, program);
+	(*g_f[event])(event, mesh);
 }

@@ -45,6 +45,7 @@ typedef struct		s_mesh
 {
 	t_vertex_data	vertex_data;
 	t_element_data	elements;
+	t_vec3			origin;
 	uint32_t		vertex_buffer;
 	uint32_t		normal_buffer;
 	uint32_t		shader_program;

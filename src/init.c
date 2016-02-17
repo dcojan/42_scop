@@ -28,8 +28,8 @@ void		init_sdl(t_sdl *sdl_var)
 void		init_gl(void)
 {
 	printf("INIT GL\n");
-	glFrontFace(GL_CCW);
-	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CCW);	
+	// glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glClearColor(0.0f, 0.0f, 0.4f, 1.0f);

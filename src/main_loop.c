@@ -22,7 +22,7 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	while (event != QUIT)
 	{
 		event = get_scop_event();
-		handle_event(event, mesh->shader_program);
+		handle_event(event, mesh);
 		set_light(4, 4, 4, mesh->shader_program);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, mesh->vertex_data.v.size);

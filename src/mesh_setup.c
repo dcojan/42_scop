@@ -12,6 +12,35 @@
 
 #include "scop.h"
 
+void	setup_mesh_origin(t_mesh *mesh)
+{
+	size_t		i;
+
+	i = 0;
+	X(mesh->origin) = 0;
+	Y(mesh->origin) = 0;
+	Z(mesh->origin) = 0;
+	while (i < mesh->vertex_data.v.size)
+	{
+		X(mesh->origin) += mesh->vertex_data.v.vertices[i];
+		Y(mesh->origin) += mesh->vertex_data.v.vertices[i + 1];
+		Z(mesh->origin) += mesh->vertex_data.v.vertices[i + 2];
+		i += 3;
+	}
+	X(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
+	Y(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
+	Z(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
+	printf("origin at %f %f %f\n", X(mesh->origin), Y(mesh->origin), Z(mesh->origin));
+	// i = 0;
+	// while (i < mesh->vertex_data.v.size)
+	// {
+	// 	mesh->vertex_data.v.vertices[i] -= X(mesh->origin);
+	// 	mesh->vertex_data.v.vertices[i + 1] -= Y(mesh->origin);
+	// 	mesh->vertex_data.v.vertices[i + 2] -= Z(mesh->origin);
+	// 	i += 3;
+	// }
+}
+
 void	setup_mesh(t_mesh *mesh)
 {
 	t_mat4x4		*rotation;

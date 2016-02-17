@@ -24,7 +24,7 @@ uniform vec3 light_position_worldspace;
 smooth out vec3 vNormal;
 
 void main() {
-	gl_Position = Projection * View * Rotation * vec4(in_vertex, 1.0);
+	gl_Position = Projection * View * Rotation * (vec4(in_vertex, 1.0));
 // " position_world_space = (M * vec4(in_vertex, 1.0)).xyz;"
 	position_world_space = (Rotation * vec4(in_vertex, 1.0)).xyz;
 
