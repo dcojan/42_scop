@@ -6,6 +6,7 @@ SRC= main.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
+		dot_mtl_file_loader.c \
 		dot_obj_file_loader.c \
 		dot_obj_file_loader_label_1.c \
 		dot_obj_file_loader_label_2.c \
@@ -52,13 +53,15 @@ endif
 
 
 
-all: $(NAME)
+all: makedir $(NAME)
+
+makedir:
+	mkdir -p $(DIROBJ)
 
 $(NAME): $(DIROBJS)
 	$(CC) $^ -o $@ $(LIB)
 
 $(DIROBJ)%.o: %.c
-	mkdir -p $(DIROBJ)
 	$(CC) $(FLAGS) -c $^ -o $@  $(INC)
 
 clean:

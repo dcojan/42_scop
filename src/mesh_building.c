@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:08:55 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/17 17:24:43 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,7 @@ t_mesh		*new_mesh(void)
 	mesh->vertex_data.vn.size = 0;
 	mesh->elements.f.element = NULL;
 	mesh->elements.f.size = 0;
+	mesh->mtl_lib.path = NULL;
+	mesh->mtl_lib.material = NULL;
 	return (mesh);
 }

@@ -6,21 +6,20 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 16:42:41 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/17 17:47:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mesh_loader.h"
 
-FILE		*open_file(const char *path)
+static FILE	*open_file(const char *path)
 {
 	FILE	*stream;
 
-	printf("path = %s\n", path);
 	stream = fopen(path, "r");
 	if (stream == NULL)
 	{
-		perror("");
+		perror(path);
 		return (NULL);
 	}
 	return (stream);
@@ -42,7 +41,7 @@ t_mesh		*load_dot_obj_file(char *path)
 	t_mesh		*mesh;
 	int			ret;
 
-	printf("Opening file\n");
+	printf("Loading %s\n", path);
 	if ((stream = open_file(path)) == NULL)
 		return (NULL);
 	mesh = new_mesh();
