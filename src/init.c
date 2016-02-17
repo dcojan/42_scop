@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:58 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:15:02 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/17 12:38:49 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		init_sdl(t_sdl *sdl_var)
 void		init_gl(void)
 {
 	printf("INIT GL\n");
-	glFrontFace(GL_CCW);	
+	glFrontFace(GL_CCW);
 	// glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);

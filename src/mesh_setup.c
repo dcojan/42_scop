@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 16:48:25 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/17 14:35:56 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	setup_mesh_origin(t_mesh *mesh)
 void	setup_mesh(t_mesh *mesh)
 {
 	t_mat4x4		*rotation;
+	t_mat4x4		*position;
+	GLuint			rot_unif_id;
 
 	printf("computing vertex buffer\n");
 	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
@@ -60,7 +62,14 @@ void	setup_mesh(t_mesh *mesh)
 	mesh->shader_program = load_shaders();
 	glUseProgram(mesh->shader_program);
 	glBindVertexArray(mesh->shader_program);
-	rotation =  new_mat4x4();
-	GLuint rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
+	rotation = new_mat4x4();
+	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
+	setup_mesh_origin(mesh);
+	position = new_mat4x4();
+	position->data[0][0] -= mesh->origin.data[0];
+	position->data[1][1] -= mesh->origin.data[1];
+	position->data[2][2] -= mesh->origin.data[2];
+	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Position");
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &(position->data[0][0]));
 }

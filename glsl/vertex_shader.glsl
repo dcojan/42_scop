@@ -16,6 +16,7 @@ out vec3 eye_direction_camera_space;
 // uniform mat4 MVP;
 uniform mat4 Rotation;
 uniform mat4 Projection;
+uniform mat4 Translation;
 uniform mat4 View;
 // uniform mat4 V;
 // "uniform mat4 M;"
