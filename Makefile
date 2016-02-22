@@ -22,11 +22,12 @@ SRC= main.c \
 		utils.c
 
 SRCGLMATH= lookat.c \
-			vec3operations.c \
-			vec4operations.c \
-			mat4x4operations.c \
-			perspective.c \
-			quaternions.c
+		vec3operations.c \
+		convertions.c \
+		mat4x4operations.c \
+		perspective.c \
+		quaternions.c \
+		print.c
 
 OBJ= $(SRC:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)

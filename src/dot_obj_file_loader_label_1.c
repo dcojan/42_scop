@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:05:26 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:20:16 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int			label_f(t_mesh *mesh, FILE *stream)
 
 	ret = fscanf(stream, " %hd %hd %hd %hd",
 		&(el[0]), &(el[1]), &(el[2]), &(el[3]));
-	// printf("%d =>  %d %d %d %d\n", ret, el[0], el[1], el[2], el[3]);
 	add_element(el, &(mesh->elements.f), ret);
 	return (ret);
 }
@@ -73,9 +72,7 @@ int			label_v(t_mesh *mesh, FILE *stream)
 	t_vec3		v;
 	int			ret;
 
-	// printf("vertex\t");
 	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
-	// printf("%d =>  %f %f %f\n", ret, vec[0], vec[1], vec[2]);
 	add_vec3(&v, &(mesh->vertex_data.v));
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 14:46:24 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 16:27:39 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:19:15 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void		event_camera(t_event event, t_mesh *mesh)
 	else if (event == CAMERA_MOVE)
 	{
 		SDL_GetMouseState(&(mouse.x), &(mouse.y));
-		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y, mesh->shader_program, 3.0f);
+		move_camera(mouse.x - mousebase.x, mouse.y - mousebase.y,
+			mesh->shader_program, 3.0f);
 		mousebase.x = mouse.x;
 		mousebase.y = mouse.y;
 	}

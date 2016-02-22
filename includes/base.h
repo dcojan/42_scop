@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/13 15:07:22 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/13 15:42:42 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:56:06 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@
 # define WIDTH  		800
 # define HEIGHT 		600
 
-typedef enum 		e_bool
+typedef enum		e_bool
 {
 	FALSE,
 	TRUE
 }					t_bool;
 
-
 typedef struct		s_sdl
 {
-	SDL_Window*		window;
+	SDL_Window		*window;
 	SDL_GLContext	context;
 }					t_sdl;
 
-void		init_sdl(t_sdl *sdl_var);
-void		init_glew();
-void		init_gl();
-void		clean_sdl(t_sdl *sdl_var);
+void				init_sdl(t_sdl *sdl_var);
+void				init_glew();
+void				init_gl();
+void				clean_sdl(t_sdl *sdl_var);
 #endif

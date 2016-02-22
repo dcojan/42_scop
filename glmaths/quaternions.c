@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:17:01 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:32:49 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:36:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 
 void		quat_to_mat4x4(const t_quat quat, t_mat4x4 *dest)
 {
-	(dest->data)[0][0] = 1 - 2 * ((Y(quat) * Y(quat)) +  (Z(quat) * Z(quat)));
+	(dest->data)[0][0] = 1 - 2 * ((Y(quat) * Y(quat)) + (Z(quat) * Z(quat)));
 	(dest->data)[0][1] = 2 * ((X(quat) * Y(quat)) + (W(quat) * Z(quat)));
 	(dest->data)[0][2] = 2 * ((X(quat) * Z(quat)) - (W(quat) * Y(quat)));
-
 	(dest->data)[1][0] = 2 * ((X(quat) * Y(quat)) - (W(quat) * Z(quat)));
-	(dest->data)[1][1] = 1 - 2 * ((X(quat) * X(quat)) +  (Z(quat) * Z(quat)));
+	(dest->data)[1][1] = 1 - 2 * ((X(quat) * X(quat)) + (Z(quat) * Z(quat)));
 	(dest->data)[1][2] = 2 * ((Y(quat) * Z(quat)) + (X(quat) * W(quat)));
-
 	(dest->data)[2][0] = 2 * ((X(quat) * Z(quat)) + (Y(quat) * W(quat)));
 	(dest->data)[2][1] = 2 * ((Y(quat) * Z(quat)) - (X(quat) * W(quat)));
-	(dest->data)[2][2] = 1 - 2 * ((X(quat) * X(quat)) +  (Y(quat) * Y(quat)));
+	(dest->data)[2][2] = 1 - 2 * ((X(quat) * X(quat)) + (Y(quat) * Y(quat)));
 }
 
-void		angleAxis(float angle, t_vec3 *axis, t_quat *dest)
+void		angle_axis(float angle, t_vec3 *axis, t_quat *dest)
 {
 	float	half_angle;
 
@@ -40,31 +38,30 @@ void		angleAxis(float angle, t_vec3 *axis, t_quat *dest)
 
 float		radians(float degree)
 {
-	return (degree * M_PI/180);
+	return (degree * M_PI / 180);
 }
 
 t_quat		quat_mult(t_quat q1, t_quat q2)
 {
 	t_quat	dest;
-	t_vec3	q3 = {{q2.data[0], q2.data[1], q2.data[2]}};
-	t_vec3	quat_vector = {{q1.data[0], q1.data[1], q1.data[2]}};
-	t_vec3	uv;
-
-	uv = cross(&quat_vector, &q3);
 	t_vec3	uuv;
+	t_vec3	uv;
+	t_vec3	q3;
+	t_vec3	quat_vector;
+
+	q3 = quat_to_vec3(q2);
+	quat_vector = quat_to_vec3(q1);
+	uv = cross(&quat_vector, &q3);
 	uuv = cross(&quat_vector, &uv);
 	uv.data[0] *= q1.data[3];
 	uv.data[1] *= q1.data[3];
 	uv.data[2] *= q1.data[3];
-
 	uuv.data[0] += uv.data[0];
 	uuv.data[1] += uv.data[1];
 	uuv.data[2] += uv.data[2];
-
-	q2.data[0] += (uuv.data[0] * 2.0f) ;
-	q2.data[1] += (uuv.data[1] * 2.0f) ;
-	q2.data[2] += (uuv.data[2] * 2.0f) ;
-
+	q2.data[0] += (uuv.data[0] * 2.0f);
+	q2.data[1] += (uuv.data[1] * 2.0f);
+	q2.data[2] += (uuv.data[2] * 2.0f);
 	dest.data[0] = q2.data[0];
 	dest.data[1] = q2.data[1];
 	dest.data[2] = q2.data[2];
@@ -72,7 +69,7 @@ t_quat		quat_mult(t_quat q1, t_quat q2)
 	return (dest);
 }
 
-void	eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat *dest)
+void		eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat *dest)
 {
 	t_vec3 c;
 	t_vec3 s;

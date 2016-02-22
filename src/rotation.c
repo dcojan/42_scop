@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 14:48:27 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/17 14:15:24 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:18:56 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,7 @@ void		rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset)
 	}
 	eul_to_quat(radians(angle[0]), radians(angle[1]), radians(angle[2]), &quat);
 	quat_to_mat4x4(quat, rotation);
-	//
-	// t_mat4x4 *m= new_mat4x4();
-	// m->data[0][0] += mesh->origin.data[0];
-	// m->data[1][1] += mesh->origin.data[1];
-	// m->data[2][2] += mesh->origin.data[2];
-	// t_mat4x4 *dest= new_mat4x4();
-	// mul_mat4x4(rotation, m ,dest);
-	// // mul_mat4x4(m, rotation ,dest);
-	// m->data[0][0] -= mesh->origin.data[0];
-	// m->data[1][1] -= mesh->origin.data[1];
-	// m->data[2][2] -= mesh->origin.data[2];
-	// t_mat4x4 *dest2= new_mat4x4();
-	// mul_mat4x4(m, dest,dest2);
-	// // mul_mat4x4(dest, m, dest2);
-
 	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
-	// glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
 	free(rotation);
 }

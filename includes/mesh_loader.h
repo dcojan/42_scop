@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mesh_loader.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/22 10:01:19 by dcojan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MESH_LOADER_H
 # define MESH_LOADER_H
 
@@ -41,12 +53,6 @@ typedef struct		s_element_data
 	void			*surf;
 }					t_element_data;
 
-/*
-
-
-*/
-
-
 typedef	struct		s_material
 {
 	char				*name;
@@ -76,28 +82,23 @@ typedef struct		s_mesh
 	uint32_t		shader_program;
 }					t_mesh;
 
-void		load_mtl_obj_file(t_mesh *mesh);
-
-t_mesh    	*load_dot_obj_file(char *path);
-int			consume_end_of_line(FILE *stream);
-
-void		add_vec3(t_vec3 *vec, t_vertex *v);
-void		add_element(GLushort *el, t_element *v, int nb);
-t_mesh		*new_mesh();
-void		clean_mesh(t_mesh *mesh);
-
-void		compute_normals(t_mesh *mesh);
-void		unpack_elements(t_mesh *mesh);
-
-int			parse_label(t_mesh *mesh, FILE *stream);
-int			label_usemtl(t_mesh *mesh, FILE *stream);
-int			label_mtllib(t_mesh *mesh, FILE *stream);
-int			label_comment(t_mesh *mesh, FILE *stream);
-int			label_f(t_mesh *mesh, FILE *stream);
-int			label_s(t_mesh *mesh, FILE *stream);
-int			label_o(t_mesh *mesh, FILE *stream);
-int			label_v(t_mesh *mesh, FILE *stream);
-
-void    	print_element_array(GLushort *array, size_t size);
-void    	print_vertice_array(GLfloat *array, size_t size);
+void				load_mtl_obj_file(t_mesh *mesh);
+t_mesh				*load_dot_obj_file(char *path);
+int					consume_end_of_line(FILE *stream);
+void				add_vec3(t_vec3 *vec, t_vertex *v);
+void				add_element(GLushort *el, t_element *v, int nb);
+t_mesh				*new_mesh();
+void				clean_mesh(t_mesh *mesh);
+void				compute_normals(t_mesh *mesh);
+void				unpack_elements(t_mesh *mesh);
+int					parse_label(t_mesh *mesh, FILE *stream);
+int					label_usemtl(t_mesh *mesh, FILE *stream);
+int					label_mtllib(t_mesh *mesh, FILE *stream);
+int					label_comment(t_mesh *mesh, FILE *stream);
+int					label_f(t_mesh *mesh, FILE *stream);
+int					label_s(t_mesh *mesh, FILE *stream);
+int					label_o(t_mesh *mesh, FILE *stream);
+int					label_v(t_mesh *mesh, FILE *stream);
+void				print_element_array(GLushort *array, size_t size);
+void				print_vertice_array(GLfloat *array, size_t size);
 #endif

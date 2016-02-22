@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:35:59 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:31:53 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez)
 	t_vec3 const	center = {{0, 0, 0}};
 	t_vec3 const	up = {{0, 1, 0}};
 
-	view_m = lookAt(&eye, &center, &up);
+	view_m = look_at(&eye, &center, &up);
 	return (view_m);
 }
 
@@ -51,7 +51,7 @@ void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)
 	camera_right_vector = cross(&target_to_camera_vector, &camera_up_vector);
 	normalize(&camera_right_vector);
 	pitch_angle *= y / 20.0f;
-	angleAxis(radians(pitch_angle), &camera_right_vector, &pitch);
+	angle_axis(radians(pitch_angle), &camera_right_vector, &pitch);
 	*position = vec4_to_vec3(quat_mult(pitch, vec3_to_vec4(position, 1.0f)));
 }
 

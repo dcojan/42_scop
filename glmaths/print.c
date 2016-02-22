@@ -1,34 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec4operations.c                                   :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/12 17:17:05 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:34:29 by dcojan           ###   ########.fr       */
+/*   Created: 2016/02/22 09:35:16 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/22 09:37:22 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "glmath.h"
 
-t_vec4	vec3_to_vec4(t_vec3 *src, GLfloat w)
+void		print_vec3(t_vec3 const *m)
 {
-	t_vec4		dest;
+	int		i;
 
-	dest.data[0] = PX(src);
-	dest.data[1] = PY(src);
-	dest.data[2] = PZ(src);
-	dest.data[3] = w;
-	return (dest);
+	i = 0;
+	while (i < 3)
+	{
+		printf("%f ", m->data[i]);
+		i++;
+	}
+	printf("\n");
 }
 
-t_vec3	vec4_to_vec3(t_vec4 src)
+void		print_mat(t_mat4x4 const *m)
 {
-	t_vec3		dest;
+	int		i;
+	int		j;
 
-	dest.data[0] = src.data[0];
-	dest.data[1] = src.data[1];
-	dest.data[2] = src.data[2];
-	return (dest);
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			printf("%f ", (m->data)[i][j]);
+			j++;
+		}
+		i++;
+		printf("\n");
+	}
+	printf("\n");
 }

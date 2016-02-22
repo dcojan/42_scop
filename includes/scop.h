@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 16:48:35 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 10:00:06 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 # include "mesh_loader.h"
 # include "glmath.h"
 
-typedef struct		s_mouse_coord
+struct	s_mouse_coord
 {
 	int				x;
 	int				y;
-}					t_mouse_coord;
+};
+typedef struct s_mouse_coord	t_mouse_coord;
 
-typedef enum		s_event
+enum	e_event
 {
 	QUIT,
 	OBJ_ROT_Y,
@@ -39,59 +40,55 @@ typedef enum		s_event
 	CAMERA_MOVE,
 	NO_EVENT,
 	TOTAL_EVENT,
-}					t_event;
+};
+typedef enum e_event			t_event;
 
-typedef struct		s_keyevent
+struct	s_keyevent
 {
 	uint32_t		type;
 	SDL_Keycode		code;
 	t_event			event;
-}					t_keyevent;
+};
+typedef struct s_keyevent		t_keyevent;
 
 /*
 ** scop.c
 */
 
-void		scop(t_mesh *mesh, t_sdl *sdl_var);
+void	scop(t_mesh *mesh, t_sdl *sdl_var);
 
 /*
 ** main_loop.c
 */
 
-void 		main_loop(t_sdl	*sdl_var, t_mesh *mesh);
-
-t_event		get_scop_event();
-
-void		rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
-
-void		handle_event(t_event event, t_mesh *mesh);
+void	main_loop(t_sdl	*sdl_var, t_mesh *mesh);
+t_event	get_scop_event();
+void	rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
+void	handle_event(t_event event, t_mesh *mesh);
 
 /*
 ** buffers.c
 */
 
-GLuint  	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
+GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
 
 /*
 ** shaders.c
 */
-
-GLuint		load_shaders();
-
-void		setup_mesh(t_mesh *mesh);
+Luint	load_shaders();
+void	setup_mesh(t_mesh *mesh);
 
 /*
 ** camera.c
 */
 
-void		set_camera(GLfloat eyeX, GLfloat eyeY, GLfloat eyeZ, GLuint shaderProgram);
-void		move_camera(int x, int y, GLuint progid, float speed);
+void	set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
+void	move_camera(int x, int y, GLuint progid, float speed);
 
 /*
 ** light.c
 */
 
-void		set_light(GLfloat lightX, GLfloat lightY, GLfloat lightZ, GLuint shaderProgram);
-
+void	set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 
 #endif

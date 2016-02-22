@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:17:03 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:32:19 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:38:23 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal)
 	normalize(normal);
 }
 
-void     normalize(t_vec3 *src)
+void	normalize(t_vec3 *src)
 {
 	GLfloat	d;
 
@@ -37,7 +37,7 @@ void     normalize(t_vec3 *src)
 	PZ(src) = PZ(src) / d;
 }
 
-t_vec3     sub(t_vec3 const a, t_vec3 const b)
+t_vec3	sub(t_vec3 const a, t_vec3 const b)
 {
 	t_vec3		dest;
 
@@ -47,7 +47,7 @@ t_vec3     sub(t_vec3 const a, t_vec3 const b)
 	return (dest);
 }
 
-t_vec3     cross(t_vec3 const *a, t_vec3 const *b)
+t_vec3	cross(t_vec3 const *a, t_vec3 const *b)
 {
 	t_vec3		dest;
 
@@ -57,23 +57,10 @@ t_vec3     cross(t_vec3 const *a, t_vec3 const *b)
 	return (dest);
 }
 
-void        print_vec3(t_vec3 const *m)
-{
-	int		i;
-
-	i = 0;
-	while (i < 3)
-	{
-		printf("%f ", m->data[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-GLfloat     dot(t_vec3 const *a, t_vec3 const *b)
+GLfloat	dot(t_vec3 const *a, t_vec3 const *b)
 {
 	GLfloat		dp;
 
 	dp = PX(a) * PX(b) + PY(a) * PY(b) + PZ(a) * PZ(b);
-	return dp;
+	return (dp);
 }

@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/17 17:47:07 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 09:20:35 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,9 @@ t_mesh		*load_dot_obj_file(char *path)
 		if (ret == -1)
 			return (NULL);
 	}
-	// printf("%zu vertices :\n", mesh->vertex_data.v.size);
-	// print_vertice_array(mesh->vertex_data.v.vertices, mesh->vertex_data.v.size);
-	// print_element_array(mesh->elements.f.element, mesh->elements.f.size);
 	if (mesh->elements.f.size > 0)
 		unpack_elements(mesh);
 	compute_normals(mesh);
-	// printf("%zu normals :\n", mesh->vertex_data.vn.size);
-	// print_vertice_array(mesh->vertex_data.vn.vertices, mesh->vertex_data.vn.size);
 	printf("Done.\n");
 	return (mesh);
 }
