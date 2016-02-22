@@ -67,9 +67,9 @@ void	setup_mesh(t_mesh *mesh)
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
 	setup_mesh_origin(mesh);
 	position = new_mat4x4();
-	position->data[0][0] -= mesh->origin.data[0];
-	position->data[1][1] -= mesh->origin.data[1];
-	position->data[2][2] -= mesh->origin.data[2];
-	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Position");
+	position->data[3][0] -= mesh->origin.data[0];
+	position->data[3][1] -= mesh->origin.data[1];
+	position->data[3][2] -= mesh->origin.data[2];
+	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Translation");
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &(position->data[0][0]));
 }
