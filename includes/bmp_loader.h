@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dot_mtl_file_loader.c                              :+:      :+:    :+:   */
+/*   bmp_loader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 16:36:16 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:45:38 by dcojan           ###   ########.fr       */
+/*   Created: 2016/02/22 10:52:04 by dcojan            #+#    #+#             */
+/*   Updated: 2016/02/22 11:23:09 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
+# include "glmath.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
-static FILE	*open_file(const char *path)
+struct	s_bmp_text
 {
-	FILE	*stream;
+	char	*name;
+	uint	width;
+	uint	height;
+	uint	image_size;
+	uint8_t	data;
+};
+typedef s_bmp_text	t_bmp_text;
 
-	stream = fopen(path, "r");
-	if (stream == NULL)
-	{
-		perror(path);
-		return (NULL);
-	}
-	return (stream);
-}
-
-void		load_mtl_obj_file(t_mesh *mesh)
-{
-	FILE		*stream;
-	// int			ret;
-
-	printf("Loading %s\n", mesh->mtl_lib.path);
-	if ((stream = open_file(mesh->mtl_lib.path)) == NULL)
-	{
-		fclose(stream);
-	}
-	return ;
-}
+t_bmp_text	*load_bmp(char *path);

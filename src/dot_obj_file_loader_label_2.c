@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/17 17:31:56 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 10:21:54 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int			label_mtllib(t_mesh *mesh, FILE *stream)
 	ret = fscanf(stream, "%s", name);
 	if (ret != 0)
 	{
-		mesh->mtl_lib.path = strdup(name);
+		mesh->mtl_lib.path = (char*)malloc(strlen(name) + strlen(mesh->folder));
+		strcpy(mesh->mtl_lib.path, mesh->folder);
+		mesh->mtl_lib.path = strcat(mesh->mtl_lib.path, name);
 	}
 	printf("%d =>  %s\n", ret, mesh->mtl_lib.path);
 	consume_end_of_line(stream);

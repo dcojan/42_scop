@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/17 17:24:43 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 10:46:17 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_mesh		*new_mesh(void)
 	t_mesh	*mesh;
 
 	mesh = (t_mesh*)malloc(sizeof(t_mesh));
+	mesh->folder = NULL;
 	mesh->vertex_data.v.vertices = NULL;
 	mesh->vertex_data.v.size = 0;
 	mesh->vertex_data.vn.vertices = NULL;

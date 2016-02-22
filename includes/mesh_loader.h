@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:01:19 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 10:10:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef	struct		s_material_lib
 
 typedef struct		s_mesh
 {
+	char			*folder;
 	t_vertex_data	vertex_data;
 	t_element_data	elements;
 	t_vec3			origin;

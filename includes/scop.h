@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:00:06 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/22 10:07:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
 /*
 ** shaders.c
 */
-Luint	load_shaders();
+uint	load_shaders();
 void	setup_mesh(t_mesh *mesh);
 
 /*
