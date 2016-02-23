@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 16:07:27 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 16:09:34 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	setup_mesh(t_mesh *mesh)
 									-mesh->origin.data[2]);
 	set_uniform_mat4x4(mesh->shader_program, "Translation", translation);
 	// if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
-	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
+	if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
 		compute_uv_coordinates(tex);
