@@ -16,6 +16,8 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 - Object rotation around axis y - OK
 - Object rotation around axis z - not perfect ?
 - mtl file parsing
+- bmp loader
+- tga loader
 - Apply mtl file values
 - Texture application
 - Replace SDL with glgw ?

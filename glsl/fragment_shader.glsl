@@ -4,10 +4,10 @@ in vec3 position_world_space;
 in vec3 normal_camera_space;
 in vec3 eye_direction_camera_space;
 in vec3 light_direction_camera_space;
-// "in vec2 UV;"
+in vec2 UV;
 // "in vec3 fragmentColor;"
 out vec3 outColor;
-// "uniform sampler2D myTextureSampler;"
+uniform sampler2D texture_sampler;
 
 uniform vec3 light_position_worldspace;
 
@@ -20,8 +20,8 @@ void main() {
 	float LightPower = 50.0f;
 
 	// Material properties
-	// "vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;"
-	vec3 MaterialDiffuseColor = vec3(0.0, 1.0, 0.0);
+	vec3 MaterialDiffuseColor = texture(texture_sampler, UV).rgb;
+	// vec3 MaterialDiffuseColor = vec3(0.0, 1.0, 0.0);
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
 	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
 

@@ -6,6 +6,7 @@ SRC= main.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
+		bmp_loader.c \
 		dot_mtl_file_loader.c \
 		dot_obj_file_loader.c \
 		dot_obj_file_loader_label_1.c \

@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:18:05 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 12:47:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,44 @@ void	setup_mesh_origin(t_mesh *mesh)
 	Z(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
 }
 
+void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat)
+{
+	GLuint			rot_unif_id;
+
+	rot_unif_id = glGetUniformLocation(prog, name);
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((mat->data)[0][0]));
+}
+
+void	set_attrib_array(GLuint num)
+{
+	glEnableVertexAttribArray(num);
+	glVertexAttribPointer(num, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+}
+
 void	setup_mesh(t_mesh *mesh)
 {
 	t_mat4x4		*rotation;
-	t_mat4x4		*position;
-	GLuint			rot_unif_id;
+	t_mat4x4		*translation;
+	GLuint			texture_id;
+	t_bmp_tex		*tex;
 
 	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
-		mesh->vertex_data.v.vertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+								mesh->vertex_data.v.vertices, GL_STATIC_DRAW);
+	set_attrib_array(0);
 	mesh->normal_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.vn.size,
-		mesh->vertex_data.vn.vertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+								mesh->vertex_data.vn.vertices, GL_STATIC_DRAW);
+	set_attrib_array(2);
 	mesh->shader_program = load_shaders();
 	glUseProgram(mesh->shader_program);
 	glBindVertexArray(mesh->shader_program);
 	rotation = new_mat4x4();
-	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
-	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
+	set_uniform_mat4x4(mesh->shader_program, "Rotation", rotation);
 	setup_mesh_origin(mesh);
-	position = new_mat4x4();
-	position->data[3][0] -= mesh->origin.data[0];
-	position->data[3][1] -= mesh->origin.data[1];
-	position->data[3][2] -= mesh->origin.data[2];
-	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Translation");
-	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &(position->data[0][0]));
+	translation = mat_translation(-mesh->origin.data[0], -mesh->origin.data[1],
+									-mesh->origin.data[2]);
+	set_uniform_mat4x4(mesh->shader_program, "Translation", translation);
+	if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
+		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
+	set_attrib_array(1);
+
 }

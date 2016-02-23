@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:16:56 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:40:41 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 11:35:27 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,15 @@ void		mul_mat4x4(t_mat4x4 const *a, t_mat4x4 const *b, t_mat4x4 *dest)
 		}
 		i++;
 	}
+}
+
+t_mat4x4	*mat_translation(GLfloat x, GLfloat y, GLfloat z)
+{
+	t_mat4x4	*translation;
+
+	translation = new_mat4x4();
+	translation->data[3][0] += x;
+	translation->data[3][1] += y;
+	translation->data[3][2] += z;
+	return (translation);
 }

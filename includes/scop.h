@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:07:07 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 11:47:49 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "base.h"
 # include "glsl_loader.h"
+# include "bmp_loader.h"
 # include "mesh_loader.h"
 # include "glmath.h"
 
@@ -71,6 +72,7 @@ void	handle_event(t_event event, t_mesh *mesh);
 */
 
 GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
+GLuint	new_texture_buffer(uint width, uint height, uint8_t *data);
 
 /*
 ** shaders.c

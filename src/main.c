@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:15 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:08:59 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 12:32:05 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int		main(int ac, char **av)
 	if (ac == 2)
 	{
 		mesh = load_dot_obj_file(av[1]);
-		if (mesh->mtl_lib.path != NULL)
-			load_mtl_obj_file(mesh);
 		if (mesh != NULL)
 		{
+			if (mesh->mtl_lib.path != NULL)
+				load_mtl_obj_file(mesh);
 			init_sdl(&sdl_var);
 			scop(mesh, &sdl_var);
 			clean_mesh(mesh);

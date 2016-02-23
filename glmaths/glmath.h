@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:16:50 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:51:39 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 11:33:59 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ float		radians(float degree);
 t_quat		quat_mult(t_quat q1, t_quat q2);
 void		eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat *dest);
 void		quat_to_mat4x4(const t_quat quat, t_mat4x4 *dest);
+t_mat4x4	*mat_translation(GLfloat x, GLfloat y, GLfloat z);
 
 t_vec4		vec3_to_vec4(t_vec3 *src, float w);
 t_vec3		vec4_to_vec3(t_vec4 src);
