@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:48:42 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 12:30:49 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 15:56:01 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,6 @@ static FILE	*open_file(const char *path)
 		return (NULL);
 	}
 	return (stream);
-}
-
-void		compute_uv_coordinates(t_bmp_tex *tex)
-{
-	float		*uv;
-	uint32_t	i;
-	uint32_t	x;
-	uint32_t	y;
-
-	uv = (float *)malloc(sizeof(float) * (tex->width * tex->height * 2));
-	i = 0;
-	x = 0;
-	y = 0;
-	while (i < (tex->width * tex->height * 2))
-	{
-		uv[i] = x / tex->width;
-		uv[i + 1] = y / tex->height;
-		i += 2;
-		x++;
-		if (x == tex->width)
-		{
-			x = 0;
-			y++;
-		}
-	}
-	tex->uv = uv;
 }
 
 t_bmp_tex	*load_bmp(char *path)
@@ -75,6 +49,5 @@ t_bmp_tex	*load_bmp(char *path)
 		printf("Not a correct BMP file\n");
 	if (stream != NULL)
 		fclose(stream);
-	compute_uv_coordinates(bmp);
 	return (bmp);
 }

@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 12:47:07 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/02/23 16:07:27 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,36 @@ void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat)
 	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((mat->data)[0][0]));
 }
 
-void	set_attrib_array(GLuint num)
+void	set_attrib_array(GLuint num, GLuint size)
 {
 	glEnableVertexAttribArray(num);
-	glVertexAttribPointer(num, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(num, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
+}
+
+void		compute_uv_coordinates(t_bmp_tex *tex)
+{
+	float		*uv;
+	uint32_t	i;
+	uint32_t	x;
+	uint32_t	y;
+
+	uv = (float *)malloc(sizeof(float) * ((tex->width * tex->height) * 2));
+	i = 0;
+	x = 0;
+	y = 0;
+	while (i < ((tex->width * tex->height) * 2))
+	{
+		uv[i] = x / tex->width;
+		uv[i + 1] = y / tex->height;
+		i += 2;
+		x++;
+		if (x == tex->width)
+		{
+			x = 0;
+			y++;
+		}
+	}
+	tex->uv = uv;
 }
 
 void	setup_mesh(t_mesh *mesh)
@@ -55,10 +81,10 @@ void	setup_mesh(t_mesh *mesh)
 
 	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
 								mesh->vertex_data.v.vertices, GL_STATIC_DRAW);
-	set_attrib_array(0);
+	set_attrib_array(0, 3);
 	mesh->normal_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.vn.size,
 								mesh->vertex_data.vn.vertices, GL_STATIC_DRAW);
-	set_attrib_array(2);
+	set_attrib_array(2, 3);
 	mesh->shader_program = load_shaders();
 	glUseProgram(mesh->shader_program);
 	glBindVertexArray(mesh->shader_program);
@@ -68,8 +94,13 @@ void	setup_mesh(t_mesh *mesh)
 	translation = mat_translation(-mesh->origin.data[0], -mesh->origin.data[1],
 									-mesh->origin.data[2]);
 	set_uniform_mat4x4(mesh->shader_program, "Translation", translation);
-	if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
+	// if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
+	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
+	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
-	set_attrib_array(1);
-
+		compute_uv_coordinates(tex);
+		new_buffer(GL_ARRAY_BUFFER, ((tex->width * tex->height) * 2),
+					tex->uv, GL_STATIC_DRAW);
+		set_attrib_array(1, 2);
+	}
 }
