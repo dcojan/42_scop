@@ -17,7 +17,9 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	t_event			event;
 	t_bool			auto_rot;
 	double			next_game_tick;
+	uint32_t		state;
 
+	state = NO_STATE;
 	next_game_tick = 0;
 	auto_rot = TRUE;
 	event = NO_EVENT;
@@ -26,7 +28,7 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	{
 		framerate_control(&next_game_tick);
 		event = get_scop_event();
-		handle_event(event, mesh);
+		handle_event(event, mesh, &state);
 		if (event == OBJ_AUTO_ROT)
 			auto_rot = (auto_rot == TRUE ? FALSE : TRUE);
 		if (auto_rot == TRUE)

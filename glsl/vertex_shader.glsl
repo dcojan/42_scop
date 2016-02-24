@@ -3,15 +3,14 @@
 layout(location = 0) in vec3 in_vertex;
 layout(location = 1) in vec2 vertex_uv;
 layout(location = 2) in vec3 in_normal;
-// "layout(location = 1) in vec3 vertexColor;"
-// "vec3 vertexColor = vec3(1.0f,0.0f,0.0f);"
+layout(location = 4) in vec3 in_color;
 
-// "out vec3 fragmentColor;"
 out vec2 UV;
 out vec3 position_world_space;
 out vec3 normal_camera_space;
 out vec3 light_direction_camera_space;
 out vec3 eye_direction_camera_space;
+out vec3 fragment_color;
 
 uniform mat4 Rotation;
 uniform mat4 Projection;
@@ -32,6 +31,7 @@ void main() {
 	vec3 light_position_cameraspace = (View * vec4(light_position_worldspace, 1.0)).xyz;
 	light_direction_camera_space = light_position_cameraspace + eye_direction_camera_space;
 	normal_camera_space = (View * Rotation * vec4(in_normal, 0)).xyz;
-// "	fragmentColor = vertexColor;"
+
+	fragment_color = in_color;
 	UV = vertex_uv;
 }

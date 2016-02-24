@@ -5,14 +5,15 @@ in vec3 normal_camera_space;
 in vec3 eye_direction_camera_space;
 in vec3 light_direction_camera_space;
 in vec2 UV;
-// "in vec3 fragmentColor;"
-out vec3 outColor;
-uniform sampler2D texture_sampler;
+in vec3 fragment_color;
 
+uniform sampler2D texture_sampler;
+uniform float texture_transition;
 uniform vec3 light_position_worldspace;
 
+out vec3 outColor;
+
 void main() {
-	// " outColor = texture( myTextureSampler, UV).rgb;"
 	// "	outColor = vec4(fragmentColor, 1.0f);" // R G B Alpha
 	// Light emission properties
 	// You probably want to put them as uniforms
@@ -20,8 +21,13 @@ void main() {
 	float LightPower = 50.0f;
 
 	// Material properties
-	vec3 MaterialDiffuseColor = texture(texture_sampler, UV).rgb;
-	// vec3 MaterialDiffuseColor = vec3(0.0, 1.0, 0.0);
+	vec3 MaterialDiffuseColor;
+	// if (apply_texture == true)
+	// 	MaterialDiffuseColor = texture(texture_sampler, UV).rgb;
+	// else
+	// 	MaterialDiffuseColor = fragment_color;
+	MaterialDiffuseColor = (fragment_color * (texture_transition)) + (texture(texture_sampler, UV).rgb * (1 - texture_transition));
+
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
 	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
 
@@ -30,7 +36,6 @@ void main() {
 
 	// Normal of the computed fragment, in camera space
 	vec3 n = normalize( normal_camera_space );
-
 	// Direction of the light (from the fragment to the light)
 	vec3 l = normalize( light_direction_camera_space );
 

@@ -40,6 +40,7 @@ enum	e_event
 	OBJ_TRANS_Z,
 	OBJ_TRANS_Z_REV,
 	OBJ_TRANS_RESET,
+	TOGGLE_TEXTURE,
 	START_CAMERA_MOVE,
 	STOP_CAMERA_MOVE,
 	CAMERA_MOVE,
@@ -56,6 +57,13 @@ struct	s_keyevent
 };
 typedef struct s_keyevent		t_keyevent;
 
+enum	e_state
+{
+	NO_STATE,
+	COLOR_TO_TEX,
+	TEX_TO_COLOR,
+};
+typedef enum e_state			t_state;
 /*
 ** scop.c
 */
@@ -68,7 +76,7 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var);
 
 void	main_loop(t_sdl	*sdl_var, t_mesh *mesh);
 t_event	get_scop_event();
-void	handle_event(t_event event, t_mesh *mesh);
+void	handle_event(t_event event, t_mesh *mesh, uint32_t *state);
 
 /*
 ** rotation.c

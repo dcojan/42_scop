@@ -157,6 +157,8 @@ void	setup_mesh(t_mesh *mesh)
 	init_mat4x4(translation);
 	set_uniform_mat4x4(mesh->shader_program, "PostTranslation", translation);
 	free(translation);
+
+	/////////////// TEXTURE
 	if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
@@ -165,4 +167,33 @@ void	setup_mesh(t_mesh *mesh)
 					tex->uv, GL_STATIC_DRAW);
 		set_attrib_array(1, 2);
 	}
+
+	/////////////// COLOR
+
+	GLfloat	*color;
+	color = (GLfloat*)malloc(sizeof(GLfloat) * (mesh->vertex_data.v.size));
+
+	size_t	i;
+	int		change;
+	float	grey;
+
+	change = 0;
+	i = 0;
+	grey = 0.4;
+	while (i < (mesh->vertex_data.v.size))
+	{
+		if (i % 9 == 0)
+		{
+			grey += 0.1;
+			if (grey >= 1.0)
+				grey = 0.4;
+		}
+		color[i] = grey;
+		color[i + 1] = grey;
+		color[i + 2] = grey;
+		i += 3;
+	}
+	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
+								color, GL_STATIC_DRAW);
+	set_attrib_array(4, 3);
 }
