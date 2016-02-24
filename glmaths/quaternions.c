@@ -69,6 +69,16 @@ t_quat		quat_mult(t_quat q1, t_quat q2)
 	return (dest);
 }
 
+t_quat		quat_x_quat(t_quat q1, t_quat q2)
+{
+	t_quat	q;
+	X(q) = (W(q1) * X(q2)) + (X(q1) * W(q2)) + (Y(q1) * Z(q2)) - (Z(q1) * Y(q2));
+	Y(q) = (W(q1) * Y(q2)) - (X(q1) * Z(q2)) + (Y(q1) * W(q2)) + (Z(q1) * X(q2));
+	Z(q) = (W(q1) * Z(q2)) + (X(q1) * Y(q2)) - (Y(q1) * X(q2)) + (Z(q1) * W(q2));
+	W(q) = (W(q1) * W(q2)) - (X(q1) * X(q2)) - (Y(q1) * Y(q2)) - (Z(q1) * Z(q2));
+	return (q);
+}
+
 void		eul_to_quat(GLfloat x, GLfloat y, GLfloat z, t_quat *dest)
 {
 	t_vec3 c;

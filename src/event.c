@@ -25,10 +25,11 @@ uint8_t		test_event(SDL_Event *we, uint32_t type, SDL_Keycode key)
 	return (0);
 }
 
-static const t_keyevent		g_keycodes[13] =
+static const t_keyevent		g_keycodes[14] =
 {
 	{SDL_QUIT, 0, QUIT},
 	{SDL_KEYUP, SDLK_ESCAPE, QUIT},
+	{SDL_KEYUP, SDLK_t, OBJ_AUTO_ROT},
 	{SDL_KEYDOWN, SDLK_s, OBJ_ROT_X},
 	{SDL_KEYDOWN, SDLK_w, OBJ_ROT_X_REV},
 	{SDL_KEYDOWN, SDLK_d, OBJ_ROT_Y},

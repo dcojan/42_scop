@@ -19,6 +19,9 @@
 # include "mesh_loader.h"
 # include "glmath.h"
 
+# define FRAMES_PER_SECOND 	30
+# define SKIP_TICKS			(1000 / FRAMES_PER_SECOND)
+
 struct	s_mouse_coord
 {
 	int				x;
@@ -29,6 +32,7 @@ typedef struct s_mouse_coord	t_mouse_coord;
 enum	e_event
 {
 	QUIT,
+	OBJ_AUTO_ROT,
 	OBJ_ROT_Y,
 	OBJ_ROT_Y_REV,
 	OBJ_ROT_X,
@@ -64,8 +68,14 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var);
 
 void	main_loop(t_sdl	*sdl_var, t_mesh *mesh);
 t_event	get_scop_event();
-void	rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
 void	handle_event(t_event event, t_mesh *mesh);
+
+/*
+** rotation.c
+*/
+
+void	rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
+void	auto_rotation(t_mesh *mesh);
 
 /*
 ** buffers.c
@@ -92,5 +102,11 @@ void	move_camera(int x, int y, GLuint progid, float speed);
 */
 
 void	set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
+
+/*
+** framerate.c
+*/
+
+void	framerate_control(double *next_game_tick);
 
 #endif

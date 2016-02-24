@@ -20,7 +20,9 @@ void		event_empty(t_event event, t_mesh *mesh)
 
 void		event_rotation(t_event event, t_mesh *mesh)
 {
-	if (event == OBJ_ROT_X_REV)
+	if (event == OBJ_AUTO_ROT)
+		auto_rotation(mesh);
+	else if (event == OBJ_ROT_X_REV)
 		rotate_model(mesh, 0, TRUE, FALSE);
 	else if (event == OBJ_ROT_X)
 		rotate_model(mesh, 0, FALSE, FALSE);
@@ -60,6 +62,7 @@ void		event_camera(t_event event, t_mesh *mesh)
 static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *) =
 {
 	&event_empty,
+	&event_rotation,
 	&event_rotation,
 	&event_rotation,
 	&event_rotation,

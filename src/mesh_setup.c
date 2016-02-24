@@ -105,6 +105,33 @@ void		compute_uv_coordinates(t_bmp_tex *tex, t_mesh *mesh)
 	tex->uv = uv;
 }
 
+void		compute_uv_coordinates_(t_bmp_tex *tex, t_mesh *mesh)
+{
+	float		*uv;
+	uint32_t	i;
+	float		x;
+	float		y;
+
+	(void)mesh;
+	uv = (float *)malloc(sizeof(float) * ((tex->width * tex->height) * 2));
+	i = 0;
+	x = 0;
+	y = 0;
+	while (i < ((tex->width * tex->height) * 2))
+	{
+		uv[i] = x / (float)tex->width;
+		uv[i + 1] = y / (float)tex->height;
+		i += 2;
+		x += 1.0;
+		if (x == tex->width)
+		{
+			x = 0;
+			y += 1.0;
+		}
+	}
+	tex->uv = uv;
+}
+
 void	setup_mesh(t_mesh *mesh)
 {
 	t_mat4x4		*rotation;

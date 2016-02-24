@@ -12,6 +12,7 @@ SRC= main.c \
 		dot_obj_file_loader_label_1.c \
 		dot_obj_file_loader_label_2.c \
 		glsl_file_loader.c \
+		framerate.c \
 		shaders.c \
 		camera.c \
 		rotation.c \

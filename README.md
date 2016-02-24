@@ -10,18 +10,38 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 
 ###############  TODO     ################
 
-- MODIFIY ROTATION SO THAT IT DOESN'T KEEP TRACK OF PREVIOUS ANGLES
-- Camera rotation around object - OK
-- Object rotation around axis x - OK
-- Object rotation around axis y - OK
-- Object rotation around axis z - not perfect ?
-- mtl file parsing
-- bmp loader
-- tga loader
-- Apply mtl file values
-- Texture application
-- Replace SDL with glgw ?
-- ZOOM - DE_ZOOM
+- Sujet :
+	- .obj parsing (minimal to render object)
+	- .obj error handling
+	- Object rotation around axis y - middle of object - OK
+	- Make object rotation automatic - OK
+	- Color (no textures) with grey level to see facettes
+	- Basic Bad Texture application - OK
+	- A key to toggle between texture and color
+	- Soft transition for texture/color switch
+	- Move object on x
+	- Move object on y
+	- Move object on z
+	- Norme
+	- OpenGL 4+ with shaders
+
+- Bonus	:
+	- Camera rotation around object - OK
+	- Texure with provided UV coordinates
+	- lighting - OK
+	- Turn lighting on and off
+	- Key Toggle auto_rot on and off - OK
+- Other :
+	- Control framerate - OK
+	- MODIFIY ROTATION SO THAT IT DOESN'T KEEP TRACK OF PREVIOUS ANGLES
+	- Object rotation around axis x - OK
+	- Object rotation around axis z - not perfect ? weird shit
+	- mtl file parsing
+	- Apply mtl file values
+	- tga loader
+	- bmp loader	- OK
+	- Replace SDL with glgw
+	- ZOOM - DE_ZOOM
 
 
 ################# mtl files ##############

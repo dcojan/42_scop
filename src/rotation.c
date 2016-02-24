@@ -10,7 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
+
+void		auto_rotation(t_mesh *mesh)
+{
+	static const float	angle = 30.0f / (float)FRAMES_PER_SECOND;
+	static t_quat		rot = {{0, 0, 0, 1.0}};
+	t_mat4x4			*rotation;
+	t_quat				quat;
+	GLuint				rot_unif_id;
+
+	rotation = new_mat4x4();
+	eul_to_quat(0.0f, radians(angle), 0.0f, &quat);
+	rot = quat_x_quat(quat, rot);
+	quat_to_mat4x4(rot, rotation);
+	rot_unif_id = glGetUniformLocation(mesh->shader_program, "Rotation");
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((rotation->data)[0][0]));
+	free(rotation);
+}
 
 void		rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset)
 {
