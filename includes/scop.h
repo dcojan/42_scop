@@ -33,13 +33,13 @@ enum	e_event
 {
 	QUIT,
 	OBJ_AUTO_ROT,
-	OBJ_ROT_Y,
-	OBJ_ROT_Y_REV,
-	OBJ_ROT_X,
-	OBJ_ROT_X_REV,
-	OBJ_ROT_Z,
-	OBJ_ROT_Z_REV,
-	OBJ_ROT_RESET,
+	OBJ_TRANS_Y,
+	OBJ_TRANS_Y_REV,
+	OBJ_TRANS_X,
+	OBJ_TRANS_X_REV,
+	OBJ_TRANS_Z,
+	OBJ_TRANS_Z_REV,
+	OBJ_TRANS_RESET,
 	START_CAMERA_MOVE,
 	STOP_CAMERA_MOVE,
 	CAMERA_MOVE,
@@ -74,7 +74,7 @@ void	handle_event(t_event event, t_mesh *mesh);
 ** rotation.c
 */
 
-void	rotate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
+void	translate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
 void	auto_rotation(t_mesh *mesh);
 
 /*

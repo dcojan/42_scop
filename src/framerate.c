@@ -25,5 +25,6 @@ void				framerate_control(double *next_game_tick)
 	{
 		usleep(1000 * sleep_time);
 		SDL_FlushEvent(SDL_MOUSEMOTION);
+		SDL_FlushEvent(SDL_KEYDOWN);
 	}
 }

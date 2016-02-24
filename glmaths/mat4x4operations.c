@@ -12,15 +12,11 @@
 
 #include <glmath.h>
 
-t_mat4x4	*new_mat4x4(void)
+void		init_mat4x4(t_mat4x4 *mat)
 {
-	t_mat4x4	*mat;
-	int			size;
 	int			i;
 	int			j;
 
-	size = 16;
-	mat = (t_mat4x4*)malloc(sizeof(t_mat4x4));
 	i = 0;
 	while (i < 4)
 	{
@@ -36,6 +32,16 @@ t_mat4x4	*new_mat4x4(void)
 	(mat->data)[1][1] = 1.0f;
 	(mat->data)[2][2] = 1.0f;
 	(mat->data)[3][3] = 1.0f;
+}
+
+t_mat4x4	*new_mat4x4(void)
+{
+	t_mat4x4	*mat;
+	int			size;
+
+	size = 16;
+	mat = (t_mat4x4*)malloc(sizeof(t_mat4x4));
+	init_mat4x4(mat);
 	return (mat);
 }
 

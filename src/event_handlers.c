@@ -20,22 +20,27 @@ void		event_empty(t_event event, t_mesh *mesh)
 
 void		event_rotation(t_event event, t_mesh *mesh)
 {
-	if (event == OBJ_AUTO_ROT)
-		auto_rotation(mesh);
-	else if (event == OBJ_ROT_X_REV)
-		rotate_model(mesh, 0, TRUE, FALSE);
-	else if (event == OBJ_ROT_X)
-		rotate_model(mesh, 0, FALSE, FALSE);
-	else if (event == OBJ_ROT_Y_REV)
-		rotate_model(mesh, 1, TRUE, FALSE);
-	else if (event == OBJ_ROT_Y)
-		rotate_model(mesh, 1, FALSE, FALSE);
-	else if (event == OBJ_ROT_Z_REV)
-		rotate_model(mesh, 2, TRUE, FALSE);
-	else if (event == OBJ_ROT_Z)
-		rotate_model(mesh, 2, FALSE, FALSE);
-	else if (event == OBJ_ROT_RESET)
-		rotate_model(mesh, 0, FALSE, TRUE);
+	(void)event;
+	auto_rotation(mesh);
+}
+
+void		event_translation(t_event event, t_mesh *mesh)
+{
+	if (event == OBJ_TRANS_X_REV)
+		translate_model(mesh, 0, TRUE, FALSE);
+	else if (event == OBJ_TRANS_X)
+		translate_model(mesh, 0, FALSE, FALSE);
+	else if (event == OBJ_TRANS_Y_REV)
+		translate_model(mesh, 1, TRUE, FALSE);
+	else if (event == OBJ_TRANS_Y)
+		translate_model(mesh, 1, FALSE, FALSE);
+	else if (event == OBJ_TRANS_Z_REV)
+		translate_model(mesh, 2, TRUE, FALSE);
+	else if (event == OBJ_TRANS_Z)
+		translate_model(mesh, 2, FALSE, FALSE);
+	else if (event == OBJ_TRANS_RESET)
+		translate_model(mesh, -1, FALSE, TRUE);
+
 }
 
 void		event_camera(t_event event, t_mesh *mesh)
@@ -63,13 +68,13 @@ static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *) =
 {
 	&event_empty,
 	&event_rotation,
-	&event_rotation,
-	&event_rotation,
-	&event_rotation,
-	&event_rotation,
-	&event_rotation,
-	&event_rotation,
-	&event_rotation,
+	&event_translation,
+	&event_translation,
+	&event_translation,
+	&event_translation,
+	&event_translation,
+	&event_translation,
+	&event_translation,
 	&event_camera,
 	&event_camera,
 	&event_camera,

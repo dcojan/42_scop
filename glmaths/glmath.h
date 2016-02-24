@@ -57,6 +57,7 @@ void		compute_normal(t_vec3 *v1, t_vec3 *v2, t_vec3 *v3, t_vec3 *normal);
 t_mat4x4	*new_mat4x4();
 void		mul_mat4x4(t_mat4x4 const *a, t_mat4x4 const *b, t_mat4x4 *dest);
 void		print_mat(t_mat4x4 const *m);
+void		init_mat4x4(t_mat4x4 *mat);
 
 t_mat4x4	*look_at(t_vec3 const *eye, t_vec3 const *center, t_vec3 const *up);
 
