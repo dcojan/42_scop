@@ -46,28 +46,61 @@ void	set_attrib_array(GLuint num, GLuint size)
 	glVertexAttribPointer(num, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }
 
-void		compute_uv_coordinates(t_bmp_tex *tex)
+void		compute_uv_coordinates(t_bmp_tex *tex, t_mesh *mesh)
 {
 	float		*uv;
 	uint32_t	i;
-	uint32_t	x;
-	uint32_t	y;
+	// float		max_x;
+	// float		max_y;
+	// float		min_x;
+	// float		min_y;
+	uint32_t	size;
+	t_vec3		tmp;
 
-	uv = (float *)malloc(sizeof(float) * ((tex->width * tex->height) * 2));
+	size = (mesh->vertex_data.v.size / 3) * 2;
+	uv = (float *)malloc(sizeof(float) * size);
+	///////////
+	// i = 0;
+	// max_x = 0;
+	// max_y = 0;
+	// min_x = 1000;
+	// min_y = 1000;
+	// while (i < size)
+	// {
+	// 	if (mesh->vertex_data.v.vertices[i] > max_x)
+	// 		max_x = mesh->vertex_data.v.vertices[i];
+	// 	if (mesh->vertex_data.v.vertices[i] < min_x)
+	// 		min_x = mesh->vertex_data.v.vertices[i];
+	// 	if (mesh->vertex_data.v.vertices[i + 1] > max_y)
+	// 		max_y = mesh->vertex_data.v.vertices[i + 1];
+	// 	if (mesh->vertex_data.v.vertices[i + 1] > min_y)
+	// 		min_y = mesh->vertex_data.v.vertices[i + 1];
+	// 	i += 3;
+	// }
+	// float	height = max_y - min_y;
+	// float	width = max_x - min_x;
+	// if (min_y > 0)
+	// 	min_y = -min_y;
+	// if (min_x > 0)
+	// 	min_x = -min_x;
+	// i = 0;
+	// while (i < size)
+	// {
+	// 	uv[i] = (mesh->vertex_data.v.vertices[i] - min_x) / width;
+	// 	uv[i + 1] = (mesh->vertex_data.v.vertices[i + 1] - min_y) / height;
+	// 	i += 3;
+	// }
+//////
 	i = 0;
-	x = 0;
-	y = 0;
-	while (i < ((tex->width * tex->height) * 2))
+	while (i < size)
 	{
-		uv[i] = x / tex->width;
-		uv[i + 1] = y / tex->height;
-		i += 2;
-		x++;
-		if (x == tex->width)
-		{
-			x = 0;
-			y++;
-		}
+		X(tmp) = mesh->vertex_data.v.vertices[i];
+		Y(tmp) = mesh->vertex_data.v.vertices[i + 1];
+		Z(tmp) = mesh->vertex_data.v.vertices[i + 2];
+		normalize(&tmp);
+		uv[i] = X(tmp);
+		uv[i + 1] = Y(tmp);
+		i += 3;
 	}
 	tex->uv = uv;
 }
@@ -98,7 +131,7 @@ void	setup_mesh(t_mesh *mesh)
 	if ((tex = load_bmp("textures/default_tex.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
-		compute_uv_coordinates(tex);
+		compute_uv_coordinates(tex, mesh);
 		new_buffer(GL_ARRAY_BUFFER, ((tex->width * tex->height) * 2),
 					tex->uv, GL_STATIC_DRAW);
 		set_attrib_array(1, 2);
