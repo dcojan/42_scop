@@ -32,7 +32,7 @@ void		init_sdl(t_sdl *sdl_var)
 void		init_gl(void)
 {
 	printf("INIT GL\n");
-	glFrontFace(GL_CCW);
+// glEnable(GL_CULL_FACE);	glFrontFace(GL_CW);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_TEXTURE_2D);

@@ -80,6 +80,7 @@ typedef struct		s_mesh
 	t_material_lib	mtl_lib;
 	uint32_t		vertex_buffer;
 	uint32_t		normal_buffer;
+	uint32_t		texture_buffer;
 	uint32_t		shader_program;
 }					t_mesh;
 

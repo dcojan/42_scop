@@ -17,7 +17,7 @@ SRC= main.c \
 		camera.c \
 		rotation.c \
 		light.c \
-		buffers.c \
+		gl_shortcuts.c \
 		mesh_building.c \
 		mesh_setup.c \
 		clean.c \

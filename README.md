@@ -11,26 +11,27 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 ###############  TODO     ################
 
 - Sujet :
-	- .obj parsing (minimal to render object) - OK
-	- .obj error handling
-	- Object rotation around axis y - middle of object - OK
-	- Make object rotation automatic - OK
-	- Color (no textures) with grey level to see facettes - OK
-	- Basic Bad Texture application - Weird shit sometimes !
-	- toggle between texture and color with key press - OK
-	- Soft transition when texture/color switch - OK
-	- Move object on x, both directions, on keypress - OK
-	- Move object on y, both directions, on keypress - OK
-	- Move object on z, both directions, on keypress - OK
-	- Norme
-	- OpenGL 4+ with shaders
+	- .obj parsing (minimal to render object)				- OK
+	- .obj error handling									-
+	- Object rotation around axis y - middle of object		- OK
+	- Make object rotation automatic						- OK
+	- Color (no textures) with grey level to see facettes 	- OK
+	- Basic Bad Texture application							- OK
+	- toggle between texture and color with key press		- OK
+	- Soft transition when texture/color switch				- OK
+	- Move object on x, both directions, on keypress		- OK
+	- Move object on y, both directions, on keypress		- OK
+	- Move object on z, both directions, on keypress		- OK
+	- Norme													-
+	- OpenGL 4+ with shaders								-
 
 - Bonus	:
-	- Camera rotation around object - OK
-	- Texure with provided UV coordinates
-	- lighting - OK
-	- Turn lighting on and off
-	- Key Toggle auto_rot on and off - OK
+	- Camera rotation around object							- OK
+	- Texure with provided UV coordinates					-
+	- lighting												- OK
+	- Toggle lighting on and off							-
+	- Key Toggle auto_rot on and off						- OK
+	- bmp loader											- OK
 
 - Other :
 	- Control framerate - OK
@@ -38,8 +39,7 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 	- mtl file parsing
 	- Apply mtl file values
 	- tga loader
-	- bmp loader	- OK
-	- Replace SDL with glgw
+	- Replace SDL with glgw ?
 	- ZOOM - DE_ZOOM
 
 

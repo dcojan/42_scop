@@ -25,11 +25,6 @@ GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 	return (buffer);
 }
 
-/*
-** texture options
-**
-*/
-
 GLuint		new_texture_buffer(uint width, uint height, uint8_t *data)
 {
 	GLuint	texture_id;
@@ -38,7 +33,8 @@ GLuint		new_texture_buffer(uint width, uint height, uint8_t *data)
 	// "Bind" the newly created texture : all future texture functions will modify this texture
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 	// Give the image to OpenGL
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
+		GL_BGR, GL_UNSIGNED_BYTE, data);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -47,4 +43,18 @@ GLuint		new_texture_buffer(uint width, uint height, uint8_t *data)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	return (texture_id);
+}
+
+void		set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat)
+{
+	GLuint	rot_unif_id;
+
+	rot_unif_id = glGetUniformLocation(prog, name);
+	glUniformMatrix4fv(rot_unif_id, 1, GL_FALSE, &((mat->data)[0][0]));
+}
+
+void		set_attrib_array(GLuint num, GLuint size)
+{
+	glEnableVertexAttribArray(num);
+	glVertexAttribPointer(num, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
 }

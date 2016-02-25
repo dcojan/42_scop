@@ -23,6 +23,7 @@ void	clean_mesh(t_mesh *mesh)
 	glDeleteProgram(mesh->shader_program);
 	glDeleteBuffers(1, &(mesh->vertex_buffer));
 	glDeleteBuffers(1, &(mesh->normal_buffer));
+	glDeleteBuffers(1, &(mesh->texture_buffer));
 	if (mesh->folder != NULL)
 		free(mesh->folder);
 	if (mesh->vertex_data.v.vertices != NULL)

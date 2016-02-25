@@ -36,14 +36,23 @@ t_bmp_tex	*load_bmp(char *path)
 	if ((stream = open_file(path)) == NULL)
 		printf("Error opening file\n");
 	else if (fread(head, 1, 54, stream) == 54 &&
-			head[0] == 'B' && head[1] == 'M')
+			head[0] == 'B' && head[1] == 'M' )
 	{
 		bmp = (t_bmp_tex*)malloc(sizeof(t_bmp_tex));
 		bmp->width = *(int*)&(head[0x12]);
 		bmp->height = *(int*)&(head[0x16]);
-		bmp->image_size = bmp->width * bmp->height * 3;
-		bmp->data = (uint8_t*)malloc(sizeof(uint8_t) * bmp->image_size);
-		fread(bmp->data, 1, bmp->image_size, stream);
+		if (bmp->width > 256 || bmp->height > 256)
+		{
+			printf("Not a correct BMP file\n");
+			free(bmp);
+			bmp = NULL;
+		}
+		else
+		{
+			bmp->image_size = bmp->width * bmp->height * 3;
+			bmp->data = (uint8_t*)malloc(sizeof(uint8_t) * bmp->image_size);
+			fread(bmp->data, 1, bmp->image_size, stream);
+		}
 	}
 	else
 		printf("Not a correct BMP file\n");

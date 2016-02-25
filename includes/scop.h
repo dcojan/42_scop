@@ -91,6 +91,8 @@ void	auto_rotation(t_mesh *mesh);
 
 GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
 GLuint	new_texture_buffer(uint width, uint height, uint8_t *data);
+void	set_attrib_array(GLuint num, GLuint size);
+void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
 
 /*
 ** shaders.c

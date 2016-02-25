@@ -29,6 +29,9 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var)
 	init_glew();
 	init_gl();
 	vaoid = new_vao();
+	mesh->shader_program = load_shaders();
+	glUseProgram(mesh->shader_program);
+	glBindVertexArray(mesh->shader_program);
 	setup_mesh(mesh);
 	main_loop(sdl_var, mesh);
 	printf("Cleaning\n");
