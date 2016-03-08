@@ -23,7 +23,11 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	next_game_tick = 0;
 	auto_rot = TRUE;
 	event = NO_EVENT;
-	set_camera(0, 0, 5, mesh->shader_program);
+	set_camera(CAM_X, CAM_Y, CAM_Z, mesh->shader_program);
+	set_light(LIGHT_X, LIGHT_Y, LIGHT_Z, mesh->shader_program);
+	int id = glGetUniformLocation(mesh->shader_program, "LightPower");
+	GLfloat	light_power = LIGHT_POWER;
+	glUniform1fv(id, 1, &light_power);
 	while (event != QUIT)
 	{
 		framerate_control(&next_game_tick);
@@ -33,7 +37,6 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 			auto_rot = (auto_rot == TRUE ? FALSE : TRUE);
 		if (auto_rot == TRUE)
 			auto_rotation(mesh);
-		set_light(4, 4, 4, mesh->shader_program);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, mesh->vertex_data.v.size);
 		SDL_GL_SwapWindow(sdl_var->window);

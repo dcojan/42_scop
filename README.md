@@ -29,9 +29,10 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 	- Camera rotation around object							- OK
 	- Texure with provided UV coordinates					-
 	- lighting												- OK
-	- Toggle lighting on and off							-
+	- keys binded to increase/decrease light_power			- OK
 	- Key Toggle auto_rot on and off						- OK
 	- bmp loader											- OK
+	- zoom dezoom
 
 - Other :
 	- Control framerate - OK

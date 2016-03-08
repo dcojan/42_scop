@@ -25,7 +25,7 @@ uint8_t		test_event(SDL_Event *we, uint32_t type, SDL_Keycode key)
 	return (0);
 }
 
-static const t_keyevent		g_keycodes[15] =
+static const t_keyevent		g_keycodes[17] =
 {
 	{SDL_QUIT, 0, QUIT},
 	{SDL_KEYUP, SDLK_ESCAPE, QUIT},
@@ -37,6 +37,8 @@ static const t_keyevent		g_keycodes[15] =
 	{SDL_KEYDOWN, SDLK_e, OBJ_TRANS_Z},
 	{SDL_KEYDOWN, SDLK_d, OBJ_TRANS_Z_REV},
 	{SDL_KEYDOWN, SDLK_x, OBJ_TRANS_RESET},
+	{SDL_KEYDOWN, SDLK_y, LIGHT_MORE},
+	{SDL_KEYDOWN, SDLK_h, LIGHT_LESS},
 	{SDL_KEYUP, SDLK_t, TOGGLE_TEXTURE},
 	{SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT, START_CAMERA_MOVE},
 	{SDL_MOUSEBUTTONUP, SDL_BUTTON_LEFT, STOP_CAMERA_MOVE},

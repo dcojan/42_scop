@@ -31,7 +31,7 @@ void	auto_rotation(t_mesh *mesh)
 void	translate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset)
 {
 	static t_mat4x4		translation;
-	static const float	amount = 0.1f;
+	static const float	amount = 0.3f;
 	GLuint				rot_unif_id;
 
 	if (translation.data[0][0] == 0)

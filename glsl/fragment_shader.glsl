@@ -10,6 +10,7 @@ in vec3 fragment_color;
 uniform sampler2D texture_sampler;
 uniform float texture_transition;
 uniform vec3 light_position_worldspace;
+uniform float LightPower;
 
 out vec3 outColor;
 
@@ -18,7 +19,7 @@ void main() {
 	// Light emission properties
 	// You probably want to put them as uniforms
 	vec3 LightColor = vec3(1,1,1);
-	float LightPower = 50.0f;
+//	float LightPower = 50.0f;
 
 	// Material properties
 	vec3 MaterialDiffuseColor;

@@ -96,6 +96,21 @@ void		event_camera(t_event event, t_mesh *mesh, void *arg)
 	}
 }
 
+void		event_light(t_event event, t_mesh *mesh, void *arg)
+{
+	static GLfloat		light_power = LIGHT_POWER;
+	int					id;
+
+	(void)arg;
+	id = glGetUniformLocation(mesh->shader_program, "LightPower");
+	if (event == LIGHT_MORE && light_power < 200)
+		light_power += 10;
+	else if (event == LIGHT_LESS && light_power > 0)
+		light_power -= 10;
+	// printf("light power : %f\n", light_power);
+	glUniform1fv(id, 1, &light_power);
+}
+
 static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *, void *) =
 {
 	&event_empty,
@@ -107,6 +122,8 @@ static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *, void *) =
 	&event_translation,
 	&event_translation,
 	&event_translation,
+	&event_light,
+	&event_light,
 	&event_texture,
 	&event_camera,
 	&event_camera,

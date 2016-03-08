@@ -23,14 +23,14 @@ smooth out vec3 vNormal;
 
 void main() {
 	gl_Position = Projection * View * PostTranslation * Rotation * Translation * (vec4(in_vertex, 1.0));
-	position_world_space = (Rotation * vec4(in_vertex, 1.0)).xyz;
+	position_world_space = (PostTranslation * Rotation * vec4(in_vertex, 1.0)).xyz;
 
-	vec3 vertex_position_cameraspace = (View * Rotation * vec4(in_vertex, 1.0)).xyz;
+	vec3 vertex_position_cameraspace = (View * PostTranslation * Rotation * vec4(in_vertex, 1.0)).xyz;
 	eye_direction_camera_space = vec3(0,0,0) - vertex_position_cameraspace;
 
 	vec3 light_position_cameraspace = (View * vec4(light_position_worldspace, 1.0)).xyz;
 	light_direction_camera_space = light_position_cameraspace + eye_direction_camera_space;
-	normal_camera_space = (View * Rotation * vec4(in_normal, 0)).xyz;
+	normal_camera_space = (View * PostTranslation * Rotation * vec4(in_normal, 0)).xyz;
 
 	fragment_color = in_color;
 	UV = vertex_uv;

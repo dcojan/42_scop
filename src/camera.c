@@ -66,7 +66,7 @@ void		move_position_yaw(float yaw_angle, t_vec3 *position, int x)
 
 void		move_camera(int x, int y, GLuint prog, float speed)
 {
-	static t_vec3		position = {{0.0f, 0.0f, 5.0f}};
+	static t_vec3		position = {{CAM_X, CAM_Y, CAM_Z}};
 	float				yaw_angle;
 	float				pitch_angle;
 	t_mat4x4			*view;

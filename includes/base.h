@@ -19,9 +19,15 @@
 
 # include <stdio.h>
 
-# define WIDTH  		800
-# define HEIGHT 		600
-
+# define WIDTH  		1024
+# define HEIGHT 		768
+# define CAM_X	 		0.0f
+# define CAM_Y	 		0.0f
+# define CAM_Z	 		7.0f
+# define LIGHT_X	 	5.0f
+# define LIGHT_Y	 	5.0f
+# define LIGHT_Z	 	5.0f
+# define LIGHT_POWER	50.0f
 typedef enum		e_bool
 {
 	FALSE,
