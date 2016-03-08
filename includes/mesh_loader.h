@@ -19,6 +19,28 @@
 # include <stdlib.h>
 # include <string.h>
 
+typedef	enum		e_label
+{
+	LABEL_COMMENT,
+	LABEL_V,
+	LABEL_VN,
+	LABEL_F,
+	LABEL_O,
+	LABEL_S,
+	LABEL_G,
+	LABEL_MTLLIB,
+	LABEL_USEMTL,
+	LABEL_NONE,
+}					t_label;
+
+typedef struct		s_f_pos
+{
+	t_label			last;
+	int				v;
+	int				vt;
+	int				vn;
+}					t_f_pos;
+
 typedef struct		s_vertex
 {
 	float			*vertices;
@@ -27,14 +49,14 @@ typedef struct		s_vertex
 
 typedef struct		s_element
 {
-	unsigned short	*element;
+	GLushort		*element;
 	size_t			size;
 }					t_element;
 
 typedef struct		s_vertex_data
 {
 	t_vertex		v;
-	void			*vt;
+	t_vertex		vt;
 	t_vertex		vn;
 	void			*vp;
 	void			*cstype;
@@ -48,6 +70,8 @@ typedef struct		s_element_data
 	void			*p;
 	void			*l;
 	t_element		f;
+	t_element		vn;
+	t_element		vt;
 	void			*curv;
 	void			*curv2;
 	void			*surf;
@@ -92,15 +116,18 @@ void				add_element(GLushort *el, t_element *v, int nb);
 t_mesh				*new_mesh();
 void				clean_mesh(t_mesh *mesh);
 void				compute_normals(t_mesh *mesh);
-void				unpack_elements(t_mesh *mesh);
-int					parse_label(t_mesh *mesh, FILE *stream);
-int					label_usemtl(t_mesh *mesh, FILE *stream);
-int					label_mtllib(t_mesh *mesh, FILE *stream);
-int					label_comment(t_mesh *mesh, FILE *stream);
-int					label_f(t_mesh *mesh, FILE *stream);
-int					label_s(t_mesh *mesh, FILE *stream);
-int					label_o(t_mesh *mesh, FILE *stream);
-int					label_v(t_mesh *mesh, FILE *stream);
+void				unpack_elements(t_vertex *vertex_data, t_element *elements);
+int					parse_label(t_mesh *mesh, FILE *stream, t_f_pos *face_pos);
+int					label_usemtl(t_mesh *mesh, FILE *stream, void *arg);
+int					label_mtllib(t_mesh *mesh, FILE *stream, void *arg);
+int					label_comment(t_mesh *mesh, FILE *stream, void *arg);
+int					label_f(t_mesh *mesh, FILE *stream, void *arg);
+int					label_s(t_mesh *mesh, FILE *stream, void *arg);
+int					label_o(t_mesh *mesh, FILE *stream, void *arg);
+int					label_v(t_mesh *mesh, FILE *stream, void *arg);
+int					label_vn(t_mesh *mesh, FILE *stream, void *arg);
+int					label_vt(t_mesh *mesh, FILE *stream, void *arg);
+int					label_g(t_mesh *mesh, FILE *stream, void *arg);
 void				print_element_array(GLushort *array, size_t size);
 void				print_vertice_array(GLfloat *array, size_t size);
 #endif

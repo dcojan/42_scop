@@ -15,21 +15,29 @@
 void	setup_mesh_origin(t_mesh *mesh)
 {
 	size_t		i;
+	GLfloat		max[3];
+	GLfloat		min[3];
 
 	i = 0;
-	X(mesh->origin) = 0;
-	Y(mesh->origin) = 0;
-	Z(mesh->origin) = 0;
+	max[0] = -10000;
+	max[1] = -10000;
+	max[2] = -10000;
+	min[0] = 10000;
+	min[1] = 10000;
+	min[2] = 10000;
 	while (i < mesh->vertex_data.v.size)
 	{
-		X(mesh->origin) += mesh->vertex_data.v.vertices[i];
-		Y(mesh->origin) += mesh->vertex_data.v.vertices[i + 1];
-		Z(mesh->origin) += mesh->vertex_data.v.vertices[i + 2];
+		max[0] = fmaxf(max[0], mesh->vertex_data.v.vertices[i]);
+		max[1] = fmaxf(max[1], mesh->vertex_data.v.vertices[i + 1]);
+		max[2] = fmaxf(max[2], mesh->vertex_data.v.vertices[i + 2]);
+		min[0] = fminf(min[0], mesh->vertex_data.v.vertices[i]);
+		min[1] = fminf(min[1], mesh->vertex_data.v.vertices[i + 1]);
+		min[2] = fminf(min[2], mesh->vertex_data.v.vertices[i + 2]);
 		i += 3;
 	}
-	X(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
-	Y(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
-	Z(mesh->origin) /= (mesh->vertex_data.v.size / 3.0);
+	X(mesh->origin) = (min[0] + max[0]) / 2.0f;
+	Y(mesh->origin) = (min[1] + max[1]) / 2.0f;
+	Z(mesh->origin) = (min[2] + max[2]) / 2.0f;
 }
 
 void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
@@ -113,13 +121,17 @@ void	setup_texture(t_mesh *mesh)
 	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
-		compute_uv_coordinates(tex, mesh);
+		if (mesh->vertex_data.vt.size == 0)
+			compute_uv_coordinates(tex, mesh);
 		mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
 			((tex->width * tex->height) * 2), tex->uv, GL_STATIC_DRAW);
 		set_attrib_array(1, 2);
+		printf("E\n");
 		free(tex->uv);
 		free(tex);
 	}
+	printf("F\n");
+
 }
 
 void	setup_mesh(t_mesh *mesh)

@@ -58,5 +58,6 @@ t_bmp_tex	*load_bmp(char *path)
 		printf("Not a correct BMP file\n");
 	if (stream != NULL)
 		fclose(stream);
+	printf("Done\n");
 	return (bmp);
 }

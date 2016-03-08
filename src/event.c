@@ -51,7 +51,7 @@ t_event		sdl_to_scop_event(SDL_Event *we)
 	int							i;
 
 	i = -1;
-	while (++i < 13)
+	while (++i < 17)
 		if (test_event(we, g_keycodes[i].type, g_keycodes[i].code))
 			break ;
 	return (g_keycodes[i].event);

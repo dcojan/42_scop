@@ -12,21 +12,23 @@
 
 #include <scop.h>
 
-int			label_comment(t_mesh *mesh, FILE *stream)
+int			label_comment(t_mesh *mesh, FILE *stream, void *arg)
 {
 	int			ret;
 
+	(void)arg;
 	(void)mesh;
 	printf("comment\t");
 	ret = consume_end_of_line(stream);
 	return (ret);
 }
 
-int			label_mtllib(t_mesh *mesh, FILE *stream)
+int			label_mtllib(t_mesh *mesh, FILE *stream, void *arg)
 {
 	char	name[256];
 	int		ret;
 
+	(void)arg;
 	printf("mtllib\t");
 	ret = fscanf(stream, "%s", name);
 	if (ret != 0)
@@ -40,11 +42,12 @@ int			label_mtllib(t_mesh *mesh, FILE *stream)
 	return (ret);
 }
 
-int			label_usemtl(t_mesh *mesh, FILE *stream)
+int			label_usemtl(t_mesh *mesh, FILE *stream, void *arg)
 {
 	char	name[256];
 	int		ret;
 
+	(void)arg;
 	(void)mesh;
 	printf("usemtl\t");
 	ret = fscanf(stream, "%s", name);
@@ -60,11 +63,12 @@ int			label_usemtl(t_mesh *mesh, FILE *stream)
 	return (ret);
 }
 
-int			label_o(t_mesh *mesh, FILE *stream)
+int			label_o(t_mesh *mesh, FILE *stream, void *arg)
 {
 	char	name[256];
 	int		ret;
 
+	(void)arg;
 	(void)mesh;
 	printf("name\t");
 	ret = fscanf(stream, "%s", name);

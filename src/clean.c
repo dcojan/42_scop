@@ -30,8 +30,14 @@ void	clean_mesh(t_mesh *mesh)
 		free(mesh->vertex_data.v.vertices);
 	if (mesh->vertex_data.vn.vertices != NULL)
 		free(mesh->vertex_data.vn.vertices);
+	if (mesh->vertex_data.vt.vertices != NULL)
+		free(mesh->vertex_data.vt.vertices);
 	if (mesh->elements.f.element != NULL)
 		free(mesh->elements.f.element);
+	if (mesh->elements.vn.element != NULL)
+		free(mesh->elements.vn.element);
+	if (mesh->elements.vt.element != NULL)
+		free(mesh->elements.vt.element);
 	if (mesh->mtl_lib.path != NULL)
 		free(mesh->mtl_lib.path);
 	if (mesh->mtl_lib.material != NULL)

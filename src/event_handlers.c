@@ -82,6 +82,7 @@ void		event_camera(t_event event, t_mesh *mesh, void *arg)
 	(void)arg;
 	if (event == START_CAMERA_MOVE)
 	{
+		printf("event_camera\n");
 		SDL_GetMouseState(&(mousebase.x), &(mousebase.y));
 		mouse.x = mousebase.x;
 		mouse.y = mousebase.y;

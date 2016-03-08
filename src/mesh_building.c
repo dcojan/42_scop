@@ -37,7 +37,8 @@ void		compute_normals(t_mesh *mesh)
 	mesh->vertex_data.vn.vertices = dest;
 }
 
-void		unpack_elements(t_mesh *mesh)
+// void		unpack_elements(t_mesh *mesh)
+void		unpack_elements(t_vertex *vertex_data, t_element *elements)
 {
 	GLfloat		*new;
 	size_t		size;
@@ -46,22 +47,32 @@ void		unpack_elements(t_mesh *mesh)
 	GLushort	tmp;
 
 	printf("Unpacking elements\n");
-	new = (GLfloat *)malloc(sizeof(GLfloat) * (mesh->elements.f.size * 3));
-	size = mesh->elements.f.size * 3;
+	new = (GLfloat *)malloc(sizeof(GLfloat) * (elements->size * 3));
+	size = elements->size * 3;
 	vindex = 0;
 	i = 0;
-	while (i < mesh->elements.f.size)
+	// printf("element->size = %zu\n", elements->size);
+	// printf("size = %zu\n", size);
+	while (i < elements->size)
 	{
-		tmp = mesh->elements.f.element[i] * 3;
-		new[vindex] = mesh->vertex_data.v.vertices[tmp];
-		new[vindex + 1] = mesh->vertex_data.v.vertices[tmp + 1];
-		new[vindex + 2] = mesh->vertex_data.v.vertices[tmp + 2];
+		// printf("element no %zu\n", i);
+		tmp = elements->element[i] * 3;
+		// printf("tmp =  %u\n", tmp);
+		// printf("vertex_data->vertices[tmp] =  %f\n", vertex_data->vertices[tmp]);
+		// printf("A\n");
+		new[vindex] = vertex_data->vertices[tmp];
+		// printf("B\n");
+		new[vindex + 1] = vertex_data->vertices[tmp + 1];
+		// printf("C\n");
+		new[vindex + 2] = vertex_data->vertices[tmp + 2];
 		vindex += 3;
 		i++;
 	}
-	free(mesh->vertex_data.v.vertices);
-	mesh->vertex_data.v.vertices = new;
-	mesh->vertex_data.v.size = size;
+	free(vertex_data->vertices);
+	vertex_data->vertices = new;
+	vertex_data->size = size;
+	printf("DONE\n");
+
 }
 
 void		add_vec3(t_vec3 *vec, t_vertex *v)
@@ -114,6 +125,8 @@ t_mesh		*new_mesh(void)
 	mesh->vertex_data.v.size = 0;
 	mesh->vertex_data.vn.vertices = NULL;
 	mesh->vertex_data.vn.size = 0;
+	mesh->vertex_data.vt.vertices = NULL;
+	mesh->vertex_data.vt.size = 0;
 	mesh->elements.f.element = NULL;
 	mesh->elements.f.size = 0;
 	mesh->mtl_lib.path = NULL;
