@@ -6,11 +6,51 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/09 10:14:58 by nhiboux           #+#    #+#             */
-/*   Updated: 2016/03/09 11:57:26 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 16:54:42 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
+
+t_obj		*new_obj(void)
+{
+	t_obj	*obj;
+
+	obj = (t_obj*)malloc(sizeof(t_obj));
+	obj->name = NULL;
+	obj->vertex_data.v.vertices = NULL;
+	obj->vertex_data.v.size = 0;
+	obj->vertex_data.vn.vertices = NULL;
+	obj->vertex_data.vn.size = 0;
+	obj->vertex_data.vt.vertices = NULL;
+	obj->vertex_data.vt.size = 0;
+	obj->elements.f.element = NULL;
+	obj->elements.f.size = 0;
+	obj->elements.vt.element = NULL;
+	obj->elements.vt.size = 0;
+	obj->elements.vn.element = NULL;
+	obj->elements.vn.size = 0;
+	obj->usemtl = NULL;
+	obj->next = NULL;
+	return (obj);
+}
+
+t_mesh		*new_mesh(void)
+{
+	t_mesh	*mesh;
+
+	mesh = (t_mesh*)malloc(sizeof(t_mesh));
+	mesh->obj_vertex.v.vertices = NULL;
+	mesh->obj_vertex.v.size = 0;
+	mesh->obj_vertex.vn.vertices = NULL;
+	mesh->obj_vertex.vn.size = 0;
+	mesh->obj_vertex.vt.vertices = NULL;
+	mesh->obj_vertex.vt.size = 0;
+	mesh->folder = NULL;
+	mesh->mtllib = NULL;
+	mesh->objs = new_obj();
+	return (mesh);
+}
 
 FILE		*open_file(const char *path)
 {

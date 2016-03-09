@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:48:42 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 15:56:01 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 20:00:38 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_bmp_tex	*load_bmp(char *path)
 	uint8_t		head[54];
 
 	bmp = NULL;
-	printf("Loading %s\n", path);
+	printf("Loading %s\t", path);
 	if ((stream = open_file(path)) == NULL)
 		printf("Error opening file\n");
 	else if (fread(head, 1, 54, stream) == 54 &&

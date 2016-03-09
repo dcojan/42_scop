@@ -49,15 +49,34 @@ typedef	struct		s_material
 	struct s_material	*next;
 }					t_material;
 
-typedef	struct		s_material_lib
+typedef struct		s_obj
 {
-	char			*path;
-	t_material		*material;
-}					t_material_lib;
-//
-// typedef struct		s_obj
+	GLuint			vaoid;
+	uint32_t		shader_program;
+	char			*name;
+	t_vertex_data	tmp_vert;
+	t_vertex_data	vertex_data;
+	t_element_data	elements;
+	t_vec3			origin;
+	t_material		*usemtl;
+	uint32_t		vertex_buffer;
+	uint32_t		normal_buffer;
+	uint32_t		texture_buffer;
+	struct s_obj	*next;
+}					t_obj;
+
+typedef struct		s_mesh
+{
+	char			*folder;
+	t_vertex_data	obj_vertex;
+	char			*mtllib;
+	t_obj			*objs;
+	uint32_t		shader_program;
+}					t_mesh;
+
+// typedef struct		s_mesh
 // {
-// 	char			*name;
+// 	char			*folder;
 // 	t_vertex_data	vertex_data;
 // 	t_element_data	elements;
 // 	t_vec3			origin;
@@ -65,24 +84,5 @@ typedef	struct		s_material_lib
 // 	uint32_t		vertex_buffer;
 // 	uint32_t		normal_buffer;
 // 	uint32_t		texture_buffer;
-// }					t_obj;
-//
-// typedef struct		s_mesh
-// {
-// 	char			*folder;
-// 	t_obj			*objs;
 // 	uint32_t		shader_program;
 // }					t_mesh;
-
-typedef struct		s_mesh
-{
-	char			*folder;
-	t_vertex_data	vertex_data;
-	t_element_data	elements;
-	t_vec3			origin;
-	t_material_lib	mtl_lib;
-	uint32_t		vertex_buffer;
-	uint32_t		normal_buffer;
-	uint32_t		texture_buffer;
-	uint32_t		shader_program;
-}					t_mesh;

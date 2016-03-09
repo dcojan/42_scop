@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buffers.c                                          :+:      :+:    :+:   */
+/*   gl_shortcuts.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:10:07 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 15:49:01 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 15:41:24 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 
 	glGenBuffers(1, &buffer);
 	glBindBuffer(type, buffer);
-	glBufferData(type,
-		size * sizeof(data[0]),
-		&(data[0]),
-		draw);
+	glBufferData(type, size * sizeof(data[0]), &(data[0]), draw);
 	return (buffer);
 }
 

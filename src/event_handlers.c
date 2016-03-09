@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 14:46:24 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:19:15 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 19:56:07 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void		event_camera(t_event event, t_mesh *mesh, void *arg)
 	(void)arg;
 	if (event == START_CAMERA_MOVE)
 	{
-		printf("event_camera\n");
 		SDL_GetMouseState(&(mousebase.x), &(mousebase.y));
 		mouse.x = mousebase.x;
 		mouse.y = mousebase.y;

@@ -43,7 +43,7 @@ VPATH:= src:src/wavefront_loader:lib/glmaths:lib/glsl_loader:lib/bmp_loader
 DIROBJ= obj/
 DIROBJS= $(addprefix $(DIROBJ), $(OBJ))
 
-CC=clang
+CC=clang -g
 
 FLAGS= -Werror -Wextra -Wall
 

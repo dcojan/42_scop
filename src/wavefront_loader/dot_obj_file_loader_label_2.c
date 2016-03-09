@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 11:57:27 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 20:05:14 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			label_comment(t_mesh *mesh, FILE *stream, void *arg)
 
 	(void)arg;
 	(void)mesh;
-	printf("comment\t");
+	printf("comment\n");
 	ret = consume_end_of_line(stream);
 	return (ret);
 }
@@ -33,33 +33,37 @@ int			label_mtllib(t_mesh *mesh, FILE *stream, void *arg)
 	ret = fscanf(stream, "%s", name);
 	if (ret != 0)
 	{
-		mesh->mtl_lib.path = (char*)malloc(strlen(name) + strlen(mesh->folder));
-		strcpy(mesh->mtl_lib.path, mesh->folder);
-		mesh->mtl_lib.path = strcat(mesh->mtl_lib.path, name);
+		mesh->mtllib = (char*)malloc(strlen(name) + strlen(mesh->folder) + 1);
+		strcpy(mesh->mtllib, mesh->folder);
+		mesh->mtllib = strcat(mesh->mtllib, name);
 	}
-	printf("%d =>  %s\n", ret, mesh->mtl_lib.path);
+	printf("%d =>  %s\n", ret, mesh->mtllib);
 	consume_end_of_line(stream);
 	return (ret);
 }
 
 int			label_usemtl(t_mesh *mesh, FILE *stream, void *arg)
 {
-	char	name[256];
+	char	*name;
 	int		ret;
 
 	(void)arg;
 	(void)mesh;
+	name = NULL;
 	printf("usemtl\t");
-	ret = fscanf(stream, "%s", name);
+	if ((ret = getline(&name, (size_t*)&ret, stream)) == -1)
+		perror("");
 	if (ret != 0)
 	{
-		mesh->mtl_lib.material = (t_material *)malloc(sizeof(t_material));
-		mesh->mtl_lib.material->name = NULL;
-		mesh->mtl_lib.material->next = NULL;
-		mesh->mtl_lib.material->name = strdup(name);
+		mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
+		mesh->objs->usemtl->name = NULL;
+		mesh->objs->usemtl->next = NULL;
+		mesh->objs->usemtl->name = name;
+		mesh->objs->usemtl->name[ret - 1] = '\0';
+
 	}
-	printf("%d =>  %s\n", ret, mesh->mtl_lib.material->name);
-	consume_end_of_line(stream);
+	printf("%d =>  %s\n", ret, mesh->objs->usemtl->name);
+	// consume_end_of_line(stream);
 	return (ret);
 }
 
@@ -67,11 +71,21 @@ int			label_o(t_mesh *mesh, FILE *stream, void *arg)
 {
 	char	name[256];
 	int		ret;
+	t_obj	*obj;
 
 	(void)arg;
 	(void)mesh;
-	printf("name\t");
+	printf("\nname\t");
 	ret = fscanf(stream, "%s", name);
+	if (mesh->objs->name == NULL)
+		mesh->objs->name = strdup(name);
+	else
+	{
+		obj = new_obj();
+		obj->next = mesh->objs;
+		mesh->objs = obj;
+		mesh->objs->name = strdup(name);
+	}
 	printf("%d =>  %s\n", ret, name);
 	consume_end_of_line(stream);
 	return (ret);

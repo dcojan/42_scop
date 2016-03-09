@@ -6,13 +6,13 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 10:26:04 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 19:57:50 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-static void	setup_mesh_origin(t_mesh *mesh)
+static void	setup_mesh_origin(t_obj *mesh)
 {
 	size_t		i;
 	GLfloat		max[3];
@@ -62,14 +62,14 @@ static void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
 	}
 }
 
-void	compute_uv_coordinates(t_bmp_tex *tex, t_mesh *mesh)
+void	compute_uv_coordinates(t_bmp_tex *tex, t_obj *mesh)
 {
 	GLfloat		*uv;
 	uint32_t	i;
 	int			j;
 	t_vec3		*normal;
 
-	printf("Compute UVs\n");
+	// printf("Compute UVs\n");
 	uv = (float *)malloc(sizeof(float) * ((mesh->vertex_data.v.size / 3) * 2));
 	i = 0;
 	j = 0;
@@ -80,18 +80,18 @@ void	compute_uv_coordinates(t_bmp_tex *tex, t_mesh *mesh)
 		j += 2;
 		i += 3;
 	}
-	printf("done\n");
+	// printf("done\n");
 	tex->uv = uv;
 }
 
-static void	setup_color(t_mesh *mesh)
+static void	setup_color(t_obj *mesh)
 {
 	float		grey;
 	size_t		i;
 	GLfloat		*color;
 
 	color = (GLfloat*)malloc(sizeof(GLfloat) * (mesh->vertex_data.v.size));
-	printf("Compute color\n");
+	// printf("Compute color\n");
 	grey = 0.4;
 	i = 0;
 	while (i < (mesh->vertex_data.v.size))
@@ -113,7 +113,7 @@ static void	setup_color(t_mesh *mesh)
 	set_attrib_array(4, 3);
 }
 
-static void	setup_texture(t_mesh *mesh)
+static void	setup_texture(t_obj *mesh)
 {
 	GLuint			texture_id;
 	t_bmp_tex		*tex;
@@ -124,19 +124,20 @@ static void	setup_texture(t_mesh *mesh)
 		// if (mesh->vertex_data.vt.size == 0)
 			compute_uv_coordinates(tex, mesh);
 		mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-			((tex->width * tex->height) * 2), tex->uv, GL_STATIC_DRAW);
+			(mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
 		set_attrib_array(1, 2);
-		printf("E\n");
+		free(tex->data);
 		free(tex->uv);
 		free(tex);
 	}
 }
 
-void		setup_mesh(t_mesh *mesh)
+void		setup_mesh(GLuint shader_program, t_obj *mesh)
 {
 	t_mat4x4		rotation;
 	t_mat4x4		*translation;
 
+	glBindVertexArray(mesh->vaoid);
 	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
 								mesh->vertex_data.v.vertices, GL_STATIC_DRAW);
 	set_attrib_array(0, 3);
@@ -144,13 +145,13 @@ void		setup_mesh(t_mesh *mesh)
 								mesh->vertex_data.vn.vertices, GL_STATIC_DRAW);
 	set_attrib_array(2, 3);
 	init_mat4x4(&rotation);
-	set_uniform_mat4x4(mesh->shader_program, "Rotation", &rotation);
+	set_uniform_mat4x4(shader_program, "Rotation", &rotation);
 	setup_mesh_origin(mesh);
 	translation = mat_translation(-mesh->origin.data[0], -mesh->origin.data[1],
 									-mesh->origin.data[2]);
-	set_uniform_mat4x4(mesh->shader_program, "Translation", translation);
+	set_uniform_mat4x4(shader_program, "Translation", translation);
 	init_mat4x4(translation);
-	set_uniform_mat4x4(mesh->shader_program, "PostTranslation", translation);
+	set_uniform_mat4x4(shader_program, "PostTranslation", translation);
 	free(translation);
 	setup_texture(mesh);
 	setup_color(mesh);

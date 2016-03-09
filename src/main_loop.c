@@ -3,20 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:10 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 17:15:49 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 19:41:55 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+void		draw_obj(t_obj* obj)
+{
+	glBindVertexArray(obj->vaoid);
+	glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
+}
 
 void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 {
 	t_event			event;
 	double			next_game_tick;
 	uint32_t		state;
+	t_obj			*obj;
 
 	state = NO_STATE;
 	next_game_tick = 0;
@@ -30,9 +37,14 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	{
 		framerate_control(&next_game_tick);
 		event = get_scop_event();
-		handle_event(event, mesh, &state);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glDrawArrays(GL_TRIANGLES, 0, mesh->vertex_data.v.size);
+		handle_event(event, mesh, &state);
+		obj = mesh->objs;
+		while (obj != NULL)
+		{
+			draw_obj(obj);
+			obj = obj->next;
+		}
 		SDL_GL_SwapWindow(sdl_var->window);
 	}
 }

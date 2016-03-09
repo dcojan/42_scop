@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 10:47:31 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 19:39:23 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var);
 */
 
 void	main_loop(t_sdl	*sdl_var, t_mesh *mesh);
-t_event	get_scop_event();
+t_event	get_scop_event(void);
 void	handle_event(t_event event, t_mesh *mesh, uint32_t *state);
 
 /*
@@ -99,9 +99,8 @@ void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
 /*
 ** shaders.c
 */
-uint	load_shaders();
-void	setup_mesh(t_mesh *mesh);
-
+uint	load_shaders(void);
+void	setup_mesh(GLuint shader_program, t_obj *mesh);
 /*
 ** camera.c
 */
@@ -121,9 +120,10 @@ void	set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 
 void	framerate_control(double *next_game_tick);
 
-void	build_mesh(t_mesh *mesh);
+// void	build_mesh(t_mesh *mesh);
+// void	build_obj(t_obj *mesh);
+void	build_obj(t_obj *obj, t_mesh *mesh);
 void	clean_mesh(t_mesh *mesh);
 
-t_mesh				*new_mesh();
 
 #endif

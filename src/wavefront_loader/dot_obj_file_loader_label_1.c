@@ -6,11 +6,28 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 11:57:27 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 20:03:14 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
+
+int			label_l(t_mesh *mesh, FILE *stream, void *arg)
+{
+	char		*buf;
+	int			tmp;
+	int			ret;
+
+	(void)mesh;
+	(void)arg;
+	buf = NULL;
+	// printf("label_l\t");
+	if ((ret = getline(&buf, (size_t*)&tmp, stream)) == -1)
+		perror("");
+	// printf("%d =>  %s\n", ret, buf);
+	free(buf);
+	return (ret);
+}
 
 int			label_g(t_mesh *mesh, FILE *stream, void *arg)
 {
@@ -37,12 +54,13 @@ int			label_f(t_mesh *mesh, FILE *stream, void *arg)
 	t_f_pos		*face_pos;
 
 	buf = NULL;
-	printf("f\n");
 	face_pos = (t_f_pos *)arg;
 	if ((ret = getline(&buf, (size_t*)&tmp, stream)) == -1)
 		perror("");
 	ret = sscanf(buf, " %s %s %s %s", s[0], s[1], s[2], s[3]);
 	int i = 0;
+	// if ret < 3 : exit error
+	ret2 = 0;
 	while (i < ret)
 	{
 		ret2 = sscanf(s[i], " %d/%d/%d", &(tmp[0]), &(tmp[1]), &(tmp[2]));
@@ -59,11 +77,11 @@ int			label_f(t_mesh *mesh, FILE *stream, void *arg)
 	// printf("el1 = %d\n", el[1]);
 	// printf("el2 = %d\n", el[2]);
 	// printf("el3 = %d\n", el[3]);
-	add_element(el, &(mesh->elements.f), ret);
+	add_element(el, &(mesh->objs->elements.f), ret);
 	if (ret2 == 3 || ret2 == 2)
-		add_element(&(el[4]), &(mesh->elements.vt), ret);
+		add_element(&(el[4]), &(mesh->objs->elements.vt), ret);
 	if (ret2 == 3 || ret2 == 4)
-		add_element(&(el[8]), &(mesh->elements.vn), ret);
+		add_element(&(el[8]), &(mesh->objs->elements.vn), ret);
 	free(buf);
 	return (ret);
 }
@@ -87,11 +105,13 @@ int			label_v(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
-	printf("v\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->v++;
 	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
-	add_vec3(&v, &(mesh->vertex_data.v));
+	// printf("%s = %f %f %f -> %zu\n", mesh->objs->name, v.data[0], v.data[1], v.data[2], mesh->objs->vertex_data.v.size);
+	// add_vec3(&v, &(mesh->objs->vertex_data.v));
+	add_vec3(&v, &(mesh->obj_vertex.v));
+	// printf("DONE\n");
 	return (ret);
 }
 
@@ -101,12 +121,12 @@ int			label_vn(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
-	printf("vn\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->vn++;
 	// printf("label_vn\n");
 	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
-	add_vec3(&v, &(mesh->vertex_data.vn));
+	// add_vec3(&v, &(mesh->objs->vertex_data.vn));
+	add_vec3(&v, &(mesh->obj_vertex.vn));
 	return (ret);
 }
 
@@ -116,11 +136,10 @@ int			label_vt(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
-	printf("vt\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->vt++;
-	// printf("label_vt\n");
 	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
-	add_vec3(&v, &(mesh->vertex_data.vt));
+	// add_vec3(&v, &(mesh->objs->vertex_data.vt));
+	add_vec3(&v, &(mesh->obj_vertex.vt));
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:54 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 11:55:14 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 19:59:37 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ static FILE	*open_file(const char *path)
 {
 	FILE	*stream;
 
-	printf("path = %s\n", path);
+	// printf("path = %s\n", path);
 	stream = fopen(path, "r");
 	if (stream == NULL)
 	{
-		perror("");
+		perror(path);
 		return (NULL);
 	}
 	return (stream);

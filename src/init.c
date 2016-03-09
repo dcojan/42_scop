@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:58 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 15:22:38 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 20:00:12 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		init_sdl(t_sdl *sdl_var)
 {
-	printf("INIT_SDL\n");
+	printf("INIT_SDL\t");
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
 		SDL_GL_CONTEXT_PROFILE_CORE);
@@ -31,7 +31,7 @@ void		init_sdl(t_sdl *sdl_var)
 
 void		init_gl(void)
 {
-	printf("INIT GL\n");
+	printf("INIT GL\t");
 // glEnable(GL_CULL_FACE);	glFrontFace(GL_CW);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
@@ -44,7 +44,7 @@ void		init_glew(void)
 {
 	GLuint	vertex_buffer;
 
-	printf("INIT_GLEW\n");
+	printf("INIT_GLEW\t");
 	glewExperimental = GL_TRUE;
 	glewInit();
 	glGenBuffers(1, &vertex_buffer);
