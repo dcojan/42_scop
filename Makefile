@@ -6,12 +6,6 @@ SRC= main.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
-		bmp_loader.c \
-		dot_mtl_file_loader.c \
-		dot_obj_file_loader.c \
-		dot_obj_file_loader_label_1.c \
-		dot_obj_file_loader_label_2.c \
-		glsl_file_loader.c \
 		framerate.c \
 		shaders.c \
 		camera.c \
@@ -20,8 +14,13 @@ SRC= main.c \
 		gl_shortcuts.c \
 		mesh_building.c \
 		mesh_setup.c \
-		clean.c \
-		utils.c
+		clean.c
+
+SRC_WAVEFRONT_LOADER=	dot_obj_file_loader.c \
+		dot_mtl_file_loader.c \
+		dot_obj_file_loader_label_1.c \
+		dot_obj_file_loader_label_2.c \
+		dot_obj_file_loader_utils.c
 
 SRCGLMATH= lookat.c \
 		vec3operations.c \
@@ -31,10 +30,16 @@ SRCGLMATH= lookat.c \
 		quaternions.c \
 		print.c
 
+SRC_BMP_LOADER= glsl_file_loader.c
+SRC_GLSL_LOADER= bmp_loader.c
+
 OBJ= $(SRC:.c=.o)
+OBJ+= $(SRC_WAVEFRONT_LOADER:.c=.o)
+OBJ+= $(SRC_GLSL_LOADER:.c=.o)
+OBJ+= $(SRC_BMP_LOADER:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)
 
-VPATH:= src:glmaths
+VPATH:= src:src/wavefront_loader:lib/glmaths:lib/glsl_loader:lib/bmp_loader
 DIROBJ= obj/
 DIROBJS= $(addprefix $(DIROBJ), $(OBJ))
 
@@ -42,7 +47,7 @@ CC=clang
 
 FLAGS= -Werror -Wextra -Wall
 
-INC= -I ./includes -I ./glmaths
+INC= -I ./includes -I ./lib/glmaths -I ./lib/glsl_loader -I ./lib/bmp_loader
 
 UNAME_S := $(shell uname -s)
 

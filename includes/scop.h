@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 11:47:49 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 10:47:31 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "base.h"
 # include "glsl_loader.h"
 # include "bmp_loader.h"
-# include "mesh_loader.h"
+# include "wavefront_loader.h"
 # include "glmath.h"
 
 # define FRAMES_PER_SECOND 	30
@@ -120,5 +120,10 @@ void	set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 */
 
 void	framerate_control(double *next_game_tick);
+
+void	build_mesh(t_mesh *mesh);
+void	clean_mesh(t_mesh *mesh);
+
+t_mesh				*new_mesh();
 
 #endif

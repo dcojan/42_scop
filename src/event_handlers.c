@@ -134,7 +134,13 @@ static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *, void *) =
 
 void		handle_event(t_event event, t_mesh *mesh, uint32_t *state)
 {
+	static t_bool			auto_rot = TRUE;
+
 	if (*state & COLOR_TO_TEX || *state & TEX_TO_COLOR)
 		event_texture(event, mesh, state);
 	(*g_f[event])(event, mesh, state);
+	if (event == OBJ_AUTO_ROT)
+		auto_rot = (auto_rot == TRUE ? FALSE : TRUE);
+	if (auto_rot == TRUE)
+		auto_rotation(mesh);
 }

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_loader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:52:04 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 12:18:21 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 12:05:12 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "glmath.h"
+#ifndef BMP_LOADER_H
+# define BMP_LOADER_H
+# include <stdint.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,3 +30,4 @@ struct	s_bmp_tex
 typedef struct s_bmp_tex	t_bmp_tex;
 
 t_bmp_tex	*load_bmp(char *path);
+#endif

@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dot_mtl_file_loader.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 16:36:16 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:45:38 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 11:57:28 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scop.h"
-
-static FILE	*open_file(const char *path)
-{
-	FILE	*stream;
-
-	stream = fopen(path, "r");
-	if (stream == NULL)
-	{
-		perror(path);
-		return (NULL);
-	}
-	return (stream);
-}
+#include "wavefront_loader.h"
 
 void		load_mtl_obj_file(t_mesh *mesh)
 {
@@ -33,7 +20,8 @@ void		load_mtl_obj_file(t_mesh *mesh)
 	printf("Loading %s\n", mesh->mtl_lib.path);
 	if ((stream = open_file(mesh->mtl_lib.path)) == NULL)
 	{
-		fclose(stream);
+		return ;
 	}
+	fclose(stream);
 	return ;
 }

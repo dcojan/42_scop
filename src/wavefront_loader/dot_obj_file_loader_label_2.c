@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader_label_2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:21:54 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 11:57:27 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "wavefront_loader.h"
 
 int			label_comment(t_mesh *mesh, FILE *stream, void *arg)
 {

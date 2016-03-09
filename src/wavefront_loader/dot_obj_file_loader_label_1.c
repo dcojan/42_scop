@@ -3,50 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader_label_1.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:20:16 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 11:57:27 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
-
-static int	(*const g_func_tab[10])(t_mesh *mesh, FILE *stream, void *arg) =
-{
-	&label_comment,
-	&label_v,
-	&label_vn,
-	&label_vt,
-	&label_f,
-	&label_o,
-	&label_s,
-	&label_g,
-	&label_mtllib,
-	&label_usemtl,
-};
-
-int			parse_label(t_mesh *mesh, FILE *stream, t_f_pos *face_pos)
-{
-	static char		*tab[10] = {
-		"#", "v", "vn", "vt", "f", "o", "s", "g", "mtllib", "usemtl"};
-	int				i;
-	char			label[15];
-	int				ret;
-
-	ret = fscanf(stream, "%s", label);
-	if (ret == EOF)
-		return (0);
-	i = 0;
-	while (i < 10)
-	{
-		if (strcmp(tab[i], label) == 0)
-			return (*g_func_tab[i])(mesh, stream, face_pos);
-		i++;
-	}
-	printf("parse error state `%s` not recognized\n", label);
-	return (-1);
-}
+#include "wavefront_loader.h"
 
 int			label_g(t_mesh *mesh, FILE *stream, void *arg)
 {
@@ -73,6 +37,7 @@ int			label_f(t_mesh *mesh, FILE *stream, void *arg)
 	t_f_pos		*face_pos;
 
 	buf = NULL;
+	printf("f\n");
 	face_pos = (t_f_pos *)arg;
 	if ((ret = getline(&buf, (size_t*)&tmp, stream)) == -1)
 		perror("");
@@ -122,6 +87,7 @@ int			label_v(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
+	printf("v\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->v++;
 	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
@@ -135,6 +101,7 @@ int			label_vn(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
+	printf("vn\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->vn++;
 	// printf("label_vn\n");
@@ -149,6 +116,7 @@ int			label_vt(t_mesh *mesh, FILE *stream, void *arg)
 	int			ret;
 	t_f_pos		*face_pos;
 
+	printf("vt\n");
 	face_pos = (t_f_pos *)arg;
 	face_pos->vt++;
 	// printf("label_vt\n");

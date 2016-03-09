@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_building.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 10:46:17 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 10:37:46 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		compute_normals(t_mesh *mesh)
+static void		compute_normals(t_mesh *mesh)
 {
 	t_vec3		*tmp[3];
 	size_t		i;
@@ -37,8 +37,7 @@ void		compute_normals(t_mesh *mesh)
 	mesh->vertex_data.vn.vertices = dest;
 }
 
-// void		unpack_elements(t_mesh *mesh)
-void		unpack_elements(t_vertex *vertex_data, t_element *elements)
+static void	unpack_elements(t_vertex *vertex_data, t_element *elements)
 {
 	GLfloat		*new;
 	size_t		size;
@@ -75,46 +74,6 @@ void		unpack_elements(t_vertex *vertex_data, t_element *elements)
 
 }
 
-void		add_vec3(t_vec3 *vec, t_vertex *v)
-{
-	GLfloat		*new;
-
-	new = (GLfloat *)malloc(sizeof(GLfloat) * (v->size + 3));
-	if (v->size > 0)
-		memcpy(new, v->vertices, sizeof(GLfloat) * v->size);
-	new[v->size] = vec->data[0];
-	new[v->size + 1] = vec->data[1];
-	new[v->size + 2] = vec->data[2];
-	if (v->vertices != NULL)
-		free(v->vertices);
-	v->vertices = new;
-	v->size += 3;
-}
-
-void		add_element(GLushort *el, t_element *v, int nb)
-{
-	size_t		size;
-	GLushort	*new;
-
-	size = (v->size + (3 * (nb - 2)));
-	new = (GLushort *)malloc(sizeof(GLushort) * size);
-	if (v->size > 0)
-		memcpy(new, v->element, sizeof(GLushort) * v->size);
-	new[v->size] = el[0] - 1;
-	new[v->size + 1] = el[1] - 1;
-	new[v->size + 2] = el[2] - 1;
-	if (nb == 4)
-	{
-		new[v->size + 3] = el[2] - 1;
-		new[v->size + 4] = el[3] - 1;
-		new[v->size + 5] = el[0] - 1;
-	}
-	if (v->element != NULL)
-		free(v->element);
-	v->element = new;
-	v->size = size;
-}
-
 t_mesh		*new_mesh(void)
 {
 	t_mesh	*mesh;
@@ -132,4 +91,25 @@ t_mesh		*new_mesh(void)
 	mesh->mtl_lib.path = NULL;
 	mesh->mtl_lib.material = NULL;
 	return (mesh);
+}
+
+void		build_mesh(t_mesh *mesh)
+{
+	if (mesh->elements.f.size > 0)
+	{
+		printf("unpacking v\n");
+		unpack_elements(&(mesh->vertex_data.v), &(mesh->elements.f));
+	}
+	if (mesh->elements.vn.size > 0)
+	{
+		printf("unpacking vn -> size = %zu\n",mesh->elements.vn.size);
+		unpack_elements(&(mesh->vertex_data.vn), &(mesh->elements.vn));
+	}
+	else
+		compute_normals(mesh);
+	if (mesh->elements.vt.size > 0)
+	{
+		printf("unpacking vt\n");
+		unpack_elements(&(mesh->vertex_data.vt), &(mesh->elements.vt));
+	}
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_setup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/23 16:09:34 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/09 10:26:04 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void	setup_mesh_origin(t_mesh *mesh)
+static void	setup_mesh_origin(t_mesh *mesh)
 {
 	size_t		i;
 	GLfloat		max[3];
@@ -40,7 +40,7 @@ void	setup_mesh_origin(t_mesh *mesh)
 	Z(mesh->origin) = (min[2] + max[2]) / 2.0f;
 }
 
-void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
+static void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
 {
 	if (pow(PX(normal), 2) > pow(PY(normal), 2) &&
 		pow(PX(normal), 2) > pow(PZ(normal), 2))
@@ -84,7 +84,7 @@ void	compute_uv_coordinates(t_bmp_tex *tex, t_mesh *mesh)
 	tex->uv = uv;
 }
 
-void	setup_color(t_mesh *mesh)
+static void	setup_color(t_mesh *mesh)
 {
 	float		grey;
 	size_t		i;
@@ -113,7 +113,7 @@ void	setup_color(t_mesh *mesh)
 	set_attrib_array(4, 3);
 }
 
-void	setup_texture(t_mesh *mesh)
+static void	setup_texture(t_mesh *mesh)
 {
 	GLuint			texture_id;
 	t_bmp_tex		*tex;
@@ -121,7 +121,7 @@ void	setup_texture(t_mesh *mesh)
 	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
-		if (mesh->vertex_data.vt.size == 0)
+		// if (mesh->vertex_data.vt.size == 0)
 			compute_uv_coordinates(tex, mesh);
 		mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
 			((tex->width * tex->height) * 2), tex->uv, GL_STATIC_DRAW);
@@ -130,11 +130,9 @@ void	setup_texture(t_mesh *mesh)
 		free(tex->uv);
 		free(tex);
 	}
-	printf("F\n");
-
 }
 
-void	setup_mesh(t_mesh *mesh)
+void		setup_mesh(t_mesh *mesh)
 {
 	t_mat4x4		rotation;
 	t_mat4x4		*translation;
