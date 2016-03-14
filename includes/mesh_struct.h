@@ -45,7 +45,11 @@ typedef	struct		s_material
 	t_vec3				kd;
 	t_vec3				ks;
 	float				ni;
+	float				illum;
 	uint8_t				d;
+	char				*map_kd;
+	char				*map_bump;
+	char				*map_ks;
 	struct s_material	*next;
 }					t_material;
 
@@ -70,6 +74,7 @@ typedef struct		s_mesh
 	char			*folder;
 	t_vertex_data	obj_vertex;
 	char			*mtllib;
+	t_material		*material;
 	t_obj			*objs;
 	uint32_t		shader_program;
 }					t_mesh;

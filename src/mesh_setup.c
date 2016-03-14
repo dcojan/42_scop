@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:57:50 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 18:58:58 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	compute_uv_coordinates(t_bmp_tex *tex, t_obj *mesh)
 	tex->uv = uv;
 }
 
-static void	setup_color(t_obj *mesh)
+void	setup_color(t_obj *mesh)
 {
 	float		grey;
 	size_t		i;
@@ -113,22 +113,26 @@ static void	setup_color(t_obj *mesh)
 	set_attrib_array(4, 3);
 }
 
-static void	setup_texture(t_obj *mesh)
+void	setup_texture(t_obj *mesh)
 {
 	GLuint			texture_id;
 	t_bmp_tex		*tex;
 
 	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
+	// if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
-		// if (mesh->vertex_data.vt.size == 0)
+		if (mesh->vertex_data.vt.size == 0)
 			compute_uv_coordinates(tex, mesh);
 		mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
 			(mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
 		set_attrib_array(1, 2);
-		free(tex->data);
-		free(tex->uv);
-		free(tex);
+		if (mesh->vertex_data.vt.size == 0)
+		{
+			free(tex->data);
+			free(tex->uv);
+			free(tex);
+		}
 	}
 }
 
@@ -153,6 +157,4 @@ void		setup_mesh(GLuint shader_program, t_obj *mesh)
 	init_mat4x4(translation);
 	set_uniform_mat4x4(shader_program, "PostTranslation", translation);
 	free(translation);
-	setup_texture(mesh);
-	setup_color(mesh);
 }

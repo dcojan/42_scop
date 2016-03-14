@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:39:23 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 17:40:05 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
 ** shaders.c
 */
 uint	load_shaders(void);
+void	setup_texture(t_obj *mesh);
+void	setup_color(t_obj *mesh);
 void	setup_mesh(GLuint shader_program, t_obj *mesh);
 /*
 ** camera.c

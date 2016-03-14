@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:48:42 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 20:00:38 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 18:49:53 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_bmp_tex	*load_bmp(char *path)
 		bmp = (t_bmp_tex*)malloc(sizeof(t_bmp_tex));
 		bmp->width = *(int*)&(head[0x12]);
 		bmp->height = *(int*)&(head[0x16]);
-		if (bmp->width > 256 || bmp->height > 256)
+		if (bmp->width > 720 || bmp->height > 720)
 		{
 			printf("Not a correct BMP file\n");
 			free(bmp);

@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:38 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 16:57:17 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/09 22:41:02 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	clean_mesh(t_mesh *mesh)
 {
 	t_obj		*obj;
 
+	if (mesh->folder != NULL)
+		free(mesh->folder);
 	if (mesh->mtllib != NULL)
 		free(mesh->mtllib);
 	while (mesh->objs != NULL)

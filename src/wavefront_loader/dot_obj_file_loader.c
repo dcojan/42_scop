@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:43:46 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 18:21:09 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_mesh		*load_dot_obj_file(t_mesh *mesh, char *path)
 		if (ret == -1)
 			return (NULL);
 	}
+	fclose(stream);
 	printf("Done.\n");
 	return (mesh);
 }

@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:55:43 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 18:55:15 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		compute_normals(t_obj *mesh)
 	t_vec3		*normal;
 	GLfloat		*dest;
 
-	// printf("Computing normals.\n");
+	printf("Computing normals.\n");
 	dest = (GLfloat*)malloc(sizeof(GLfloat) * mesh->vertex_data.v.size);
 	mesh->vertex_data.vn.size = mesh->vertex_data.v.size;
 	i = 0;
@@ -78,19 +78,19 @@ void		build_obj(t_obj *obj, t_mesh *mesh)
 {
 	if (obj->elements.f.size > 0)
 	{
-		// printf("unpacking v\n");
+		printf("unpacking v\n");
 		unpack_elements(&(obj->vertex_data.v), &(obj->elements.f), &(mesh->obj_vertex.v));
 	}
 	if (obj->elements.vn.size > 0)
 	{
-		// printf("unpacking vn -> size = %zu\n",obj->elements.vn.size);
+		printf("unpacking vn -> size = %zu\n",obj->elements.vn.size);
 		unpack_elements(&(obj->vertex_data.vn), &(obj->elements.vn), &(mesh->obj_vertex.vn));
 	}
 	else
 		compute_normals(obj);
 	if (obj->elements.vt.size > 0)
 	{
-		// printf("unpacking vt\n");
+		printf("unpacking vt\n");
 		unpack_elements(&(obj->vertex_data.vt), &(obj->elements.vt), &(mesh->obj_vertex.vt));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 20:05:14 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 17:36:50 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			label_mtllib(t_mesh *mesh, FILE *stream, void *arg)
 	}
 	printf("%d =>  %s\n", ret, mesh->mtllib);
 	consume_end_of_line(stream);
+	load_mtl_obj_file(mesh->mtllib, &(mesh->material));
 	return (ret);
 }
 

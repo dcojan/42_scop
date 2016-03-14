@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:44:30 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/10 17:39:01 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_f_pos
 }					t_f_pos;
 
 t_mesh				*load_dot_obj_file(t_mesh *mesh, char *path);
-void				load_mtl_obj_file(t_material *mtl);
+int					load_mtl_obj_file(char *path, t_material **mtl);
 
 int					label_usemtl(t_mesh *mesh, FILE *stream, void *arg);
 int					label_mtllib(t_mesh *mesh, FILE *stream, void *arg);
