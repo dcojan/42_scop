@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:56:23 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 20:19:48 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ void		build_obj(t_obj *obj, t_mesh *mesh)
 	{
 		printf("unpacking v\n");
 		unpack_elements(&(obj->vertex_data.v), &(obj->elements.f), &(mesh->obj_vertex.v), 3);
+	}
+	else
+	{
+		obj->vertex_data.v = mesh->obj_vertex.v;
+		mesh->obj_vertex.v.vertices = NULL;
+		mesh->obj_vertex.v.size = 0;
 	}
 	if (obj->elements.vn.size > 0)
 	{

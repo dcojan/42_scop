@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:36:54 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 19:40:24 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ typedef struct		s_f_pos
 t_mesh				*load_dot_obj_file(t_mesh *mesh, char *path);
 int					load_mtl_obj_file(char *path, t_material **mtl);
 
-int					label_usemtl(t_mesh *mesh, FILE *stream, void *arg);
-int					label_mtllib(t_mesh *mesh, FILE *stream, void *arg);
-int					label_comment(t_mesh *mesh, FILE *stream, void *arg);
-int					label_f(t_mesh *mesh, FILE *stream, void *arg);
-int					label_s(t_mesh *mesh, FILE *stream, void *arg);
-int					label_o(t_mesh *mesh, FILE *stream, void *arg);
-int					label_v(t_mesh *mesh, FILE *stream, void *arg);
-int					label_vn(t_mesh *mesh, FILE *stream, void *arg);
-int					label_vt(t_mesh *mesh, FILE *stream, void *arg);
-int					label_g(t_mesh *mesh, FILE *stream, void *arg);
-int					label_l(t_mesh *mesh, FILE *stream, void *arg);
+int					label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_comment(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_f(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_s(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_o(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_v(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_vn(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_vt(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_g(t_mesh *mesh, char *str, t_f_pos *arg);
+int					label_l(t_mesh *mesh, char *str, t_f_pos *arg);
 
 t_mesh				*new_mesh(void);
 t_obj				*new_obj(void);

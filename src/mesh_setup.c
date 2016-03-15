@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:44:45 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 23:14:14 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	setup_texture(t_obj *mesh)
 	t_bmp_tex		*tex;
 
 	// if ((tex = load_bmp("textures/pony.bmp")) != NULL)
-	if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
+	// if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
+	if ((tex = load_bmp("/home/nhiboux/Downloads/cat_diff.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
 		if (mesh->vertex_data.vt.size == 0)

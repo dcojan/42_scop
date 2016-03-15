@@ -6,78 +6,76 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 18:44:23 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 22:25:16 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
 
-int			label_comment(t_mesh *mesh, FILE *stream, void *arg)
+int			label_comment(t_mesh *mesh, char *str, t_f_pos *arg)
 {
-	int			ret;
-
 	(void)arg;
 	(void)mesh;
-	printf("comment\n");
-	ret = consume_end_of_line(stream);
-	return (ret);
+	printf("comment %s\n", str);
+	return (1);
 }
 
-int			label_mtllib(t_mesh *mesh, FILE *stream, void *arg)
+int			label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg)
 {
 	char	name[256];
+	char	s[15];
 	int		ret;
 
 	(void)arg;
-	printf("mtllib\t");
-	ret = fscanf(stream, "%s", name);
-	if (ret != 0)
-	{
-		mesh->mtllib = (char*)malloc(strlen(name) + strlen(mesh->folder) + 1);
-		strcpy(mesh->mtllib, mesh->folder);
-		mesh->mtllib = strcat(mesh->mtllib, name);
-	}
+	printf("mtllib POUET %s\t", str);
+	ret = sscanf(str, "%s %s", s, name);
+	printf("ret = %d\n", ret);
+	if (ret != 2)
+	 	return (-1);
+	mesh->mtllib = (char*)malloc(strlen(name) + strlen(mesh->folder) + 1);
+	strcpy(mesh->mtllib, mesh->folder);
+	mesh->mtllib = strcat(mesh->mtllib, name);
 	printf("%d =>  %s\n", ret, mesh->mtllib);
-	consume_end_of_line(stream);
 	load_mtl_obj_file(mesh->mtllib, &(mesh->material));
 	return (ret);
 }
 
-int			label_usemtl(t_mesh *mesh, FILE *stream, void *arg)
+int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 {
-	char	*name;
+	char	name[256];
+	char	s[15];
 	int		ret;
-	size_t	i;
 
 	(void)arg;
 	(void)mesh;
-	name = NULL;
 	printf("usemtl\t");
-	if ((ret = getline(&name, &i, stream)) == -1)
-		perror("");
-	if (ret > 0)
+	ret = sscanf(str, "%s %s", s, name);
+	if (ret != 2)
+	 	return (-1);
+	if (ret == 2)
 	{
 		mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
 		mesh->objs->usemtl->name = NULL;
 		mesh->objs->usemtl->next = NULL;
-		mesh->objs->usemtl->name = name;
-		mesh->objs->usemtl->name[ret - 1] = '\0';
+		mesh->objs->usemtl->name = strdup(name);
 		printf("%d =>  %s\n", ret, mesh->objs->usemtl->name);
 	}
-	// consume_end_of_line(stream);
 	return (ret);
 }
 
-int			label_o(t_mesh *mesh, FILE *stream, void *arg)
+int			label_o(t_mesh *mesh, char *str, t_f_pos *arg)
 {
 	char	name[256];
+	char	s[15];
 	int		ret;
 	t_obj	*obj;
 
 	(void)arg;
 	(void)mesh;
 	printf("\nname\t");
-	ret = fscanf(stream, "%s", name);
+	ret = sscanf(str, "%s %s", s, name);
+	if (ret != 2)
+	 	return (-1);
 	if (mesh->objs->name == NULL)
 		mesh->objs->name = strdup(name);
 	else
@@ -88,6 +86,5 @@ int			label_o(t_mesh *mesh, FILE *stream, void *arg)
 		mesh->objs->name = strdup(name);
 	}
 	printf("%d =>  %s\n", ret, name);
-	consume_end_of_line(stream);
 	return (ret);
 }

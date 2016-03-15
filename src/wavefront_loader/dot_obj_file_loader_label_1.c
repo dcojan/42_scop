@@ -6,60 +6,51 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:45:28 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 22:36:54 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
 
-int			label_l(t_mesh *mesh, FILE *stream, void *arg)
+int			label_l(t_mesh *mesh, char *str, t_f_pos *arg)
 {
-	char		*buf;
-	int			tmp;
-	int			ret;
-
 	(void)mesh;
+	(void)str;
 	(void)arg;
-	buf = NULL;
-	// printf("label_l\t");
-	if ((ret = getline(&buf, (size_t*)&tmp, stream)) == -1)
-		perror("");
-	// printf("%d =>  %s\n", ret, buf);
-	free(buf);
-	return (ret);
+	printf("label_l\t");
+	return (1);
 }
 
-int			label_g(t_mesh *mesh, FILE *stream, void *arg)
+int			label_g(t_mesh *mesh, char *str, t_f_pos *arg)
 {
 	char	name[256];
+	char	s[15];
 	int		ret;
 
 	(void)arg;
 	(void)mesh;
 	printf("group\t");
-	ret = fscanf(stream, "%s", name);
+	ret = sscanf(str, "%s %s", s, name);
+	if (ret != 2)
+		return (-1);
 	printf("%d =>  %s\n", ret, name);
-	consume_end_of_line(stream);
 	return (ret);
 }
 
-int			label_f(t_mesh *mesh, FILE *stream, void *arg)
+int			label_f(t_mesh *mesh, char *str, t_f_pos *face_pos)
 {
 	int			ret;
 	int			ret2;
 	GLushort	el[12];
 	int			tmp[3];
 	char		s[4][64];
-	char		*buf;
-	t_f_pos		*face_pos;
 
-	buf = NULL;
-	face_pos = (t_f_pos *)arg;
-	if ((ret = getline(&buf, (size_t*)&tmp, stream)) == -1)
-		perror("");
-	ret = sscanf(buf, " %s %s %s %s", s[0], s[1], s[2], s[3]);
+	// printf("label f\n");
+	str = &(str[1]);
+	ret = sscanf(str, " %s %s %s %s", s[0], s[1], s[2], s[3]);
+	if (ret < 3)
+		return (-1);
 	int i = 0;
-	// if ret < 3 : exit error
 	ret2 = 0;
 	while (i < ret)
 	{
@@ -82,32 +73,36 @@ int			label_f(t_mesh *mesh, FILE *stream, void *arg)
 		add_element(&(el[4]), &(mesh->objs->elements.vt), ret);
 	if (ret2 == 3 || ret2 == 4)
 		add_element(&(el[8]), &(mesh->objs->elements.vn), ret);
-	free(buf);
 	return (ret);
 }
 
-int			label_s(t_mesh *mesh, FILE *stream, void *arg)
+int			label_s(t_mesh *mesh, char *str, t_f_pos *arg)
 {
 	int		ret;
 	char	name[256];
 
 	(void)mesh;
 	(void)arg;
-	printf("smoothing group\t");
-	ret = fscanf(stream, "%s", name);
+	str = &(str[1]);
+	ret = sscanf(str, "%s", name);
+	printf("smoothing group - ret %d\t", ret);
+	if (ret != 1)
+		return (-1);
 	printf("%d =>  %s\n", ret, name);
-	return (ret);
+	return (1);
 }
 
-int			label_v(t_mesh *mesh, FILE *stream, void *arg)
+int			label_v(t_mesh *mesh, char *str, t_f_pos *face_pos)
 {
 	t_vec3		v;
 	int			ret;
-	t_f_pos		*face_pos;
 
-	face_pos = (t_f_pos *)arg;
+	// printf("label v\n");
 	face_pos->v++;
-	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
+	str = &(str[1]);
+	ret = sscanf(str, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
+	if (ret < 3)
+		return (-1);
 	// printf("%s = %f %f %f -> %zu\n", mesh->objs->name, v.data[0], v.data[1], v.data[2], mesh->objs->vertex_data.v.size);
 	// add_vec3(&v, &(mesh->objs->vertex_data.v));
 	add_vec3(&v, &(mesh->obj_vertex.v));
@@ -115,30 +110,33 @@ int			label_v(t_mesh *mesh, FILE *stream, void *arg)
 	return (ret);
 }
 
-int			label_vn(t_mesh *mesh, FILE *stream, void *arg)
+int			label_vn(t_mesh *mesh, char *str, t_f_pos *face_pos)
 {
 	t_vec3		v;
 	int			ret;
-	t_f_pos		*face_pos;
 
-	face_pos = (t_f_pos *)arg;
+	str = &(str[2]);
 	face_pos->vn++;
 	// printf("label_vn\n");
-	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
+	ret = sscanf(str, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
+	if (ret < 3)
+		return (-1);
 	// add_vec3(&v, &(mesh->objs->vertex_data.vn));
 	add_vec3(&v, &(mesh->obj_vertex.vn));
 	return (ret);
 }
 
-int			label_vt(t_mesh *mesh, FILE *stream, void *arg)
+int			label_vt(t_mesh *mesh, char *str, t_f_pos *face_pos)
 {
 	t_vec3		v;
 	int			ret;
-	t_f_pos		*face_pos;
 
-	face_pos = (t_f_pos *)arg;
+	// printf("label_vt\n");
+	str = &(str[2]);
 	face_pos->vt++;
-	ret = fscanf(stream, " %f %f", &(v.data[0]), &(v.data[1]));
+	ret = sscanf(str, " %f %f", &(v.data[0]), &(v.data[1]));
+	if (ret < 2)
+		return (0);
 	// add_vec3(&v, &(mesh->objs->vertex_data.vt));
 	add_vec2(&v, &(mesh->obj_vertex.vt));
 	return (ret);
