@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 20:03:14 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:45:28 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ int			label_vt(t_mesh *mesh, FILE *stream, void *arg)
 
 	face_pos = (t_f_pos *)arg;
 	face_pos->vt++;
-	ret = fscanf(stream, " %f %f %f", &(v.data[0]), &(v.data[1]), &(v.data[2]));
+	ret = fscanf(stream, " %f %f", &(v.data[0]), &(v.data[1]));
 	// add_vec3(&v, &(mesh->objs->vertex_data.vt));
-	add_vec3(&v, &(mesh->obj_vertex.vt));
+	add_vec2(&v, &(mesh->obj_vertex.vt));
 	return (ret);
 }

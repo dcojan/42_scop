@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 18:58:58 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:44:45 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,21 @@ void	setup_texture(t_obj *mesh)
 	GLuint			texture_id;
 	t_bmp_tex		*tex;
 
-	if ((tex = load_bmp("textures/pony.bmp")) != NULL)
-	// if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
+	// if ((tex = load_bmp("textures/pony.bmp")) != NULL)
+	if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
 		if (mesh->vertex_data.vt.size == 0)
+		{
 			compute_uv_coordinates(tex, mesh);
-		mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-			(mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
+			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
+				(mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
+		}
+		else
+		{
+			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
+				mesh->vertex_data.vt.size, mesh->vertex_data.vt.vertices, GL_STATIC_DRAW);
+		}
 		set_attrib_array(1, 2);
 		if (mesh->vertex_data.vt.size == 0)
 		{

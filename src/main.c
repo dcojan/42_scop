@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:15 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 17:22:50 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:08:17 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		main(int ac, char **av)
 			init_sdl(&sdl_var);
 			scop(mesh, &sdl_var);
 			clean_mesh(mesh);
-			glDeleteProgram(mesh->shader_program);
 			clean_sdl(&sdl_var);
 		}
 		else

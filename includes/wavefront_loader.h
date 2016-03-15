@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 17:39:01 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:36:54 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char				*make_folder_path(char* file);
 FILE				*open_file(const char *path);
 int					consume_end_of_line(FILE *stream);
 void				add_vec3(t_vec3 *vec, t_vertex *v);
+void				add_vec2(t_vec3 *vec, t_vertex *v);
 void				add_element(GLushort *el, t_element *v, int nb);
 void				print_element_array(GLushort *array, size_t size);
 void				print_vertice_array(GLfloat *array, size_t size);

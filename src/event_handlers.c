@@ -6,11 +6,23 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 14:46:24 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:56:07 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 18:08:53 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
+
+void		event_zoom(t_event event, t_mesh *mesh, void *arg)
+{
+	static float	zoom = 1.0f;
+
+	if (event == ZOOM_IN)
+		zoom += 0.1f;
+	else if (event == ZOOM_OUT)
+		zoom -= 0.1f;
+	set_projection(zoom, mesh->shader_program);
+	(void)arg;
+}
 
 void		event_empty(t_event event, t_mesh *mesh, void *arg)
 {
@@ -124,6 +136,8 @@ static void		(*const g_f[TOTAL_EVENT])(t_event, t_mesh *, void *) =
 	&event_translation,
 	&event_light,
 	&event_light,
+	&event_zoom,
+	&event_zoom,
 	&event_texture,
 	&event_camera,
 	&event_camera,

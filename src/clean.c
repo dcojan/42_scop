@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:38 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 22:41:02 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:12:30 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	clean_mesh(t_mesh *mesh)
 {
 	t_obj		*obj;
 
+	glDeleteProgram(mesh->shader_program);
 	if (mesh->folder != NULL)
 		free(mesh->folder);
 	if (mesh->mtllib != NULL)
@@ -65,7 +66,7 @@ void	clean_mesh(t_mesh *mesh)
 		free(mesh->obj_vertex.v.vertices);
 	if (mesh->obj_vertex.vn.vertices != NULL)
 		free(mesh->obj_vertex.vn.vertices);
-	if (obj->vertex_data.vt.vertices != NULL)
+	if (mesh->obj_vertex.vt.vertices != NULL)
 		free(mesh->obj_vertex.vt.vertices);
 	free(mesh);
 }

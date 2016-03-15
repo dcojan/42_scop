@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:31:53 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/15 17:52:22 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,25 @@ t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez)
 	return (view_m);
 }
 
+void		set_projection(float zoom_factor, GLuint progid)
+{
+	t_mat4x4		*projection;
+	GLuint			proj_unif_id;
+
+	projection = perspective(radians(45.0f * zoom_factor),
+		(GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	proj_unif_id = glGetUniformLocation(progid, "Projection");
+	glUniformMatrix4fv(proj_unif_id, 1, GL_FALSE, &((projection->data)[0][0]));
+}
+
 void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
 {
-	GLuint			proj_unif_id;
 	GLuint			view_unif_id;
-	t_mat4x4		*projection;
 	t_mat4x4		*view;
 
-	projection = perspective(radians(45.0f),
-		(GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+	set_projection(1.0f, progid);
 	view = view_matrix(eyex, eyey, eyez);
-	proj_unif_id = glGetUniformLocation(progid, "Projection");
 	view_unif_id = glGetUniformLocation(progid, "View");
-	glUniformMatrix4fv(proj_unif_id, 1, GL_FALSE, &((projection->data)[0][0]));
 	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((view->data)[0][0]));
 }
 

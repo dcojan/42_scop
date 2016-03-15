@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 17:36:50 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 18:44:23 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ int			label_usemtl(t_mesh *mesh, FILE *stream, void *arg)
 {
 	char	*name;
 	int		ret;
+	size_t	i;
 
 	(void)arg;
 	(void)mesh;
 	name = NULL;
 	printf("usemtl\t");
-	if ((ret = getline(&name, (size_t*)&ret, stream)) == -1)
+	if ((ret = getline(&name, &i, stream)) == -1)
 		perror("");
-	if (ret != 0)
+	if (ret > 0)
 	{
 		mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
 		mesh->objs->usemtl->name = NULL;
 		mesh->objs->usemtl->next = NULL;
 		mesh->objs->usemtl->name = name;
 		mesh->objs->usemtl->name[ret - 1] = '\0';
-
+		printf("%d =>  %s\n", ret, mesh->objs->usemtl->name);
 	}
-	printf("%d =>  %s\n", ret, mesh->objs->usemtl->name);
 	// consume_end_of_line(stream);
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 12:53:36 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/15 16:26:03 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/15 18:11:21 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint8_t		test_event(SDL_Event *we, uint32_t type, SDL_Keycode key)
 	return (0);
 }
 
-static const t_keyevent		g_keycodes[17] =
+static const t_keyevent		g_keycodes[19] =
 {
 	{SDL_QUIT, 0, QUIT},
 	{SDL_KEYUP, SDLK_ESCAPE, QUIT},
@@ -39,6 +39,8 @@ static const t_keyevent		g_keycodes[17] =
 	{SDL_KEYDOWN, SDLK_x, OBJ_TRANS_RESET},
 	{SDL_KEYDOWN, SDLK_y, LIGHT_MORE},
 	{SDL_KEYDOWN, SDLK_h, LIGHT_LESS},
+	{SDL_KEYDOWN, SDLK_u, ZOOM_IN},
+	{SDL_KEYDOWN, SDLK_j, ZOOM_OUT},
 	{SDL_KEYUP, SDLK_t, TOGGLE_TEXTURE},
 	{SDL_MOUSEBUTTONDOWN, SDL_BUTTON_LEFT, START_CAMERA_MOVE},
 	{SDL_MOUSEBUTTONUP, SDL_BUTTON_LEFT, STOP_CAMERA_MOVE},
@@ -51,7 +53,7 @@ t_event		sdl_to_scop_event(SDL_Event *we)
 	int							i;
 
 	i = -1;
-	while (++i < 17)
+	while (++i < 19)
 		if (test_event(we, g_keycodes[i].type, g_keycodes[i].code))
 			break ;
 	return (g_keycodes[i].event);

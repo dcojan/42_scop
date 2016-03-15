@@ -22,13 +22,10 @@ void main() {
 //	float LightPower = 50.0f;
 
 	// Material properties
-	vec3 MaterialDiffuseColor;
-	// if (apply_texture == true)
-	// 	MaterialDiffuseColor = texture(texture_sampler, UV).rgb;
-	// else
-	// 	MaterialDiffuseColor = fragment_color;
-	MaterialDiffuseColor = (fragment_color * texture_transition) + (texture(texture_sampler, UV).rgb * (1 - texture_transition));
+	vec3 fragment_color2 = fragment_color * texture_transition;
+	vec3 tex = (texture(texture_sampler, UV).rgb * (1 - texture_transition));
 
+	vec3 MaterialDiffuseColor = fragment_color2 + tex;
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
 	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
 

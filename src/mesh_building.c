@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 18:55:15 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 17:56:23 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void		compute_normals(t_obj *mesh)
 	mesh->vertex_data.vn.vertices = dest;
 }
 
-static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex *mesh)
+static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex *mesh, int nb)
 {
 	GLfloat		*new;
 	size_t		size;
@@ -46,8 +46,8 @@ static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex
 	GLushort	tmp;
 
 	// printf("Unpacking %zu elements from %zu vertex_data\n", elements->size, mesh->size);
-	new = (GLfloat *)malloc(sizeof(GLfloat) * (elements->size * 3));
-	size = elements->size * 3;
+	new = (GLfloat *)malloc(sizeof(GLfloat) * (elements->size * nb));
+	size = elements->size * nb;
 	vindex = 0;
 	i = 0;
 	// printf("element->size = %zu\n", elements->size);
@@ -55,7 +55,7 @@ static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex
 	while (i < elements->size)
 	{
 		// printf("element no %zu\n", i);
-		tmp = elements->element[i] * 3;
+		tmp = elements->element[i] * nb;
 		// printf("index =  %u\n", tmp);
 		// printf("vindex =  %u\n", vindex);
 		// printf("vertex_data->vertices[tmp] =  %f\n", vertex_data->vertices[tmp]);
@@ -65,8 +65,9 @@ static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex
 		// }
 		new[vindex] = mesh->vertices[tmp];
 		new[vindex + 1] = mesh->vertices[tmp + 1];
-		new[vindex + 2] = mesh->vertices[tmp + 2];
-		vindex += 3;
+		if (nb == 3)
+			new[vindex + 2] = mesh->vertices[tmp + 2];
+		vindex += nb;
 		i++;
 	}
 	vertex_data->vertices = new;
@@ -79,19 +80,19 @@ void		build_obj(t_obj *obj, t_mesh *mesh)
 	if (obj->elements.f.size > 0)
 	{
 		printf("unpacking v\n");
-		unpack_elements(&(obj->vertex_data.v), &(obj->elements.f), &(mesh->obj_vertex.v));
+		unpack_elements(&(obj->vertex_data.v), &(obj->elements.f), &(mesh->obj_vertex.v), 3);
 	}
 	if (obj->elements.vn.size > 0)
 	{
 		printf("unpacking vn -> size = %zu\n",obj->elements.vn.size);
-		unpack_elements(&(obj->vertex_data.vn), &(obj->elements.vn), &(mesh->obj_vertex.vn));
+		unpack_elements(&(obj->vertex_data.vn), &(obj->elements.vn), &(mesh->obj_vertex.vn), 3);
 	}
 	else
 		compute_normals(obj);
 	if (obj->elements.vt.size > 0)
 	{
 		printf("unpacking vt\n");
-		unpack_elements(&(obj->vertex_data.vt), &(obj->elements.vt), &(mesh->obj_vertex.vt));
+		unpack_elements(&(obj->vertex_data.vt), &(obj->elements.vt), &(mesh->obj_vertex.vt), 2);
 	}
 }
 //

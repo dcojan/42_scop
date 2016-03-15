@@ -6,7 +6,7 @@
 /*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 17:40:05 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/15 18:08:36 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ enum	e_event
 	OBJ_TRANS_RESET,
 	LIGHT_MORE,
 	LIGHT_LESS,
+	ZOOM_IN,
+	ZOOM_OUT,
 	TOGGLE_TEXTURE,
 	START_CAMERA_MOVE,
 	STOP_CAMERA_MOVE,
@@ -107,6 +109,7 @@ void	setup_mesh(GLuint shader_program, t_obj *mesh);
 ** camera.c
 */
 
+void	set_projection(float zoom_factor, GLuint progid);
 void	set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 void	move_camera(int x, int y, GLuint progid, float speed);
 

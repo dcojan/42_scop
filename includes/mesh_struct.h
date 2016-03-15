@@ -5,12 +5,14 @@ typedef struct		s_vertex
 {
 	float			*vertices;
 	size_t			size;
+	size_t			max_size;
 }					t_vertex;
 
 typedef struct		s_element
 {
 	GLushort		*element;
 	size_t			size;
+	size_t			max_size;
 }					t_element;
 
 typedef struct		s_vertex_data
