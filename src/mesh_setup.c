@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_setup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 23:14:14 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 10:48:32 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,18 +116,19 @@ void	setup_color(t_obj *mesh)
 void	setup_texture(t_obj *mesh)
 {
 	GLuint			texture_id;
-	t_bmp_tex		*tex;
+	// t_bmp_tex		*tex;
+	t_tga_tex		*tex;
 
 	// if ((tex = load_bmp("textures/pony.bmp")) != NULL)
 	// if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
-	if ((tex = load_bmp("/home/nhiboux/Downloads/cat_diff.bmp")) != NULL)
+	if ((tex = load_tga("ressources/cat/cat_diff.tga")) != NULL)
 	{
 		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
 		if (mesh->vertex_data.vt.size == 0)
 		{
-			compute_uv_coordinates(tex, mesh);
-			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-				(mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
+			// compute_uv_coordinates(tex, mesh);
+			// mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
+				// (mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
 		}
 		else
 		{
@@ -137,11 +138,13 @@ void	setup_texture(t_obj *mesh)
 		set_attrib_array(1, 2);
 		if (mesh->vertex_data.vt.size == 0)
 		{
-			free(tex->data);
-			free(tex->uv);
-			free(tex);
+			// free(tex->data);
+			// free(tex->uv);
+			// free(tex);
 		}
 	}
+	else
+		printf("failed to load texture\n");
 }
 
 void		setup_mesh(GLuint shader_program, t_obj *mesh)

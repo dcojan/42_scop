@@ -30,6 +30,7 @@ SRCGLMATH= lookat.c \
 		quaternions.c \
 		print.c
 
+SRC_TGA_LOADER= tga_loader.c
 SRC_BMP_LOADER= glsl_file_loader.c
 SRC_GLSL_LOADER= bmp_loader.c
 
@@ -37,9 +38,10 @@ OBJ= $(SRC:.c=.o)
 OBJ+= $(SRC_WAVEFRONT_LOADER:.c=.o)
 OBJ+= $(SRC_GLSL_LOADER:.c=.o)
 OBJ+= $(SRC_BMP_LOADER:.c=.o)
+OBJ+= $(SRC_TGA_LOADER:.c=.o)
 OBJ+= $(SRCGLMATH:.c=.o)
 
-VPATH:= src:src/wavefront_loader:lib/glmaths:lib/glsl_loader:lib/bmp_loader
+VPATH:= src:src/wavefront_loader:lib/glmaths:lib/glsl_loader:lib/bmp_loader:lib/tga_loader
 DIROBJ= obj/
 DIROBJS= $(addprefix $(DIROBJ), $(OBJ))
 
@@ -47,7 +49,7 @@ CC=clang -g
 
 FLAGS= -Werror -Wextra -Wall
 
-INC= -I ./includes -I ./lib/glmaths -I ./lib/glsl_loader -I ./lib/bmp_loader
+INC= -I ./includes -I ./lib/glmaths -I ./lib/glsl_loader -I ./lib/bmp_loader -I ./lib/tga_loader
 
 UNAME_S := $(shell uname -s)
 
