@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader_label_2.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 22:25:16 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:25:10 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ int			label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg)
 	strcpy(mesh->mtllib, mesh->folder);
 	mesh->mtllib = strcat(mesh->mtllib, name);
 	printf("%d =>  %s\n", ret, mesh->mtllib);
-	load_mtl_obj_file(mesh->mtllib, &(mesh->material));
+	load_mtl_obj_file(mesh, mesh->mtllib);
 	return (ret);
 }
 
 int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 {
-	char	name[256];
-	char	s[15];
-	int		ret;
+	char		name[256];
+	char		s[15];
+	int			ret;
+	t_material	*mat;
 
 	(void)arg;
 	(void)mesh;
@@ -54,11 +55,21 @@ int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 	 	return (-1);
 	if (ret == 2)
 	{
-		mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
-		mesh->objs->usemtl->name = NULL;
-		mesh->objs->usemtl->next = NULL;
-		mesh->objs->usemtl->name = strdup(name);
-		printf("%d =>  %s\n", ret, mesh->objs->usemtl->name);
+		// mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
+		// mesh->objs->usemtl->name = NULL;
+		// mesh->objs->usemtl->next = NULL;
+		// mesh->objs->usemtl->name = strdup(name);
+		printf("%d =>  %s\n", ret, name);
+		mat = mesh->material;
+		while (mat != NULL)
+		{
+			if (strcmp(mat->name, name) == 0)
+			{
+				mesh->objs->usemtl = mat;
+				break;
+			}
+			mat = mat->next;
+		}
 	}
 	return (ret);
 }

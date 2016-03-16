@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:38 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:12:30 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:39:05 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	clean_obj(t_obj *obj)
 		free(obj->elements.vn.element);
 	if (obj->elements.vt.element != NULL)
 		free(obj->elements.vt.element);
-	if (obj->usemtl != NULL)
-	{
-		free(obj->usemtl->name);
-		free(obj->usemtl);
-	}
 	glDeleteVertexArrays(1, &(obj->vaoid));
 	free(obj);
 }
@@ -49,6 +44,7 @@ void	clean_obj(t_obj *obj)
 void	clean_mesh(t_mesh *mesh)
 {
 	t_obj		*obj;
+	t_material	*mat;
 
 	glDeleteProgram(mesh->shader_program);
 	if (mesh->folder != NULL)
@@ -61,6 +57,16 @@ void	clean_mesh(t_mesh *mesh)
 		printf("clean obj : %s\n", obj->name);
 		mesh->objs = mesh->objs->next;
 		clean_obj(obj);
+	}
+	while (mesh->material)
+	{
+		mat = mesh->material;
+		printf("clean material : %s\n", mat->name);
+		mesh->material = mesh->material->next;
+		if (mat->map_kd != NULL)
+			free(mat->map_kd);
+		free(mat->name);
+		free(mat);
 	}
 	if (mesh->obj_vertex.v.vertices != NULL)
 		free(mesh->obj_vertex.v.vertices);

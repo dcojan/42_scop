@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bmp_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:48:42 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 18:49:53 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:30:59 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static FILE	*open_file(const char *path)
 	return (stream);
 }
 
-t_bmp_tex	*load_bmp(char *path)
+t_bmp_tex	*load_bmp(const char *path)
 {
 	t_bmp_tex	*bmp;
 	FILE		*stream;

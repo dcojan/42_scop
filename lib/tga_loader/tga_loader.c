@@ -6,66 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 11:42:27 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 11:52:01 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 12:51:43 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tga_loader.h"
-
-// t_tga_tex	*load_tga(const char* filename)
-// {
-// 	t_tga_header		tgaheader;
-// 	t_tga_tex			*t;
-// 	FILE				*f;
-//
-// 	printf("loading %s\n", filename);
-// 	f = fopen(filename, "rb");
-// 	if (f == NULL)
-// 	{
-// 		perror(filename);
-// 		return (NULL);
-// 	}
-// 	t = (t_tga_tex*)malloc(sizeof(t_tga_tex));
-//
-// 	// read TGA header
-// 	// fread((char*) &tgaheader , sizeof(struct tga_header));			// Read tga header. For more information: see tga.h and link above
-// 	fread(&tgaheader, sizeof(t_tga_header), 1, f);
-// 	// printf("image type: %i n", tgaheader.imageTypeCode);
-// 	// read pixel data
-// 	int imageSize = tgaheader.width * tgaheader.height * tgaheader.PixelDepth;		// Calculate image size
-// 	t->width = tgaheader.width;
-// 	t->height = tgaheader.height;
-//  	t->data = (unsigned char*) malloc(imageSize);							// Reserve space in the memory to store our image data
-// 	fread(&(t->data), imageSize, 1, f);						// Read image data from file, into the reserved memory place
-// 	/*
-//  	* TGA is stored in BGR (Blue-Green-Red) format,
-//  	* we need to convert this to Red-Green-Blue (RGB).
-//  	* The following section does BGR to RGB conversion
-//  	*/
-//  	// if (tgaheader.bpp == 24)
-// 	// {
-// 	// 	for (int i = 0; i < imageSize; i+=3)
-// 	// 	{
-// 	// 		char c = imageData[i];
-// 	// 		imageData[i] = imageData[i+2];
-// 	// 		imageData[i+2] = c;
-// 	// 	}
-// 	// }
-// 	// else
-// 	// if (tgaheader.bpp == 32)
-// 	// {
-// 	// 	for (int i = 0; i < imageSize; i+=4)
-// 	// 	{
-// 	// 		// 32 bits per pixel   =  4 byte per pixel
-// 	// 		char c = imageData[i];
-// 	// 		imageData[i] = imageData[i+2];
-// 	// 		imageData[i+2] = c;
-// 	// 	}
-// 	// }
-// 	fclose(f);
-// 	printf("done\n");
-// 	return (t);
-// }
 
 t_tga_tex	*load_tga(const char *filename)
 {

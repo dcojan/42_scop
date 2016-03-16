@@ -17,6 +17,8 @@ SRC= main.c \
 		clean.c
 
 SRC_WAVEFRONT_LOADER=	dot_obj_file_loader.c \
+		dot_mtl_file_loader_label_1.c \
+		dot_mtl_file_loader_label_2.c \
 		dot_mtl_file_loader.c \
 		dot_obj_file_loader_label_1.c \
 		dot_obj_file_loader_label_2.c \

@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 10:48:32 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 14:44:39 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
 	}
 }
 
-void	compute_uv_coordinates(t_bmp_tex *tex, t_obj *mesh)
+GLfloat		*compute_uv_coordinates(t_obj *mesh)
 {
 	GLfloat		*uv;
 	uint32_t	i;
@@ -81,7 +81,7 @@ void	compute_uv_coordinates(t_bmp_tex *tex, t_obj *mesh)
 		i += 3;
 	}
 	// printf("done\n");
-	tex->uv = uv;
+	return (uv);
 }
 
 void	setup_color(t_obj *mesh)
@@ -115,20 +115,34 @@ void	setup_color(t_obj *mesh)
 
 void	setup_texture(t_obj *mesh)
 {
-	GLuint			texture_id;
-	// t_bmp_tex		*tex;
-	t_tga_tex		*tex;
+	static const char	def[] = "textures/pony.bmp";
+	GLuint				texture_id;
+	t_bmp_tex			*tex_bmp;
+	t_tga_tex			*tex_tga;
+	GLfloat				*uv;
 
-	// if ((tex = load_bmp("textures/pony.bmp")) != NULL)
-	// if ((tex = load_bmp("ressources/Iphone/Textures/iphone-6-02_1_.bmp")) != NULL)
-	if ((tex = load_tga("ressources/cat/cat_diff.tga")) != NULL)
+	tex_tga = NULL;
+	tex_bmp = NULL;
+	if (mesh->usemtl != NULL && mesh->usemtl->map_kd != NULL &&
+		(tex_tga = load_tga(mesh->usemtl->map_kd)) != NULL)
 	{
-		texture_id = new_texture_buffer(tex->width, tex->height, tex->data);
+		printf("loading texture path : %s\n", mesh->usemtl->map_kd);
+		texture_id = new_texture_buffer(tex_tga->width, tex_tga->height, tex_tga->data, GL_RGB);
+	}
+	else
+	{
+		printf("loading texture path : %s\n", def);
+		tex_bmp = load_bmp(def);
+		texture_id = new_texture_buffer(tex_bmp->width, tex_bmp->height, tex_bmp->data, GL_BGR);
+	}
+	if (tex_tga != NULL || tex_bmp)
+	{
 		if (mesh->vertex_data.vt.size == 0)
 		{
-			// compute_uv_coordinates(tex, mesh);
-			// mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-				// (mesh->vertex_data.v.size / 3) * 2, tex->uv, GL_STATIC_DRAW);
+			uv = compute_uv_coordinates(mesh);
+			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
+				(mesh->vertex_data.v.size / 3) * 2, uv, GL_STATIC_DRAW);
+			free(uv);
 		}
 		else
 		{
@@ -139,7 +153,6 @@ void	setup_texture(t_obj *mesh)
 		if (mesh->vertex_data.vt.size == 0)
 		{
 			// free(tex->data);
-			// free(tex->uv);
 			// free(tex);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wavefront_loader.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 19:40:24 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:21:46 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_f_pos
 }					t_f_pos;
 
 t_mesh				*load_dot_obj_file(t_mesh *mesh, char *path);
-int					load_mtl_obj_file(char *path, t_material **mtl);
+int					load_mtl_obj_file(t_mesh *mesh, char *path);
 
 int					label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg);
 int					label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg);
@@ -66,4 +66,17 @@ void				add_vec2(t_vec3 *vec, t_vertex *v);
 void				add_element(GLushort *el, t_element *v, int nb);
 void				print_element_array(GLushort *array, size_t size);
 void				print_vertice_array(GLfloat *array, size_t size);
+
+t_material			*new_material();
+int					mtl_label_comment(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_newmtl(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_ns(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_ka(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_kd(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_ks(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_ni(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_d(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_illum(t_mesh *mesh, char *str, void*arg);
+int					mtl_label_map_kd(t_mesh *mesh, char *str, void*arg);
+
 #endif

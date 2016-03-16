@@ -3,124 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   dot_mtl_file_loader.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 16:36:16 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 18:36:50 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:24:43 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
 
-int	mtl_label_comment(t_material **mtl, FILE *stream, void*arg)
+int	mtl_label_map_bump(t_mesh *mesh, char *str, void*arg)
 {
-	(void)mtl;
-	(void)stream;
+	(void)mesh;
+	(void)str;
 	(void)arg;
 	return (1);
 }
 
-int	mtl_label_empty(t_material **mtl, FILE *stream, void*arg)
+int	mtl_label_map_ks(t_mesh *mesh, char *str, void*arg)
 {
-	(void)mtl;
-	(void)stream;
+	(void)mesh;
+	(void)str;
 	(void)arg;
 	return (1);
 }
 
-int	mtl_label_newmtl(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_ns(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_ka(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_kd(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_ks(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_ni(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_d(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_illum(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_map_kd(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_map_bump(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-int	mtl_label_map_ks(t_material **mtl, FILE *stream, void*arg)
-{
-	(void)mtl;
-	(void)stream;
-	(void)arg;
-	return (1);
-}
-
-
-static int	(*const g_func_tab[13])(t_material **mtl, FILE *stream, void *arg) =
+static int	(*const g_mtl_tab[12])(t_mesh *, char *, void *) =
 {
 	&mtl_label_comment,
-	&mtl_label_empty,
 	&mtl_label_newmtl,
 	&mtl_label_ns,
 	&mtl_label_ka,
@@ -147,30 +57,40 @@ t_material	*new_material()
 	return (mat);
 }
 
-static int	parse_label(t_material **mtl, FILE *stream)
+static int	parse_label(t_mesh *mesh, FILE *stream)
 {
-	char		label[32];
-	int			ret;
-	static char	*tab[13] = { "#", "/n",
-		"newmtl", "Ns", "Ka", "Kd", "Ks", "Ni", "d", "illum", "map_Kd",
-		"map_Bump", "map_Ks"
-	};
-	int			i;
+	static char		*tab[12] = { "#", "newmtl", "Ns", "Ka", "Kd", "Ks", "Ni",
+		"d", "illum", "map_Kd", "map_Bump", "map_Ks"};
+	char			label[32];
+	int				ret;
+	int				i;
+	size_t			z;
+	char			*str;
 
-	ret = fscanf(stream, "%s", label);
-	if (ret == EOF)
+	bzero(label, 32);
+	str = NULL;
+	if ((ret = getline(&str, &z, stream)) == -1)
+	{
+		// perror("getline");
 		return (0);
+	}
+	if (str[0] == '\n')
+		return (1);
+	if (ret > 0)
+		str[ret - 1] = '\0';
+	ret = sscanf(str, "%s", label);
+	// printf("label = %s\n", label);
 	i = 0;
-	while (i < 13)
+	while (i < 12)
 	{
 		if (strcmp(tab[i], label) == 0)
-			return (*g_func_tab[i])(mtl, stream, NULL);
+			return (*g_mtl_tab[i])(mesh, str, NULL);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
-int		load_mtl_obj_file(char *path, t_material **mtl)
+int		load_mtl_obj_file(t_mesh *mesh, char *path)
 {
 	FILE		*stream;
 	ssize_t		ret;
@@ -182,7 +102,7 @@ int		load_mtl_obj_file(char *path, t_material **mtl)
 		return (0);
 	while (1)
 	{
-		ret = parse_label(mtl, stream);
+		ret = parse_label(mesh, stream);
 		if (ret == 0)
 			break ;
 		if (ret == -1)

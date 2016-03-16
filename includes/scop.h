@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 10:43:59 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 14:43:55 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	auto_rotation(t_mesh *mesh);
 */
 
 GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
-GLuint	new_texture_buffer(uint width, uint height, uint8_t *data);
+GLuint	new_texture_buffer(uint width, uint height, uint8_t *data, GLuint);
 void	set_attrib_array(GLuint num, GLuint size);
 void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
 

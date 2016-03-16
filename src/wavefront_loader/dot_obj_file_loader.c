@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 22:37:01 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 12:57:12 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	parse_label(t_mesh *mesh, FILE *stream, t_f_pos *face_pos)
 	str = NULL;
 	if ((ret = getline(&str, &i, stream)) == -1)
 	{
-		perror("");
+		// perror("getline");
 		return (0);
 	}
 	// printf("ret = %d - PARSE str %s\n", ret, str);
