@@ -6,6 +6,7 @@ SRC= main.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
+		event_handlers_2.c \
 		framerate.c \
 		shaders.c \
 		camera.c \
@@ -13,6 +14,7 @@ SRC= main.c \
 		light.c \
 		gl_shortcuts.c \
 		mesh_building.c \
+		textures.c \
 		mesh_setup.c \
 		clean.c
 
@@ -22,7 +24,9 @@ SRC_WAVEFRONT_LOADER=	dot_obj_file_loader.c \
 		dot_mtl_file_loader.c \
 		dot_obj_file_loader_label_1.c \
 		dot_obj_file_loader_label_2.c \
-		dot_obj_file_loader_utils.c
+		dot_obj_file_loader_label_3.c \
+		dot_obj_file_loader_utils.c \
+		dot_obj_file_loader_utils_2.c
 
 SRCGLMATH= lookat.c \
 		vec3operations.c \

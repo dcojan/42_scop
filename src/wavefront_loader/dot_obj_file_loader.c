@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 12:57:12 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 15:55:54 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,17 @@ static int	parse_label(t_mesh *mesh, FILE *stream, t_f_pos *face_pos)
 
 	str = NULL;
 	if ((ret = getline(&str, &i, stream)) == -1)
-	{
-		// perror("getline");
 		return (0);
-	}
-	// printf("ret = %d - PARSE str %s\n", ret, str);
 	if (str[0] == '\n')
 		return (1);
 	if (ret > 0)
 		str[ret - 1] = '\0';
 	ret = sscanf(str, "%s", label);
-	// printf("PARSE ret %d\n", ret);
-	// printf("PARSE label %s\n", label);
 	i = 0;
 	while (i < 11)
 	{
 		if (strcmp(tab[i], label) == 0)
-		{
-			// printf("PARSER face_pos address %p\n", face_pos);
 			return (*g_tab[i])(mesh, str, face_pos);
-		}
 		i++;
 	}
 	free(str);
@@ -75,7 +66,6 @@ t_mesh		*load_dot_obj_file(t_mesh *mesh, char *path)
 	face_pos.v = 0;
 	face_pos.vt = 0;
 	face_pos.vn = 0;
-	// printf("face_pos address %p\n", &face_pos);
 	printf("Loading %s\n", path);
 	if ((stream = open_file(path)) == NULL)
 		return (NULL);

@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mesh_struct.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/17 11:24:41 by dcojan            #+#    #+#             */
+/*   Updated: 2016/03/17 11:25:25 by dcojan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MESH_STRUCT_H
+# define MESH_STRUCT_H
 
 # include "glmath.h"
 
@@ -81,15 +95,4 @@ typedef struct		s_mesh
 	uint32_t		shader_program;
 }					t_mesh;
 
-// typedef struct		s_mesh
-// {
-// 	char			*folder;
-// 	t_vertex_data	vertex_data;
-// 	t_element_data	elements;
-// 	t_vec3			origin;
-// 	t_material_lib	mtl_lib;
-// 	uint32_t		vertex_buffer;
-// 	uint32_t		normal_buffer;
-// 	uint32_t		texture_buffer;
-// 	uint32_t		shader_program;
-// }					t_mesh;
+#endif

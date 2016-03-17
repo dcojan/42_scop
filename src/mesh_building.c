@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mesh_building.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 20:19:48 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 16:02:42 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-static void		compute_normals(t_obj *mesh)
+static void	compute_normals(t_obj *mesh)
 {
 	t_vec3		*tmp[3];
 	size_t		i;
@@ -37,7 +37,7 @@ static void		compute_normals(t_obj *mesh)
 	mesh->vertex_data.vn.vertices = dest;
 }
 
-static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex *mesh, int nb)
+static void	unpack_elements(t_vertex *v, t_element *e, t_vertex *mesh, int nb)
 {
 	GLfloat		*new;
 	size_t		size;
@@ -45,24 +45,13 @@ static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex
 	size_t		i;
 	GLushort	tmp;
 
-	// printf("Unpacking %zu elements from %zu vertex_data\n", elements->size, mesh->size);
-	new = (GLfloat *)malloc(sizeof(GLfloat) * (elements->size * nb));
-	size = elements->size * nb;
+	new = (GLfloat *)malloc(sizeof(GLfloat) * (e->size * nb));
+	size = e->size * nb;
 	vindex = 0;
 	i = 0;
-	// printf("element->size = %zu\n", elements->size);
-	// printf("size = %zu\n", size);
-	while (i < elements->size)
+	while (i < e->size)
 	{
-		// printf("element no %zu\n", i);
-		tmp = elements->element[i] * nb;
-		// printf("index =  %u\n", tmp);
-		// printf("vindex =  %u\n", vindex);
-		// printf("vertex_data->vertices[tmp] =  %f\n", vertex_data->vertices[tmp]);
-		// if (tmp >= mesh->size)
-		// {
-		// 	printf("vertex_data->size = %zu - tmp = %u - i = %d\n", mesh->size, tmp, elements->element[i]);
-		// }
+		tmp = e->element[i] * nb;
 		new[vindex] = mesh->vertices[tmp];
 		new[vindex + 1] = mesh->vertices[tmp + 1];
 		if (nb == 3)
@@ -70,17 +59,16 @@ static void	unpack_elements(t_vertex *vertex_data, t_element *elements, t_vertex
 		vindex += nb;
 		i++;
 	}
-	vertex_data->vertices = new;
-	vertex_data->size = size;
-	// printf("DONE\n");
+	v->vertices = new;
+	v->size = size;
 }
 
 void		build_obj(t_obj *obj, t_mesh *mesh)
 {
 	if (obj->elements.f.size > 0)
 	{
-		printf("unpacking v\n");
-		unpack_elements(&(obj->vertex_data.v), &(obj->elements.f), &(mesh->obj_vertex.v), 3);
+		unpack_elements(&(obj->vertex_data.v),
+		&(obj->elements.f), &(mesh->obj_vertex.v), 3);
 	}
 	else
 	{
@@ -90,37 +78,14 @@ void		build_obj(t_obj *obj, t_mesh *mesh)
 	}
 	if (obj->elements.vn.size > 0)
 	{
-		printf("unpacking vn -> size = %zu\n",obj->elements.vn.size);
-		unpack_elements(&(obj->vertex_data.vn), &(obj->elements.vn), &(mesh->obj_vertex.vn), 3);
+		unpack_elements(&(obj->vertex_data.vn), &(obj->elements.vn),
+						&(mesh->obj_vertex.vn), 3);
 	}
 	else
 		compute_normals(obj);
 	if (obj->elements.vt.size > 0)
 	{
-		printf("unpacking vt\n");
-		unpack_elements(&(obj->vertex_data.vt), &(obj->elements.vt), &(mesh->obj_vertex.vt), 2);
+		unpack_elements(&(obj->vertex_data.vt), &(obj->elements.vt),
+						&(mesh->obj_vertex.vt), 2);
 	}
 }
-//
-// void		build_mesh(t_mesh *mesh)
-// {
-// 	if (mesh->elements.f.size > 0)
-// 	{
-// 		printf("unpacking v\n");
-// 		unpack_elements(&(mesh->vertex_data.v), &(mesh->elements.f));
-// 	}
-// 	if (mesh->elements.vn.size > 0)
-// 	{
-// 		printf("unpacking vn -> size = %zu\n",mesh->elements.vn.size);
-// 		unpack_elements(&(mesh->vertex_data.vn), &(mesh->elements.vn));
-// 	}
-// 	else
-// 		compute_normals(mesh);
-// 	if (mesh->elements.vt.size > 0)
-// 	{
-// 		printf("unpacking vt\n");
-// 		unpack_elements(&(mesh->vertex_data.vt), &(mesh->elements.vt));
-// 	}
-// 	if (mesh->mtl_lib.path != NULL)
-// 		load_mtl_obj_file(mesh);
-// }

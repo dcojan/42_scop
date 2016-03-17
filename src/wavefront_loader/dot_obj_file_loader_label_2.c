@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:25:10 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 16:07:05 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg)
 	ret = sscanf(str, "%s %s", s, name);
 	printf("ret = %d\n", ret);
 	if (ret != 2)
-	 	return (-1);
+		return (-1);
 	mesh->mtllib = (char*)malloc(strlen(name) + strlen(mesh->folder) + 1);
 	strcpy(mesh->mtllib, mesh->folder);
 	mesh->mtllib = strcat(mesh->mtllib, name);
@@ -48,17 +48,12 @@ int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 	t_material	*mat;
 
 	(void)arg;
-	(void)mesh;
 	printf("usemtl\t");
 	ret = sscanf(str, "%s %s", s, name);
 	if (ret != 2)
-	 	return (-1);
+		return (-1);
 	if (ret == 2)
 	{
-		// mesh->objs->usemtl = (t_material *)malloc(sizeof(t_material));
-		// mesh->objs->usemtl->name = NULL;
-		// mesh->objs->usemtl->next = NULL;
-		// mesh->objs->usemtl->name = strdup(name);
 		printf("%d =>  %s\n", ret, name);
 		mat = mesh->material;
 		while (mat != NULL)
@@ -66,7 +61,7 @@ int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 			if (strcmp(mat->name, name) == 0)
 			{
 				mesh->objs->usemtl = mat;
-				break;
+				break ;
 			}
 			mat = mat->next;
 		}
@@ -86,7 +81,7 @@ int			label_o(t_mesh *mesh, char *str, t_f_pos *arg)
 	printf("\nname\t");
 	ret = sscanf(str, "%s %s", s, name);
 	if (ret != 2)
-	 	return (-1);
+		return (-1);
 	if (mesh->objs->name == NULL)
 		mesh->objs->name = strdup(name);
 	else

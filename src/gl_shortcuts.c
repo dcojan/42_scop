@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:10:07 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:44:11 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 15:00:15 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,19 @@ GLuint		new_buffer(GLuint type, GLuint size, GLfloat *data, GLuint draw)
 	return (buffer);
 }
 
-GLuint		new_texture_buffer(uint width, uint height, uint8_t *data, GLuint color)
+GLuint		new_texture_buffer(uint w, uint h, uint8_t *data, GLuint color)
 {
 	GLuint	texture_id;
 
 	glGenTextures(1, &texture_id);
-	// "Bind" the newly created texture : all future texture functions will modify this texture
 	glBindTexture(GL_TEXTURE_2D, texture_id);
-	// Give the image to OpenGL
-	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
-		// GL_BGR, GL_UNSIGNED_BYTE, data);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0,
 		color, GL_UNSIGNED_BYTE, data);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_LINEAR_MIPMAP_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	return (texture_id);
 }

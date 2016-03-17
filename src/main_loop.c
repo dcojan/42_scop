@@ -3,19 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:10 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:41:55 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 14:55:17 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-void		draw_obj(t_obj* obj)
+void		draw_obj(t_obj *obj)
 {
 	glBindVertexArray(obj->vaoid);
 	glDrawArrays(GL_TRIANGLES, 0, obj->vertex_data.v.size);
+}
+
+void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
+{
+	GLuint			view_unif_id;
+	t_mat4x4		*view;
+
+	set_projection(1.0f, progid);
+	view = view_matrix(eyex, eyey, eyez);
+	view_unif_id = glGetUniformLocation(progid, "View");
+	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((view->data)[0][0]));
+}
+
+void		init_light_power(t_mesh *mesh)
+{
+	int				id;
+	GLfloat			light_power;
+
+	id = glGetUniformLocation(mesh->shader_program, "LightPower");
+	light_power = LIGHT_POWER;
+	glUniform1fv(id, 1, &light_power);
 }
 
 void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
@@ -30,9 +51,7 @@ void		main_loop(t_sdl *sdl_var, t_mesh *mesh)
 	event = NO_EVENT;
 	set_camera(CAM_X, CAM_Y, CAM_Z, mesh->shader_program);
 	set_light(LIGHT_X, LIGHT_Y, LIGHT_Z, mesh->shader_program);
-	int id = glGetUniformLocation(mesh->shader_program, "LightPower");
-	GLfloat	light_power = LIGHT_POWER;
-	glUniform1fv(id, 1, &light_power);
+	init_light_power(mesh);
 	while (event != QUIT)
 	{
 		framerate_control(&next_game_tick);

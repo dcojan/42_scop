@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:17:01 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:36:07 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:23:58 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ void		angle_axis(float angle, t_vec3 *axis, t_quat *dest)
 	PY(dest) = PY(axis) * (float)sin(half_angle);
 	PZ(dest) = PZ(axis) * (float)sin(half_angle);
 	PW(dest) = cos(half_angle);
-}
-
-float		radians(float degree)
-{
-	return (degree * M_PI / 180);
 }
 
 t_quat		quat_mult(t_quat q1, t_quat q2)
@@ -72,10 +67,15 @@ t_quat		quat_mult(t_quat q1, t_quat q2)
 t_quat		quat_x_quat(t_quat q1, t_quat q2)
 {
 	t_quat	q;
-	X(q) = (W(q1) * X(q2)) + (X(q1) * W(q2)) + (Y(q1) * Z(q2)) - (Z(q1) * Y(q2));
-	Y(q) = (W(q1) * Y(q2)) - (X(q1) * Z(q2)) + (Y(q1) * W(q2)) + (Z(q1) * X(q2));
-	Z(q) = (W(q1) * Z(q2)) + (X(q1) * Y(q2)) - (Y(q1) * X(q2)) + (Z(q1) * W(q2));
-	W(q) = (W(q1) * W(q2)) - (X(q1) * X(q2)) - (Y(q1) * Y(q2)) - (Z(q1) * Z(q2));
+
+	X(q) = (W(q1) * X(q2)) + (X(q1) * W(q2));
+	X(q) += (Y(q1) * Z(q2)) - (Z(q1) * Y(q2));
+	Y(q) = (W(q1) * Y(q2)) - (X(q1) * Z(q2));
+	Y(q) += (Y(q1) * W(q2)) + (Z(q1) * X(q2));
+	Z(q) = (W(q1) * Z(q2)) + (X(q1) * Y(q2));
+	Z(q) -= (Y(q1) * X(q2)) + (Z(q1) * W(q2));
+	W(q) = (W(q1) * W(q2)) - (X(q1) * X(q2));
+	W(q) -= (Y(q1) * Y(q2)) - (Z(q1) * Z(q2));
 	return (q);
 }
 

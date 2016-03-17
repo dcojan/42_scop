@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:38 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:39:05 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 16:11:37 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,34 @@ void	clean_obj(t_obj *obj)
 	free(obj);
 }
 
+void	clean_material(t_material *mat)
+{
+	if (mat == NULL)
+		return ;
+	clean_material(mat->next);
+	printf("clean material : %s\n", mat->name);
+	if (mat->map_kd != NULL)
+		free(mat->map_kd);
+	free(mat->name);
+	free(mat);
+}
+
 void	clean_mesh(t_mesh *mesh)
 {
 	t_obj		*obj;
-	t_material	*mat;
 
 	glDeleteProgram(mesh->shader_program);
 	if (mesh->folder != NULL)
 		free(mesh->folder);
 	if (mesh->mtllib != NULL)
 		free(mesh->mtllib);
+	clean_material(mesh->material);
 	while (mesh->objs != NULL)
 	{
 		obj = mesh->objs;
 		printf("clean obj : %s\n", obj->name);
 		mesh->objs = mesh->objs->next;
 		clean_obj(obj);
-	}
-	while (mesh->material)
-	{
-		mat = mesh->material;
-		printf("clean material : %s\n", mat->name);
-		mesh->material = mesh->material->next;
-		if (mat->map_kd != NULL)
-			free(mat->map_kd);
-		free(mat->name);
-		free(mat);
 	}
 	if (mesh->obj_vertex.v.vertices != NULL)
 		free(mesh->obj_vertex.v.vertices);

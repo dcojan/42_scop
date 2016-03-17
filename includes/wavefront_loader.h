@@ -6,12 +6,12 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:01:17 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:21:46 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:26:43 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MESH_LOADER_H
-# define MESH_LOADER_H
+#ifndef WAVEFRONT_LOADER_H
+# define WAVEFRONT_LOADER_H
 
 # include "mesh_struct.h"
 # include <fcntl.h>
@@ -58,7 +58,7 @@ int					label_l(t_mesh *mesh, char *str, t_f_pos *arg);
 
 t_mesh				*new_mesh(void);
 t_obj				*new_obj(void);
-char				*make_folder_path(char* file);
+char				*make_folder_path(char *file);
 FILE				*open_file(const char *path);
 int					consume_end_of_line(FILE *stream);
 void				add_vec3(t_vec3 *vec, t_vertex *v);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:47 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/10 17:40:43 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 15:00:37 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var)
 		build_obj(obj, mesh);
 		obj->vaoid = new_vao();
 		obj->shader_program = mesh->shader_program;
-		// printf("%s : vao nb %d\n", obj->name, obj->vaoid);
 		glBindVertexArray(mesh->shader_program);
 		setup_mesh(mesh->shader_program, obj);
 		setup_texture(obj);

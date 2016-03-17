@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 16:48:11 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:44:39 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 16:08:23 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,58 +40,13 @@ static void	setup_mesh_origin(t_obj *mesh)
 	Z(mesh->origin) = (min[2] + max[2]) / 2.0f;
 }
 
-static void	fill_uv(t_vec3 *normal, GLfloat *uv, GLfloat *vertices)
-{
-	if (pow(PX(normal), 2) > pow(PY(normal), 2) &&
-		pow(PX(normal), 2) > pow(PZ(normal), 2))
-	{
-		uv[0] = vertices[2];;
-		uv[1] = vertices[1];
-	}
-	else if (pow(PZ(normal), 2) > pow(PY(normal), 2) &&
-		pow(PZ(normal), 2) > pow(PX(normal), 2))
-	{
-		uv[0] = vertices[0];
-		uv[1] = vertices[1];
-	}
-	else if (pow(PY(normal), 2) > pow(PX(normal), 2) &&
-		pow(PY(normal), 2) > pow(PZ(normal), 2))
-	{
-		uv[0] = vertices[0];
-		uv[1] = vertices[2];
-	}
-}
-
-GLfloat		*compute_uv_coordinates(t_obj *mesh)
-{
-	GLfloat		*uv;
-	uint32_t	i;
-	int			j;
-	t_vec3		*normal;
-
-	// printf("Compute UVs\n");
-	uv = (float *)malloc(sizeof(float) * ((mesh->vertex_data.v.size / 3) * 2));
-	i = 0;
-	j = 0;
-	while (i < mesh->vertex_data.v.size)
-	{
-		normal = (t_vec3 *)&(mesh->vertex_data.vn.vertices[i]);
-		fill_uv(normal, &(uv[j]), &(mesh->vertex_data.v.vertices[i]));
-		j += 2;
-		i += 3;
-	}
-	// printf("done\n");
-	return (uv);
-}
-
-void	setup_color(t_obj *mesh)
+void		setup_color(t_obj *mesh)
 {
 	float		grey;
 	size_t		i;
 	GLfloat		*color;
 
 	color = (GLfloat*)malloc(sizeof(GLfloat) * (mesh->vertex_data.v.size));
-	// printf("Compute color\n");
 	grey = 0.4;
 	i = 0;
 	while (i < (mesh->vertex_data.v.size))
@@ -111,53 +66,6 @@ void	setup_color(t_obj *mesh)
 								color, GL_STATIC_DRAW);
 	free(color);
 	set_attrib_array(4, 3);
-}
-
-void	setup_texture(t_obj *mesh)
-{
-	static const char	def[] = "textures/pony.bmp";
-	GLuint				texture_id;
-	t_bmp_tex			*tex_bmp;
-	t_tga_tex			*tex_tga;
-	GLfloat				*uv;
-
-	tex_tga = NULL;
-	tex_bmp = NULL;
-	if (mesh->usemtl != NULL && mesh->usemtl->map_kd != NULL &&
-		(tex_tga = load_tga(mesh->usemtl->map_kd)) != NULL)
-	{
-		printf("loading texture path : %s\n", mesh->usemtl->map_kd);
-		texture_id = new_texture_buffer(tex_tga->width, tex_tga->height, tex_tga->data, GL_RGB);
-	}
-	else
-	{
-		printf("loading texture path : %s\n", def);
-		tex_bmp = load_bmp(def);
-		texture_id = new_texture_buffer(tex_bmp->width, tex_bmp->height, tex_bmp->data, GL_BGR);
-	}
-	if (tex_tga != NULL || tex_bmp)
-	{
-		if (mesh->vertex_data.vt.size == 0)
-		{
-			uv = compute_uv_coordinates(mesh);
-			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-				(mesh->vertex_data.v.size / 3) * 2, uv, GL_STATIC_DRAW);
-			free(uv);
-		}
-		else
-		{
-			mesh->texture_buffer = new_buffer(GL_ARRAY_BUFFER,
-				mesh->vertex_data.vt.size, mesh->vertex_data.vt.vertices, GL_STATIC_DRAW);
-		}
-		set_attrib_array(1, 2);
-		if (mesh->vertex_data.vt.size == 0)
-		{
-			// free(tex->data);
-			// free(tex);
-		}
-	}
-	else
-		printf("failed to load texture\n");
 }
 
 void		setup_mesh(GLuint shader_program, t_obj *mesh)

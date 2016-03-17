@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   glsl_file_loader.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:54 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 19:59:37 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 16:39:23 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static FILE	*open_file(const char *path)
 {
 	FILE	*stream;
 
-	// printf("path = %s\n", path);
 	stream = fopen(path, "r");
 	if (stream == NULL)
 	{

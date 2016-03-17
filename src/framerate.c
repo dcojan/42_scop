@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   framerate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/16 15:04:08 by dcojan            #+#    #+#             */
+/*   Updated: 2016/03/16 15:04:14 by dcojan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scop.h"
 #include <sys/time.h>
 #include <unistd.h>
 
-unsigned long		get_time()
+unsigned long		get_time(void)
 {
 	struct timeval			t;
 

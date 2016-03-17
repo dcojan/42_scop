@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 09:29:55 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/22 09:43:15 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:23:55 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,9 @@ t_vec3		vec4_to_vec3(t_vec4 src)
 	dest.data[1] = src.data[1];
 	dest.data[2] = src.data[2];
 	return (dest);
+}
+
+float		radians(float degree)
+{
+	return (degree * M_PI / 180);
 }

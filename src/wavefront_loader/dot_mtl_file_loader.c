@@ -6,13 +6,13 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/17 16:36:16 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:24:43 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/16 15:58:27 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wavefront_loader.h"
 
-int	mtl_label_map_bump(t_mesh *mesh, char *str, void*arg)
+int			mtl_label_map_bump(t_mesh *mesh, char *str, void *arg)
 {
 	(void)mesh;
 	(void)str;
@@ -20,7 +20,7 @@ int	mtl_label_map_bump(t_mesh *mesh, char *str, void*arg)
 	return (1);
 }
 
-int	mtl_label_map_ks(t_mesh *mesh, char *str, void*arg)
+int			mtl_label_map_ks(t_mesh *mesh, char *str, void *arg)
 {
 	(void)mesh;
 	(void)str;
@@ -44,42 +44,24 @@ static int	(*const g_mtl_tab[12])(t_mesh *, char *, void *) =
 	&mtl_label_map_ks,
 };
 
-t_material	*new_material()
-{
-	t_material		*mat;
-
-	mat = (t_material*)malloc(sizeof(t_material));
-	mat->name = NULL;
-	mat->next = NULL;
-	mat->map_kd = NULL;
-	mat->map_bump = NULL;
-	mat->map_ks = NULL;
-	return (mat);
-}
-
 static int	parse_label(t_mesh *mesh, FILE *stream)
 {
 	static char		*tab[12] = { "#", "newmtl", "Ns", "Ka", "Kd", "Ks", "Ni",
 		"d", "illum", "map_Kd", "map_Bump", "map_Ks"};
 	char			label[32];
 	int				ret;
-	int				i;
-	size_t			z;
+	size_t			i;
 	char			*str;
 
 	bzero(label, 32);
 	str = NULL;
-	if ((ret = getline(&str, &z, stream)) == -1)
-	{
-		// perror("getline");
+	if ((ret = getline(&str, &i, stream)) == -1)
 		return (0);
-	}
 	if (str[0] == '\n')
 		return (1);
 	if (ret > 0)
 		str[ret - 1] = '\0';
 	ret = sscanf(str, "%s", label);
-	// printf("label = %s\n", label);
 	i = 0;
 	while (i < 12)
 	{
@@ -90,7 +72,7 @@ static int	parse_label(t_mesh *mesh, FILE *stream)
 	return (0);
 }
 
-int		load_mtl_obj_file(t_mesh *mesh, char *path)
+int			load_mtl_obj_file(t_mesh *mesh, char *path)
 {
 	FILE		*stream;
 	ssize_t		ret;

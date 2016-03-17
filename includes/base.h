@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/13 15:07:22 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 11:53:47 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/17 11:24:32 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define LIGHT_Y	 	5.0f
 # define LIGHT_Z	 	5.0f
 # define LIGHT_POWER	50.0f
+
 typedef enum		e_bool
 {
 	FALSE,

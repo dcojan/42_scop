@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/09 10:14:58 by nhiboux           #+#    #+#             */
-/*   Updated: 2016/03/15 17:35:59 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 15:18:17 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,48 +58,6 @@ t_mesh		*new_mesh(void)
 	return (mesh);
 }
 
-FILE		*open_file(const char *path)
-{
-	FILE	*stream;
-
-	stream = fopen(path, "r");
-	if (stream == NULL)
-	{
-		perror(path);
-		return (NULL);
-	}
-	return (stream);
-}
-
-char		*make_folder_path(char* file)
-{
-	size_t		size;
-
-	size = strlen(file) - 1;
-	while (size)
-	{
-		if (file[size] == '/')
-		{
-			file[size + 1] = '\0';
-				break ;
-		}
-		size--;
-	}
-	if (size == 0)
-		return (strdup("./"));
-	return (strdup(file));
-}
-
-int			consume_end_of_line(FILE *stream)
-{
-	char	state;
-	int		ret;
-
-	while ((ret = fread(&state, 1, 1, stream)) != 0 && state != '\n')
-		;
-	return (ret);
-}
-
 void		add_vec3(t_vec3 *vec, t_vertex *v)
 {
 	GLfloat		*new;
@@ -140,18 +98,17 @@ void		add_vec2(t_vec3 *vec, t_vertex *v)
 void		add_element(GLushort *el, t_element *v, int nb)
 {
 	size_t		size;
-	GLushort	*new;
+	GLushort	*n;
 
 	size = (3 * (nb - 2));
-	// printf("%zu/%zu\n", v->size, v->max_size);
 	if (v->size + size > v->max_size)
 	{
-		new = (GLushort *)malloc(sizeof(GLushort) * (size * 10000 + v->max_size));
+		n = (GLushort *)malloc(sizeof(GLushort) * (size * 10000 + v->max_size));
 		v->max_size += size * 10000;
-		memcpy(new, v->element, sizeof(GLushort) * v->size);
+		memcpy(n, v->element, sizeof(GLushort) * v->size);
 		if (v->element != NULL)
 			free(v->element);
-		v->element = new;
+		v->element = n;
 	}
 	v->element[v->size] = el[0] - 1;
 	v->element[v->size + 1] = el[1] - 1;
@@ -163,31 +120,4 @@ void		add_element(GLushort *el, t_element *v, int nb)
 		v->element[v->size + 5] = el[0] - 1;
 	}
 	v->size += size;
-}
-
-void		print_vertice_array(GLfloat *array, size_t size)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < size)
-	{
-		printf("%f %f %f\n", array[i], array[i + 1], array[i + 2]);
-		i += 3;
-	}
-}
-
-void		print_element_array(GLushort *array, size_t size)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < size)
-	{
-		printf("%hd ", array[i]);
-		if ((i + 1) % 3 == 0)
-			printf("\n");
-		i++;
-	}
-	printf("\n");
 }

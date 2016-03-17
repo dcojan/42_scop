@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:43:55 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:29:40 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 # define FRAMES_PER_SECOND 	30
 # define SKIP_TICKS			(1000 / FRAMES_PER_SECOND)
 
-struct	s_mouse_coord
+struct		s_mouse_coord
 {
 	int				x;
 	int				y;
 };
 typedef struct s_mouse_coord	t_mouse_coord;
 
-enum	e_event
+enum		e_event
 {
 	QUIT,
 	OBJ_AUTO_ROT,
@@ -54,7 +54,7 @@ enum	e_event
 };
 typedef enum e_event			t_event;
 
-struct	s_keyevent
+struct		s_keyevent
 {
 	uint32_t		type;
 	SDL_Keycode		code;
@@ -62,7 +62,7 @@ struct	s_keyevent
 };
 typedef struct s_keyevent		t_keyevent;
 
-enum	e_state
+enum		e_state
 {
 	NO_STATE,
 	COLOR_TO_TEX,
@@ -73,63 +73,66 @@ typedef enum e_state			t_state;
 ** scop.c
 */
 
-void	scop(t_mesh *mesh, t_sdl *sdl_var);
+void		scop(t_mesh *mesh, t_sdl *sdl_var);
 
 /*
 ** main_loop.c
 */
 
-void	main_loop(t_sdl	*sdl_var, t_mesh *mesh);
-t_event	get_scop_event(void);
-void	handle_event(t_event event, t_mesh *mesh, uint32_t *state);
+void		main_loop(t_sdl	*sdl_var, t_mesh *mesh);
+t_event		get_scop_event(void);
+void		handle_event(t_event event, t_mesh *mesh, uint32_t *state);
 
 /*
 ** rotation.c
 */
 
-void	translate_model(t_mesh *mesh, int axis, t_bool reverse, t_bool reset);
-void	auto_rotation(t_mesh *mesh);
+void		translate_model(t_mesh *m, int axis, t_bool reverse, t_bool reset);
+void		auto_rotation(t_mesh *mesh);
 
 /*
 ** buffers.c
 */
 
-GLuint	new_buffer(GLuint type, GLuint size, GLfloat *vertices, GLuint draw);
-GLuint	new_texture_buffer(uint width, uint height, uint8_t *data, GLuint);
-void	set_attrib_array(GLuint num, GLuint size);
-void	set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
+GLuint		new_buffer(GLuint type, GLuint size, GLfloat *vert, GLuint draw);
+GLuint		new_texture_buffer(uint w, uint h, uint8_t *data, GLuint color);
+void		set_attrib_array(GLuint num, GLuint size);
+void		set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
 
 /*
 ** shaders.c
 */
-uint	load_shaders(void);
-void	setup_texture(t_obj *mesh);
-void	setup_color(t_obj *mesh);
-void	setup_mesh(GLuint shader_program, t_obj *mesh);
+uint		load_shaders(void);
+void		setup_texture(t_obj *mesh);
+void		setup_color(t_obj *mesh);
+void		setup_mesh(GLuint shader_program, t_obj *mesh);
 /*
 ** camera.c
 */
 
-void	set_projection(float zoom_factor, GLuint progid);
-void	set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
-void	move_camera(int x, int y, GLuint progid, float speed);
+t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez);
+void		set_projection(float zoom_factor, GLuint progid);
+void		set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
+void		move_camera(int x, int y, GLuint progid, float speed);
 
 /*
 ** light.c
 */
 
-void	set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
+void		set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 
 /*
 ** framerate.c
 */
 
-void	framerate_control(double *next_game_tick);
+void		framerate_control(double *next_game_tick);
 
-// void	build_mesh(t_mesh *mesh);
-// void	build_obj(t_obj *mesh);
-void	build_obj(t_obj *obj, t_mesh *mesh);
-void	clean_mesh(t_mesh *mesh);
+void		build_obj(t_obj *obj, t_mesh *mesh);
+void		clean_mesh(t_mesh *mesh);
 
+void		event_zoom(t_event event, t_mesh *mesh, void *arg);
+void		event_empty(t_event event, t_mesh *mesh, void *arg);
+void		event_rotation(t_event event, t_mesh *mesh, void *arg);
+void		event_texture(t_event event, t_mesh *mesh, void *arg);
 
 #endif

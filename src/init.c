@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:58 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/09 20:00:12 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/16 16:08:32 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		init_sdl(t_sdl *sdl_var)
 void		init_gl(void)
 {
 	printf("INIT GL\t");
-// glEnable(GL_CULL_FACE);	glFrontFace(GL_CW);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_TEXTURE_2D);
