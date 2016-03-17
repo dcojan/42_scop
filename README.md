@@ -22,16 +22,17 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 	- Move object on x, both directions, on keypress		- OK
 	- Move object on y, both directions, on keypress		- OK
 	- Move object on z, both directions, on keypress		- OK
-	- Norme													-
-	- OpenGL 4+ with shaders								-
+	- Norme													- OK
+	- OpenGL 4+ with shaders								- OK
 
 - Bonus	:
 	- Camera rotation around object							- OK
-	- Texure with provided UV coordinates					-
+	- Texure with provided UV coordinates					- OK
 	- lighting												- OK
 	- keys binded to increase/decrease light_power			- OK
 	- Key Toggle auto_rot on and off						- OK
 	- bmp loader											- OK
+	- tga loader											- OK
 	- zoom dezoom
 
 - Other :

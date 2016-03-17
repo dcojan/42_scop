@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:56:31 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:43:31 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 12:00:55 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void		event_zoom(t_event event, t_mesh *mesh, void *arg)
 	static float	zoom = 1.0f;
 
 	if (event == ZOOM_IN)
-		zoom += 0.1f;
-	else if (event == ZOOM_OUT)
 		zoom -= 0.1f;
+	else if (event == ZOOM_OUT)
+		zoom += 0.1f;
 	set_projection(zoom, mesh->shader_program);
 	(void)arg;
 }
@@ -56,12 +56,12 @@ void		event_texture(t_event event, t_mesh *mesh, void *arg)
 	else
 	{
 		i += (*state == COLOR_TO_TEX ? -0.2f : 0.2f);
-		if (*state == COLOR_TO_TEX)
-			if (i <= 0.0f)
-				*state &= ~COLOR_TO_TEX;
-		if (*state == TEX_TO_COLOR)
-			if (i >= 1.0f)
-				*state &= ~TEX_TO_COLOR;
+		if (*state == COLOR_TO_TEX && i <= 0.0f)
+			*state &= ~COLOR_TO_TEX;
+		if (*state == TEX_TO_COLOR && i >= 1.0f)
+			*state &= ~TEX_TO_COLOR;
+		i = (i < 0.0f ? 0.0f : i);
+		i = (i > 1.0f ? 1.0f : i);
 	}
 	unif_id = glGetUniformLocation(mesh->shader_program, "texture_transition");
 	glUniform1fv(unif_id, 1, &i);

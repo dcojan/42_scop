@@ -1,4 +1,4 @@
-#version 330 core
+#version 400 core
 
 layout(location = 0) in vec3 in_vertex;
 layout(location = 1) in vec2 vertex_uv;
