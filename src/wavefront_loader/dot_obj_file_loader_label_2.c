@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:33 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 16:07:05 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:40:49 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			label_comment(t_mesh *mesh, char *str, t_f_pos *arg)
 {
 	(void)arg;
 	(void)mesh;
-	printf("comment %s\n", str);
+	printf("%s\n", str);
 	return (1);
 }
 
@@ -27,15 +27,12 @@ int			label_mtllib(t_mesh *mesh, char *str, t_f_pos *arg)
 	int		ret;
 
 	(void)arg;
-	printf("mtllib POUET %s\t", str);
 	ret = sscanf(str, "%s %s", s, name);
-	printf("ret = %d\n", ret);
 	if (ret != 2)
 		return (-1);
 	mesh->mtllib = (char*)malloc(strlen(name) + strlen(mesh->folder) + 1);
 	strcpy(mesh->mtllib, mesh->folder);
 	mesh->mtllib = strcat(mesh->mtllib, name);
-	printf("%d =>  %s\n", ret, mesh->mtllib);
 	load_mtl_obj_file(mesh, mesh->mtllib);
 	return (ret);
 }
@@ -48,13 +45,11 @@ int			label_usemtl(t_mesh *mesh, char *str, t_f_pos *arg)
 	t_material	*mat;
 
 	(void)arg;
-	printf("usemtl\t");
 	ret = sscanf(str, "%s %s", s, name);
 	if (ret != 2)
 		return (-1);
 	if (ret == 2)
 	{
-		printf("%d =>  %s\n", ret, name);
 		mat = mesh->material;
 		while (mat != NULL)
 		{
@@ -78,7 +73,6 @@ int			label_o(t_mesh *mesh, char *str, t_f_pos *arg)
 
 	(void)arg;
 	(void)mesh;
-	printf("\nname\t");
 	ret = sscanf(str, "%s %s", s, name);
 	if (ret != 2)
 		return (-1);
@@ -91,6 +85,5 @@ int			label_o(t_mesh *mesh, char *str, t_f_pos *arg)
 		mesh->objs = obj;
 		mesh->objs->name = strdup(name);
 	}
-	printf("%d =>  %s\n", ret, name);
 	return (ret);
 }

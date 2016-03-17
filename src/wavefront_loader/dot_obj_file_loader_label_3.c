@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 15:15:20 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 15:34:15 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:41:04 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int			label_l(t_mesh *mesh, char *str, t_f_pos *arg)
 	(void)mesh;
 	(void)str;
 	(void)arg;
-	printf("label_l\t");
 	return (1);
 }
 
@@ -29,11 +28,9 @@ int			label_g(t_mesh *mesh, char *str, t_f_pos *arg)
 
 	(void)arg;
 	(void)mesh;
-	printf("group\t");
 	ret = sscanf(str, "%s %s", s, name);
 	if (ret != 2)
 		return (-1);
-	printf("%d =>  %s\n", ret, name);
 	return (ret);
 }
 
@@ -46,9 +43,7 @@ int			label_s(t_mesh *mesh, char *str, t_f_pos *arg)
 	(void)arg;
 	str = &(str[1]);
 	ret = sscanf(str, "%s", name);
-	printf("smoothing group - ret %d\t", ret);
 	if (ret != 1)
 		return (-1);
-	printf("%d =>  %s\n", ret, name);
 	return (1);
 }

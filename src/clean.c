@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:38 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 13:11:32 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/17 13:39:43 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	clean_mesh(t_mesh *mesh)
 {
 	t_obj		*obj;
 
+	printf("clean mesh\n");
 	glDeleteProgram(mesh->shader_program);
 	if (mesh->folder != NULL)
 		free(mesh->folder);
@@ -67,7 +68,6 @@ void	clean_mesh(t_mesh *mesh)
 	while (mesh->objs != NULL)
 	{
 		obj = mesh->objs;
-		printf("clean obj : %s\n", obj->name);
 		mesh->objs = mesh->objs->next;
 		clean_obj(obj);
 	}

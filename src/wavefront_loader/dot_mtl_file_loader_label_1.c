@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 13:52:51 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 16:07:58 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:41:38 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	mtl_label_newmtl(t_mesh *mesh, char *str, void *arg)
 	t_material	*mtl;
 
 	(void)mesh;
-	printf("newmtl\n");
 	ret = sscanf(str, "%s %s", l, name);
 	if (ret != 2)
 		return (-1);

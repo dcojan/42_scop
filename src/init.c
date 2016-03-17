@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:58 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:44:07 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:37:13 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		init_sdl(t_sdl *sdl_var)
 {
-	printf("INIT_SDL\t");
+	printf("init sdl\t");
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
 		SDL_GL_CONTEXT_PROFILE_CORE);
@@ -31,7 +31,7 @@ void		init_sdl(t_sdl *sdl_var)
 
 void		init_gl(void)
 {
-	printf("INIT GL\t");
+	printf("init gl\t");
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_TEXTURE_2D);
@@ -43,7 +43,7 @@ void		init_glew(void)
 {
 	GLuint	vertex_buffer;
 
-	printf("INIT_GLEW\t");
+	printf("init glew\t");
 	glewExperimental = GL_TRUE;
 	glewInit();
 	glGenBuffers(1, &vertex_buffer);

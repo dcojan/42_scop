@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 13:54:44 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 15:19:39 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:42:04 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ int	mtl_label_map_kd(t_mesh *mesh, char *str, void *arg)
 	mesh->material->map_kd = (char*)malloc(size);
 	strcpy(mesh->material->map_kd, mesh->folder);
 	mesh->material->map_kd = strcat(mesh->material->map_kd, name);
-	printf("map_kd : %s\n", mesh->material->map_kd);
 	return (1);
 }
