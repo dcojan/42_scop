@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:40 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 15:55:54 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:10:50 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ static int	parse_label(t_mesh *mesh, FILE *stream, t_f_pos *face_pos)
 	while (i < 11)
 	{
 		if (strcmp(tab[i], label) == 0)
-			return (*g_tab[i])(mesh, str, face_pos);
+		{
+			ret = (*g_tab[i])(mesh, str, face_pos);
+			free(str);
+			return (ret);
+		}
 		i++;
 	}
 	free(str);

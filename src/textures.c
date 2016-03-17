@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 15:21:44 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 15:31:43 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:05:26 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,16 @@ int			load_texture(t_obj *mesh, GLuint *id)
 	{
 		printf("loading texture path : %s\n", mesh->usemtl->map_kd);
 		*id = new_texture_buffer(tga->width, tga->height, tga->data, GL_RGB);
+		free(tga->data);
+		free(tga);
 	}
 	else
 	{
 		printf("loading texture path : %s\n", def);
 		bmp = load_bmp(def);
 		*id = new_texture_buffer(bmp->width, bmp->height, bmp->data, GL_BGR);
+		free(bmp->data);
+		free(bmp);
 	}
 	if (tga == NULL && bmp == NULL)
 		return (0);

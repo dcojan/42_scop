@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:43:18 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:02:20 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		set_projection(float zoom_factor, GLuint progid)
 		(GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 	proj_unif_id = glGetUniformLocation(progid, "Projection");
 	glUniformMatrix4fv(proj_unif_id, 1, GL_FALSE, &((projection->data)[0][0]));
+	free(projection);
 }
 
 void		move_position_pitch(float pitch_angle, t_vec3 *position, int y)

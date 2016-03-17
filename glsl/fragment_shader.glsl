@@ -1,4 +1,4 @@
-#version 400 core
+#version 330 core
 
 in vec3 position_world_space;
 in vec3 normal_camera_space;

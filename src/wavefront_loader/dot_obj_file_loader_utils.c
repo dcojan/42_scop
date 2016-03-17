@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dot_obj_file_loader_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/09 10:14:58 by nhiboux           #+#    #+#             */
-/*   Updated: 2016/03/16 15:18:17 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 12:19:25 by nhiboux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_mesh		*new_mesh(void)
 	mesh->obj_vertex.vt.max_size = 0;
 	mesh->folder = NULL;
 	mesh->mtllib = NULL;
+	mesh->material = NULL;
 	mesh->objs = new_obj();
 	return (mesh);
 }
