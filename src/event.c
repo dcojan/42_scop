@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/15 12:53:36 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 18:11:21 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/17 11:43:45 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
 
 uint8_t		test_event(SDL_Event *we, uint32_t type, SDL_Keycode key)
 {

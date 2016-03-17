@@ -6,11 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:49 by dcojan            #+#    #+#             */
-/*   Updated: 2016/02/12 17:13:50 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:44:32 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
 
 void	compile_shader(const GLchar *buf, const GLuint *prog, const GLenum type)
 {

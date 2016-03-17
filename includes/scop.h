@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:29:40 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:42:34 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ enum		e_state
 	TEX_TO_COLOR,
 };
 typedef enum e_state			t_state;
+
 /*
 ** scop.c
 */
@@ -79,9 +80,29 @@ void		scop(t_mesh *mesh, t_sdl *sdl_var);
 ** main_loop.c
 */
 
+void		set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 void		main_loop(t_sdl	*sdl_var, t_mesh *mesh);
+
+/*
+** event.c
+*/
+
 t_event		get_scop_event(void);
+
+/*
+** event_handler.c
+*/
+
 void		handle_event(t_event event, t_mesh *mesh, uint32_t *state);
+
+/*
+** event_handler_2.c
+*/
+
+void		event_zoom(t_event event, t_mesh *mesh, void *arg);
+void		event_empty(t_event event, t_mesh *mesh, void *arg);
+void		event_rotation(t_event event, t_mesh *mesh, void *arg);
+void		event_texture(t_event event, t_mesh *mesh, void *arg);
 
 /*
 ** rotation.c
@@ -91,28 +112,39 @@ void		translate_model(t_mesh *m, int axis, t_bool reverse, t_bool reset);
 void		auto_rotation(t_mesh *mesh);
 
 /*
-** buffers.c
+** gl_shortcuts.c
 */
 
 GLuint		new_buffer(GLuint type, GLuint size, GLfloat *vert, GLuint draw);
-GLuint		new_texture_buffer(uint w, uint h, uint8_t *data, GLuint color);
 void		set_attrib_array(GLuint num, GLuint size);
 void		set_uniform_mat4x4(GLuint prog, const char *name, t_mat4x4 *mat);
+GLuint		new_texture_buffer(uint w, uint h, uint8_t *data, GLuint color);
 
 /*
 ** shaders.c
 */
+
 uint		load_shaders(void);
+
+/*
+** textures.c
+*/
+
 void		setup_texture(t_obj *mesh);
+
+/*
+** mesh_setup.c
+*/
+
 void		setup_color(t_obj *mesh);
 void		setup_mesh(GLuint shader_program, t_obj *mesh);
+
 /*
 ** camera.c
 */
 
 t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez);
 void		set_projection(float zoom_factor, GLuint progid);
-void		set_camera(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 void		move_camera(int x, int y, GLuint progid, float speed);
 
 /*
@@ -120,6 +152,7 @@ void		move_camera(int x, int y, GLuint progid, float speed);
 */
 
 void		set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
+void		init_light_power(t_mesh *mesh);
 
 /*
 ** framerate.c
@@ -127,12 +160,16 @@ void		set_light(GLfloat x, GLfloat y, GLfloat z, GLuint program);
 
 void		framerate_control(double *next_game_tick);
 
-void		build_obj(t_obj *obj, t_mesh *mesh);
-void		clean_mesh(t_mesh *mesh);
+/*
+** mesh_building.c
+*/
 
-void		event_zoom(t_event event, t_mesh *mesh, void *arg);
-void		event_empty(t_event event, t_mesh *mesh, void *arg);
-void		event_rotation(t_event event, t_mesh *mesh, void *arg);
-void		event_texture(t_event event, t_mesh *mesh, void *arg);
+void		build_obj(t_obj *obj, t_mesh *mesh);
+
+/*
+** clen_mesh.c
+*/
+
+void		clean_mesh(t_mesh *mesh);
 
 #endif

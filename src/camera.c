@@ -6,11 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:11:25 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:53:56 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:43:18 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
 
 t_mat4x4	*view_matrix(GLfloat eyex, GLfloat eyey, GLfloat eyez)
 {

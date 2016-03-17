@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:10 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:55:17 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:40:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ void		set_camera(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLuint progid)
 	view = view_matrix(eyex, eyey, eyez);
 	view_unif_id = glGetUniformLocation(progid, "View");
 	glUniformMatrix4fv(view_unif_id, 1, GL_FALSE, &((view->data)[0][0]));
-}
-
-void		init_light_power(t_mesh *mesh)
-{
-	int				id;
-	GLfloat			light_power;
-
-	id = glGetUniformLocation(mesh->shader_program, "LightPower");
-	light_power = LIGHT_POWER;
-	glUniform1fv(id, 1, &light_power);
 }
 
 void		main_loop(t_sdl *sdl_var, t_mesh *mesh)

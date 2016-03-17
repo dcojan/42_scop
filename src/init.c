@@ -6,11 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:58 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 16:08:32 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:44:07 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
 
 void		init_sdl(t_sdl *sdl_var)
 {

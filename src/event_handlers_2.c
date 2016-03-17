@@ -6,11 +6,11 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:56:31 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 14:56:48 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 11:43:31 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <scop.h>
+#include "scop.h"
 
 void		event_zoom(t_event event, t_mesh *mesh, void *arg)
 {
