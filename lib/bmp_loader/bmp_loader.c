@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/22 10:48:42 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:14:57 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:48:36 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_bmp_tex	*load_bmp(const char *path)
 	bmp = NULL;
 	printf("Loading %s\t", path);
 	if ((stream = open_file(path)) == NULL)
+	{
 		printf("Error opening file\n");
+		return (NULL);
+	}
 	if (load_bmp_header(&bmp, stream))
 	{
 		bmp->image_size = bmp->width * bmp->height * 3;

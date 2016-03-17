@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 11:42:27 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 16:38:14 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 13:47:04 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ t_tga_tex	*load_tga(const char *filename)
 
 	printf("loading %s\n", filename);
 	if ((file_ptr = open_file(filename)) == NULL)
+	{
 		printf("Error opening file\n");
+		return (NULL);
+	}
 	tga_file = (t_tga_tex*)malloc(sizeof(t_tga_tex));
 	if (check_tga(file_ptr) == 0)
 		return (NULL);
