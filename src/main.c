@@ -6,11 +6,31 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:15 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 16:51:12 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 17:26:08 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+void	print_notice(void)
+{
+	printf("\033[36m---------------KEYBOARD---------------\n"
+		"Move object :\n "
+		"\taxe X + : q\n"
+		"\taxe X - : a\n"
+		"\taxe Y + : w\n"
+		"\taxe Y - : s\n"
+		"\taxe Z + : e\n"
+		"\taxe Z - : d\n"
+		"Reset object position : x\n"
+		"Toggle pause rotation : r\n"
+		"Toggle color/texture : t\n"
+		"Light + : y\n"
+		"Light - : h\n"
+		"Zoom - : u\n"
+		"Zoom - : j\n"
+		"--------------------------------------\n\033[0m");
+}
 
 void	scop(t_mesh *mesh, t_sdl *sdl_var)
 {
@@ -19,6 +39,7 @@ void	scop(t_mesh *mesh, t_sdl *sdl_var)
 	mesh->shader_program = load_shaders();
 	glUseProgram(mesh->shader_program);
 	build_mesh(mesh);
+	print_notice();
 	main_loop(sdl_var, mesh);
 }
 

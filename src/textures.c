@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 15:21:44 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 13:50:24 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 17:11:24 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ int			load_texture(t_obj *mesh, GLuint *id)
 	if (mesh->usemtl != NULL && mesh->usemtl->map_kd != NULL &&
 		(tga = load_tga(mesh->usemtl->map_kd)) != NULL)
 	{
-		printf("loading texture path : %s\n", mesh->usemtl->map_kd);
 		*id = new_texture_buffer(tga->width, tga->height, tga->data, GL_RGB);
 		free(tga->data);
 		free(tga);
 	}
 	else if ((bmp = load_bmp(def)) != NULL)
 	{
-		printf("loading texture path : %s\n", def);
 		*id = new_texture_buffer(bmp->width, bmp->height, bmp->data, GL_BGR);
 		free(bmp->data);
 		free(bmp);

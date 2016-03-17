@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/16 14:56:31 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 12:00:55 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 17:09:16 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ void		event_zoom(t_event event, t_mesh *mesh, void *arg)
 	static float	zoom = 1.0f;
 
 	if (event == ZOOM_IN)
+	{
 		zoom -= 0.1f;
+		if (zoom < 0)
+			zoom = 0.0f;
+	}
 	else if (event == ZOOM_OUT)
 		zoom += 0.1f;
 	set_projection(zoom, mesh->shader_program);
