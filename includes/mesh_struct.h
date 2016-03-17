@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 11:24:41 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:25:25 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 16:30:10 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct		s_obj
 	t_vertex_data	tmp_vert;
 	t_vertex_data	vertex_data;
 	t_element_data	elements;
-	t_vec3			origin;
 	t_material		*usemtl;
 	uint32_t		vertex_buffer;
 	uint32_t		normal_buffer;
@@ -88,6 +87,7 @@ typedef struct		s_obj
 typedef struct		s_mesh
 {
 	char			*folder;
+	t_vec3			origin;
 	t_vertex_data	obj_vertex;
 	char			*mtllib;
 	t_material		*material;

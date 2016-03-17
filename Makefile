@@ -1,21 +1,20 @@
 NAME=scop
 
 SRC= main.c \
-		scop.c \
 		init.c \
+		gl_shortcuts.c \
+		shaders.c \
+		build_mesh.c \
+		build_obj.c \
 		main_loop.c \
 		event.c \
 		event_handlers.c \
 		event_handlers_2.c \
 		framerate.c \
-		shaders.c \
 		camera.c \
 		rotation.c \
 		light.c \
-		gl_shortcuts.c \
-		mesh_building.c \
 		textures.c \
-		mesh_setup.c \
 		clean.c
 
 SRC_WAVEFRONT_LOADER=	dot_obj_file_loader.c \
@@ -51,7 +50,7 @@ VPATH:= src:src/wavefront_loader:lib/glmaths:lib/glsl_loader:lib/bmp_loader:lib/
 DIROBJ= obj/
 DIROBJS= $(addprefix $(DIROBJ), $(OBJ))
 
-CC=clang -g
+CC=clang
 
 FLAGS= -Werror -Wextra -Wall
 

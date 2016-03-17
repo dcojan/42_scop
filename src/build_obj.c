@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mesh_building.c                                    :+:      :+:    :+:   */
+/*   build_obj.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:43 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/16 16:02:42 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 16:50:26 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,45 @@ static void	unpack_elements(t_vertex *v, t_element *e, t_vertex *mesh, int nb)
 	}
 	v->vertices = new;
 	v->size = size;
+}
+
+void		setup_color(t_obj *mesh)
+{
+	float		grey;
+	size_t		i;
+	GLfloat		*color;
+
+	color = (GLfloat*)malloc(sizeof(GLfloat) * (mesh->vertex_data.v.size));
+	grey = 0.4;
+	i = 0;
+	while (i < (mesh->vertex_data.v.size))
+	{
+		if (i % 9 == 0)
+		{
+			grey += 0.1;
+			if (grey >= 1.0)
+				grey = 0.4;
+		}
+		color[i] = grey;
+		color[i + 1] = grey;
+		color[i + 2] = grey;
+		i += 3;
+	}
+	mesh->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, mesh->vertex_data.v.size,
+								color, GL_STATIC_DRAW);
+	free(color);
+	set_attrib_array(4, 3);
+}
+
+void		setup_obj(t_obj *obj)
+{
+	glBindVertexArray(obj->vaoid);
+	obj->vertex_buffer = new_buffer(GL_ARRAY_BUFFER, obj->vertex_data.v.size,
+								obj->vertex_data.v.vertices, GL_STATIC_DRAW);
+	set_attrib_array(0, 3);
+	obj->normal_buffer = new_buffer(GL_ARRAY_BUFFER, obj->vertex_data.vn.size,
+								obj->vertex_data.vn.vertices, GL_STATIC_DRAW);
+	set_attrib_array(2, 3);
 }
 
 void		build_obj(t_obj *obj, t_mesh *mesh)

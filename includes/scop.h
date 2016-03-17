@@ -6,7 +6,7 @@
 /*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:12:30 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/17 11:42:34 by dcojan           ###   ########.fr       */
+/*   Updated: 2016/03/17 16:48:03 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ void		setup_texture(t_obj *mesh);
 */
 
 void		setup_color(t_obj *mesh);
-void		setup_mesh(GLuint shader_program, t_obj *mesh);
+void		setup_obj(t_obj *obj);
+void		build_mesh(t_mesh *mesh);
 
 /*
 ** camera.c

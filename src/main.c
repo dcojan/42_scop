@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhiboux <nhiboux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dcojan <dcojan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 17:13:15 by dcojan            #+#    #+#             */
-/*   Updated: 2016/03/15 17:08:17 by nhiboux          ###   ########.fr       */
+/*   Updated: 2016/03/17 16:51:12 by dcojan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+void	scop(t_mesh *mesh, t_sdl *sdl_var)
+{
+	init_glew();
+	init_gl();
+	mesh->shader_program = load_shaders();
+	glUseProgram(mesh->shader_program);
+	build_mesh(mesh);
+	main_loop(sdl_var, mesh);
+}
 
 int		main(int ac, char **av)
 {
