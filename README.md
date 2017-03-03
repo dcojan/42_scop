@@ -1,42 +1,37 @@
-###############  42 Scop  ################
+##  42_Scop
+42 project : 3d visualizer for .obj (blender) in C and OpenGL - made early 2016
 
-File format :
-.obj : http://www.martinreddy.net/gfx/3d/OBJ.spec
-.mtl : http://www.fileformat.info/format/material/
-	http://nendowingsmirai.yuku.com/forum/viewtopic/id/1723#.VsSZkpMrJBw
-	https://www.youtube.com/watch?v=17axYo6mKhY
-Quaternions :
-http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
+#### File format
+* [.obj](http://www.martinreddy.net/gfx/3d/OBJ.spec)
+* [.mtl](http://www.fileformat.info/format/material/)
 
-###############  TODO     ################
+#### Requirement
+	* .obj parsing (minimal to render object)
+	* .obj error handling
+	* Object rotation around axis y - middle of object
+	* Make object rotation automatic		
+	* Color (no textures) with grey level to see facettes
+	* Basic Bad Texture application
+	* toggle between texture and color with key press
+	* Soft transition when texture/color switch
+	* Move object on x, both directions, on keypress
+	* Move object on y, both directions, on keypress
+	* Move object on z, both directions, on keypress
+	* Norme
+	* OpenGL 4+ with shaders
 
-- Sujet :
-	- .obj parsing (minimal to render object)				- OK
-	- .obj error handling									-
-	- Object rotation around axis y - middle of object		- OK
-	- Make object rotation automatic						- OK
-	- Color (no textures) with grey level to see facettes 	- OK
-	- Basic Bad Texture application							- OK
-	- toggle between texture and color with key press		- OK
-	- Soft transition when texture/color switch				- OK
-	- Move object on x, both directions, on keypress		- OK
-	- Move object on y, both directions, on keypress		- OK
-	- Move object on z, both directions, on keypress		- OK
-	- Norme													- OK
-	- OpenGL 4+ with shaders								- OK
+#### Bonus
+	* Camera rotation around object
+	* Texure with provided UV coordinates
+	* lighting
+	* keys binded to increase/decrease light_power
+	* Key Toggle auto_rot on and off
+	* bmp loader
+	* tga loader
+	* zoom dezoom
 
-- Bonus	:
-	- Camera rotation around object							- OK
-	- Texure with provided UV coordinates					- OK
-	- lighting												- OK
-	- keys binded to increase/decrease light_power			- OK
-	- Key Toggle auto_rot on and off						- OK
-	- bmp loader											- OK
-	- tga loader											- OK
-	- zoom dezoom
-
-- Other :
-	- Control framerate - OK
+#### Other/Idea
+	- Control framerate
 	- MODIFIY ROTATION SO THAT IT DOESN'T KEEP TRACK OF PREVIOUS ANGLES
 	- mtl file parsing
 	- Apply mtl file values
@@ -45,7 +40,9 @@ http://www.geeks3d.com/20141201/how-to-rotate-a-vertex-by-a-quaternion-in-glsl/
 	- ZOOM - DE_ZOOM
 
 
-################# mtl files ##############
+###### mtl files
+
+[extracted from this topic](http://nendowingsmirai.yuku.com/forum/viewtopic/id/1723#.VsSZkpMrJBw)
 
 Ns = Phong specular component. Ranges from 0 to 1000. (I've seen various statements about this range (see below))
 Kd = Diffuse color weighted by the diffuse coefficient.
