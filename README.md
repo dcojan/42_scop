@@ -1,8 +1,8 @@
 ##  42_Scop
 42 school project : 3d visualizer for .obj (blender) in C and OpenGL - made early 2016
 
-I did not made any of the ressources objects in the ressources files.
-If no texture is provided with the mesh, or if I do not load it for whatever
+I did not made any of the ressources objects in the ressources directory.
+If no texture is provided with the mesh, or if it won't load it for whatever
 reason, a default pony texture is applied.
 
 #### File format
